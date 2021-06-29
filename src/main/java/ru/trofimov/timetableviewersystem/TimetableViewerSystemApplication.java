@@ -8,7 +8,6 @@ public class TimetableViewerSystemApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TimetableViewerSystemApplication.class, args);
-		System.out.println(11111);
 	}
 
 }
