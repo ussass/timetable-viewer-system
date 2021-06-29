@@ -1,8 +1,6 @@
 package ru.trofimov.timetableviewersystem.model;
 
-public class Student {
+public class Student extends User{
     private int studentId;
     private Group group;
-    private String firstName;
-    private String lastName;
 }
