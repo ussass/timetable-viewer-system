@@ -1,5 +1,7 @@
 package ru.trofimov.timetableviewersystem.model;
 
 public class Course {
-    private String courseName;;
+    private int courseId;
+    private String courseName;
+
 }
