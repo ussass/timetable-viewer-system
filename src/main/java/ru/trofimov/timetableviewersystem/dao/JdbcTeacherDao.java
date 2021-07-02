@@ -1,10 +1,18 @@
 package ru.trofimov.timetableviewersystem.dao;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import ru.trofimov.timetableviewersystem.dao.mapper.TeacherMapper;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 
 import java.util.List;
 
 public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
+    private final JdbcTemplate jdbcTemplate;
+
+    public JdbcTeacherDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public Teacher create(Teacher entity) {
         return null;
@@ -17,7 +25,8 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
 
     @Override
     public List<Teacher> findAll() {
-        return null;
+        String sql = "SELECT * from students";
+        return jdbcTemplate.query(sql, new TeacherMapper());
     }
 
     @Override
