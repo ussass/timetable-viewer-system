@@ -14,7 +14,7 @@ public class StudentMapper implements RowMapper<Student> {
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name")
         );
-        student.setStudentId(resultSet.getInt("student_id"));
+        student.setId(resultSet.getLong("student_id"));
         student.setGroupId(resultSet.getInt("group_id"));
 
         return student;

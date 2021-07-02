@@ -1,21 +1,25 @@
 package ru.trofimov.timetableviewersystem.model;
 
+import ru.trofimov.timetableviewersystem.dao.Entity;
+
 import java.util.Objects;
 
-public class Student extends User{
-    private int studentId;
+public class Student extends User implements Entity<Long> {
+    private long id;
     private int groupId;
 
     public Student(String firstName, String lastName, Role... roles) {
         super(firstName, lastName, roles);
     }
 
-    public int getStudentId() {
-        return studentId;
+    @Override
+    public Long getId() {
+        return id;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    @Override
+    public void setId(Long value) {
+        this.id = value;
     }
 
     public int getGroupId() {
@@ -29,7 +33,7 @@ public class Student extends User{
     @Override
     public String toString() {
         return "Student{" +
-                "studentId=" + studentId +
+                "studentId=" + id +
                 ", groupId=" + groupId +
                 ", " + getFirstName() + " "  + getLastName() +
                 '}';

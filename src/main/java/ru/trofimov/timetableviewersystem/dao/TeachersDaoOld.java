@@ -4,7 +4,7 @@ import ru.trofimov.timetableviewersystem.model.Teacher;
 
 import java.util.List;
 
-public class TeachersDao implements Dao<Teacher> {
+public class TeachersDaoOld implements DaoOld<Teacher> {
     @Override
     public void add(Teacher teacher) {
 

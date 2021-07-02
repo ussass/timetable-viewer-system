@@ -2,10 +2,10 @@ package ru.trofimov.timetableviewersystem.dao;
 
 import java.util.List;
 
-public interface Dao<T> {
-    void add(T t);
+public interface Dao<T, K> {
+    T save(T entity);
     List<T> findAll();
-    T findById(int id);
-    void update(T t, int id);
-    void delete(int id);
+    T findById(K id);
+    T update(T entity);
+    void delete(K id);
 }
