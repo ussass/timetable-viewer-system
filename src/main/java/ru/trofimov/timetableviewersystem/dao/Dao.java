@@ -1,9 +1,10 @@
 package ru.trofimov.timetableviewersystem.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface Dao<T, K> {
-    T save(T entity);
+    T save(T entity) throws SQLException;
     List<T> findAll();
     T findById(K id);
     T update(T entity);

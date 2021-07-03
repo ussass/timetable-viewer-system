@@ -6,6 +6,7 @@ import ru.trofimov.timetableviewersystem.dao.DaoOld;
 import ru.trofimov.timetableviewersystem.dao.StudentDao;
 import ru.trofimov.timetableviewersystem.model.Student;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @SpringBootApplication
@@ -32,38 +33,18 @@ public class TimetableViewerSystemApplication {
 		System.out.println(student);
 
 		Student student1 = new Student("Ab", "Cd");
-		studentDao.save(student1);
-		System.out.println(student1);
+		Student student2 = null;
+		try {
+			student2 = studentDao.save(student1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(student2);
 
 		studentDaoOld.delete(97);
 
 		students = studentDao.findAll();
 		students.forEach(System.out::println);
-
-
-//		List<Student> students = studentDaoOld.findAll();
-//		students.forEach(System.out::println);
-//
-//		System.out.println();
-//		Student student = studentDaoOld.findById(1);
-//		System.out.println(student);
-//
-//		studentDaoOld.delete(228);
-//
-//		System.out.println();
-//		Student student1 = new Student("Ivan", "Ivanov");
-//		System.out.println("student1.getStudentId() = " + student1.getId());
-//		studentDaoOld.add(student1);
-//		students = studentDaoOld.findAll();
-//		students.forEach(System.out::println);
-//
-//		System.out.println();
-//		student1.setGroupId(13);
-//		studentDaoOld.update(student1, 0);
-//		students = studentDaoOld.findAll();
-//		students.forEach(System.out::println);
-
-
 
 	}
 
