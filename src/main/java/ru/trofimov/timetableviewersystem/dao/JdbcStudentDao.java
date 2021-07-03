@@ -2,7 +2,6 @@ package ru.trofimov.timetableviewersystem.dao;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
@@ -23,8 +22,6 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
 
     @Override
     public Student create(Student entity) throws SQLException {
-//        String sql = "INSERT INTO students(group_id, first_name, last_name) VALUES (0, 'asd', ?);" +
-//                "CALL Scope_IDENTITY() ;";
         String sql = "INSERT INTO students(group_id, first_name, last_name) VALUES (?, ?, ?);";
 
        KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -38,7 +35,6 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
           return ps;
         }, keyHolder);
 
-        System.out.println(keyHolder.getKey());
 
         if (updatedRows == 1) {
             Student student = new Student(entity.getFirstName(), entity.getLastName());
@@ -47,31 +43,20 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
             return student;
         }
         throw new SQLException("Unable to insert entity");
-
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//
-//        int updatedRows = jdbcTemplate.update(connection -> {
-//            PreparedStatement ps = connection
-//                    .prepareStatement("insert into dogs (name, age) values (?,?)");
-//            ps.setString(1, dog.getName());
-//            ps.setInt(2, dog.getAge());
-//            return ps;
-//        }, keyHolder);
-//
-//        if (updatedRows == 1) {
-//            return new Dog(
-//                    keyHolder.getKey().longValue(),
-//                    dog.getName(),
-//                    dog.getAge()
-//            );
-//        }
-//        throw new SQLException("Unable to insert entity");
     }
 
     @Override
-    public Student update(Student entity) {
-        System.out.println("update");
-        return null;
+    public Student update(Student entity) throws SQLException {
+
+        String sql = "UPDATE students SET group_id = ?, first_name = ?, last_name = ? WHERE student_id = ?";
+        int update = jdbcTemplate.update(sql, entity.getGroupId(), entity.getFirstName(), entity.getLastName(), entity.getId());
+        if (update == 1){
+            Student student = new Student(entity.getFirstName(), entity.getLastName());
+            student.setGroupId(entity.getGroupId());
+            student.setId(entity.getId());
+            return student;
+        }
+        throw new SQLException("Unable to update entity");
     }
 
     @Override
@@ -94,8 +79,11 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws SQLException {
         String sql = "DELETE FROM students WHERE student_id = ?";
-        jdbcTemplate.update(sql, id);
+        int delete = jdbcTemplate.update(sql, id);
+        if (delete == 0){
+            throw new SQLException("Unable to delete----------------------- entity");
+        }
     }
 }

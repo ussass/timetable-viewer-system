@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class User {
-    private final String firstName;
-    private final String lastName;
+    private String firstName;
+    private String lastName;
     private final List<Role> roles;
 
     public User(String firstName, String lastName, Role... roles) {
@@ -24,5 +24,13 @@ public class User {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

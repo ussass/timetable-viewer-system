@@ -9,5 +9,5 @@ public abstract class AbstractDao<T extends Entity<Long>> implements Dao<T, Long
 
     abstract public T create(T entity) throws SQLException;
 
-    abstract public T update(T entity);
+    abstract public T update(T entity) throws SQLException;
 }
