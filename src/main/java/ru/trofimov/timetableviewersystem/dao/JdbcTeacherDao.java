@@ -1,5 +1,6 @@
 package ru.trofimov.timetableviewersystem.dao;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -59,7 +60,15 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
 
     @Override
     public Teacher findById(Long id) {
-        return null;
+        String sql = "SELECT * FROM teachers WHERE teacher_id = ?";
+        Teacher teacher = null;
+        try {
+            teacher = jdbcTemplate.queryForObject(sql, new Object[]{id}, new TeacherMapper());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return teacher;
     }
 
     @Override
