@@ -78,6 +78,5 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
         if (delete == 0){
             throw new SQLException("Unable to delete entity");
         }
-
     }
 }

@@ -77,6 +77,5 @@ public class JdbcGroupDao extends AbstractDao<Group> implements GroupDao {
         if (delete == 0){
             throw new SQLException("Unable to delete entity");
         }
-
     }
 }

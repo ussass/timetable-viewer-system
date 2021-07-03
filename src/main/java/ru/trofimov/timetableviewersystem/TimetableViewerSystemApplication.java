@@ -17,7 +17,6 @@ public class TimetableViewerSystemApplication {
 		TimetableViewerSystemApplication.studentDao = studentDao;
 	}
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(TimetableViewerSystemApplication.class, args);
 

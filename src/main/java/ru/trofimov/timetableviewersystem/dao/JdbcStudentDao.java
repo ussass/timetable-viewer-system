@@ -35,7 +35,6 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
           return ps;
         }, keyHolder);
 
-
         if (updatedRows == 1) {
             Student student = new Student(entity.getFirstName(), entity.getLastName());
             student.setGroupId(entity.getGroupId());
