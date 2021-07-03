@@ -24,7 +24,7 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
     public Student create(Student entity) throws SQLException {
         String sql = "INSERT INTO students(group_id, first_name, last_name) VALUES (?, ?, ?);";
 
-       KeyHolder keyHolder = new GeneratedKeyHolder();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int updatedRows = jdbcTemplate.update(connection -> {
         PreparedStatement ps = connection
@@ -83,7 +83,7 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
         String sql = "DELETE FROM students WHERE student_id = ?";
         int delete = jdbcTemplate.update(sql, id);
         if (delete == 0){
-            throw new SQLException("Unable to delete----------------------- entity");
+            throw new SQLException("Unable to delete entity");
         }
     }
 }
