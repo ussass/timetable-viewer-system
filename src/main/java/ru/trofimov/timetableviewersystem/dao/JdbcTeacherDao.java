@@ -4,6 +4,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.mapper.TeacherMapper;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+@Component
 public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
     private final JdbcTemplate jdbcTemplate;
 

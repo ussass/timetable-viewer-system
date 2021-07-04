@@ -4,6 +4,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.mapper.GroupMapper;
 import ru.trofimov.timetableviewersystem.model.Group;
 
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+@Component
 public class JdbcGroupDao extends AbstractDao<Group> implements GroupDao {
     private final JdbcTemplate jdbcTemplate;
 

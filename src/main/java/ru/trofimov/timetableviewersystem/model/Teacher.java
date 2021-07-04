@@ -19,4 +19,12 @@ public class Teacher extends User implements Entity<Long> {
     public void setId(Long value) {
         this.id = value;
     }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", " + getFirstName() + " "  + getLastName() +
+                '}';
+    }
 }

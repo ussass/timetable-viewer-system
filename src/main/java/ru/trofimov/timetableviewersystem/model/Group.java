@@ -38,4 +38,13 @@ public class Group implements Entity<Long> {
     public void addStudent(Student student) {
         students.add(student);
     }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", groupName='" + groupName + '\'' +
+                ", students=" + students +
+                '}';
+    }
 }
