@@ -19,9 +19,8 @@ class JdbcGroupDaoTest {
 
     @Test
     @Order(1)
-    void shouldFindAll() throws SQLException {
+    void shouldFindAll() {
         List<Group> groups = groupDao.findAll();
-        groups.forEach(System.out::println);
         assertEquals(2, groups.size());
     }
 
@@ -37,7 +36,7 @@ class JdbcGroupDaoTest {
     void shouldAdd() throws SQLException {
         Group group = new Group("test");
         group = groupDao.save(group);
-        System.out.println("group.getId() = " + group.getId());
+
         assertNotEquals(0, (long) group.getId());
     }
 
@@ -48,9 +47,9 @@ class JdbcGroupDaoTest {
         List<Group> groups = groupDao.findAll();
         long count = groups.get(groups.size() - 1).getId();
         group.setId(count);
-        System.out.println("count = " + count);
         groupDao.update(group);
         Group groupExpected = groupDao.findById(count);
+
         assertEquals("update", groupExpected.getGroupName());
     }
 
@@ -61,6 +60,7 @@ class JdbcGroupDaoTest {
         long count = groups.get(groups.size() - 1).getId();
         groupDao.delete(count);
         List<Group> groupsExpected = groupDao.findAll();
+
         assertEquals(2, groupsExpected.size());
     }
 }

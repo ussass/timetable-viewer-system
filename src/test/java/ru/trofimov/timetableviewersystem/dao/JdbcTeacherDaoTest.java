@@ -22,7 +22,6 @@ class JdbcTeacherDaoTest {
     @Order(1)
     void shouldFindAll() {
         List<Teacher> teachers = teacherDao.findAll();
-        teachers.forEach(System.out::println);
         assertEquals(2, teachers.size());
     }
 
@@ -38,7 +37,7 @@ class JdbcTeacherDaoTest {
     void shouldAdd() throws SQLException {
         Teacher teacher = new Teacher("fName", "lName");
         teacher = teacherDao.save(teacher);
-        System.out.println("student.getId() = " + teacher.getId());
+
         assertNotEquals(0, (long) teacher.getId());
     }
 
@@ -49,9 +48,9 @@ class JdbcTeacherDaoTest {
         List<Teacher> teachers = teacherDao.findAll();
         long count = teachers.get(teachers.size() - 1).getId();
         teacher.setId(count);
-        System.out.println("count = " + count);
         teacherDao.update(teacher);
         Teacher teacherExpected = teacherDao.findById(count);
+
         assertEquals("Teacher{id=2, newFirst newLast}", teacherExpected.toString());
     }
 
@@ -62,6 +61,7 @@ class JdbcTeacherDaoTest {
         long count = teachers.get(teachers.size() - 1).getId();
         teacherDao.delete(count);
         List<Teacher> teachersExpected = teacherDao.findAll();
+
         assertEquals(2, teachersExpected.size());
     }
 }
