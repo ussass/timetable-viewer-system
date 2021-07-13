@@ -1,9 +1,9 @@
 package ru.trofimov.timetableviewersystem.dao;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 
 import java.sql.SQLException;
@@ -19,21 +19,21 @@ class JdbcTeacherDaoTest {
     TeacherDao teacherDao;
 
     @Test
-    @Order(1)
+    @Sql({ "/teacher/recreate_schema.sql", "/teacher/insert_data.sql" })
     void shouldFindAll() {
         List<Teacher> teachers = teacherDao.findAll();
         assertEquals(2, teachers.size());
     }
 
     @Test
-    @Order(2)
+    @Sql({ "/teacher/recreate_schema.sql", "/teacher/insert_data.sql" })
     void shouldFindById() {
         Teacher teacher = teacherDao.findById(1L);
-        assertEquals("Teacher{id=1, Jacob Smith}", teacher.toString());
+        assertEquals("Teacher{id=1, Jacob_test Smith_test}", teacher.toString());
     }
 
     @Test
-    @Order(3)
+    @Sql("/teacher/recreate_schema.sql")
     void shouldAdd() throws SQLException {
         Teacher teacher = new Teacher("fName", "lName");
         teacher = teacherDao.save(teacher);
@@ -42,26 +42,22 @@ class JdbcTeacherDaoTest {
     }
 
     @Test
-    @Order(4)
+    @Sql({ "/teacher/recreate_schema.sql", "/teacher/insert_data.sql" })
     void shouldUpdate() throws SQLException {
         Teacher teacher = new Teacher("newFirst", "newLast");
-        List<Teacher> teachers = teacherDao.findAll();
-        long count = teachers.get(teachers.size() - 1).getId();
-        teacher.setId(count);
+        teacher.setId(1L);
         teacherDao.update(teacher);
-        Teacher teacherExpected = teacherDao.findById(count);
+        Teacher teacherExpected = teacherDao.findById(1L);
 
-        assertEquals("Teacher{id=2, newFirst newLast}", teacherExpected.toString());
+        assertEquals("Teacher{id=1, newFirst newLast}", teacherExpected.toString());
     }
 
     @Test
-    @Order(5)
+    @Sql({ "/teacher/recreate_schema.sql", "/teacher/insert_data.sql" })
     void shouldDelete() throws SQLException {
-        List<Teacher> teachers = teacherDao.findAll();
-        long count = teachers.get(teachers.size() - 1).getId();
-        teacherDao.delete(count);
+        teacherDao.delete(1L);
         List<Teacher> teachersExpected = teacherDao.findAll();
 
-        assertEquals(2, teachersExpected.size());
+        assertEquals(1, teachersExpected.size());
     }
 }
