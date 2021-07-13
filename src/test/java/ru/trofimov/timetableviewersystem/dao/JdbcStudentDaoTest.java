@@ -1,9 +1,9 @@
 package ru.trofimov.timetableviewersystem.dao;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import ru.trofimov.timetableviewersystem.model.Student;
 
 import java.sql.SQLException;
@@ -19,21 +19,21 @@ class JdbcStudentDaoTest {
     StudentDao studentDao;
 
     @Test
-    @Order(1)
+    @Sql({ "/student/recreate_schema.sql", "/student/insert_data.sql" })
     void shouldFindAll() {
         List<Student> students = studentDao.findAll();
         assertEquals(2, students.size());
     }
 
     @Test
-    @Order(2)
+    @Sql({ "/student/recreate_schema.sql", "/student/insert_data.sql" })
     void shouldFindById() {
         Student student = studentDao.findById(1L);
-        assertEquals("Student{studentId=1, groupId=1, Tony Stark}", student.toString());
+        assertEquals("Student{studentId=1, groupId=1, Tony_test Star_test}", student.toString());
     }
 
     @Test
-    @Order(3)
+    @Sql("/student/recreate_schema.sql")
     void shouldAdd() throws SQLException {
         Student student = new Student("fName", "lName");
         student = studentDao.save(student);
@@ -42,26 +42,22 @@ class JdbcStudentDaoTest {
     }
 
     @Test
-    @Order(4)
+    @Sql({ "/student/recreate_schema.sql", "/student/insert_data.sql" })
     void shouldUpdate() throws SQLException {
         Student student = new Student("newFirst", "newLast");
-        List<Student> students = studentDao.findAll();
-        long count = students.get(students.size() - 1).getId();
-        student.setId(count);
+        student.setId(1L);
         studentDao.update(student);
-        Student studentExpected = studentDao.findById(count);
+        Student studentExpected = studentDao.findById(1L);
 
-        assertEquals("Student{studentId=2, groupId=0, newFirst newLast}", studentExpected.toString());
+        assertEquals("Student{studentId=1, groupId=0, newFirst newLast}", studentExpected.toString());
     }
 
     @Test
-    @Order(5)
+    @Sql({ "/student/recreate_schema.sql", "/student/insert_data.sql" })
     void shouldDelete() throws SQLException {
-        List<Student> students = studentDao.findAll();
-        long count = students.get(students.size() - 1).getId();
-        studentDao.delete(count);
+        studentDao.delete(1L);
         List<Student> studentsExpected = studentDao.findAll();
 
-        assertEquals(2, studentsExpected.size());
+        assertEquals(1, studentsExpected.size());
     }
 }
