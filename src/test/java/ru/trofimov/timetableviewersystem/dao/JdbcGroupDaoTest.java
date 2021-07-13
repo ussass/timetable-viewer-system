@@ -1,9 +1,9 @@
 package ru.trofimov.timetableviewersystem.dao;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import ru.trofimov.timetableviewersystem.model.Group;
 
 import java.sql.SQLException;
@@ -18,21 +18,21 @@ class JdbcGroupDaoTest {
     GroupDao groupDao;
 
     @Test
-    @Order(1)
+    @Sql({ "/group/recreate_schema.sql", "/group/insert_data.sql" })
     void shouldFindAll() {
         List<Group> groups = groupDao.findAll();
         assertEquals(2, groups.size());
     }
 
     @Test
-    @Order(2)
+    @Sql({ "/group/recreate_schema.sql", "/group/insert_data.sql" })
     void shouldFindById() {
         Group group = groupDao.findById(1L);
-        assertEquals("it-01", group.getGroupName());
+        assertEquals("it-01_test", group.getGroupName());
     }
 
     @Test
-    @Order(3)
+    @Sql("/group/recreate_schema.sql")
     void shouldAdd() throws SQLException {
         Group group = new Group("test");
         group = groupDao.save(group);
@@ -41,26 +41,22 @@ class JdbcGroupDaoTest {
     }
 
     @Test
-    @Order(4)
+    @Sql({ "/group/recreate_schema.sql", "/group/insert_data.sql" })
     void shouldUpdate() throws SQLException {
         Group group = new Group("update");
-        List<Group> groups = groupDao.findAll();
-        long count = groups.get(groups.size() - 1).getId();
-        group.setId(count);
+        group.setId(1L);
         groupDao.update(group);
-        Group groupExpected = groupDao.findById(count);
+        Group groupExpected = groupDao.findById(1L);
 
         assertEquals("update", groupExpected.getGroupName());
     }
 
     @Test
-    @Order(5)
+    @Sql({ "/group/recreate_schema.sql", "/group/insert_data.sql" })
     void shouldDelete() throws SQLException {
-        List<Group> groups = groupDao.findAll();
-        long count = groups.get(groups.size() - 1).getId();
-        groupDao.delete(count);
+        groupDao.delete(1L);
         List<Group> groupsExpected = groupDao.findAll();
 
-        assertEquals(2, groupsExpected.size());
+        assertEquals(1, groupsExpected.size());
     }
 }
