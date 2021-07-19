@@ -44,5 +44,6 @@ CREATE TABLE classes(
     "course_id" INTEGER REFERENCES courses (course_id),
     "teacher_id" BIGINT REFERENCES teachers (teacher_id),
     "group_id" BIGINT REFERENCES groups (group_id),
-    "classroom_id" INTEGER REFERENCES classrooms (classroom_id)
+    "classroom_id" INTEGER REFERENCES classrooms (classroom_id),
+    classes_date BIGINT
 );
