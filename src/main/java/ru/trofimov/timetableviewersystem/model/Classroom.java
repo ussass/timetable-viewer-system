@@ -1,6 +1,6 @@
 package ru.trofimov.timetableviewersystem.model;
 
-public class LessonSlot {
+public class Classroom {
     private int id;
     private int number;
 }
