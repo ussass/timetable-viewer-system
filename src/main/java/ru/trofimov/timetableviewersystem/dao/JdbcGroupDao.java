@@ -5,11 +5,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import ru.trofimov.timetableviewersystem.dao.mapper.ClassesMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.GroupMapper;
+import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Group;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -79,5 +82,11 @@ public class JdbcGroupDao extends AbstractDao<Group> implements GroupDao {
         if (delete == 0){
             throw new SQLException("Unable to delete entity");
         }
+    }
+
+    @Override
+    public List<Classes> getGroupSchedule(long groupId, Date startDate, Date finishDate) {
+        String sql = "SELECT * FROM classes WHERE group_id = ? AND classes_date BETWEEN ? AND ?";
+        return jdbcTemplate.query(sql, new ClassesMapper(), groupId, startDate, finishDate);
     }
 }
