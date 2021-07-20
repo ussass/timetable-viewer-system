@@ -6,8 +6,7 @@ public class Classroom implements Entity<Long> {
     private Long id;
     private int number;
 
-    public Classroom(Long id, int number) {
-        this.id = id;
+    public Classroom(int number) {
         this.number = number;
     }
 

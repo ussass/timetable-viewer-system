@@ -6,8 +6,7 @@ public class Course implements Entity<Long> {
     private Long courseId;
     private String courseName;
 
-    public Course(long courseId, String courseName) {
-        this.courseId = courseId;
+    public Course(String courseName) {
         this.courseName = courseName;
     }
 

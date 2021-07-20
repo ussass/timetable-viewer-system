@@ -9,6 +9,8 @@ import java.sql.SQLException;
 public class LessonSlotMapper implements RowMapper<LessonSlot> {
     @Override
     public LessonSlot mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new LessonSlot(resultSet.getInt("lesson_slot_id"), resultSet.getInt("lesson_slot_number"));
+        LessonSlot lessonSlot = new LessonSlot(resultSet.getInt("lesson_slot_number"));
+        lessonSlot.setId(resultSet.getLong("lesson_slot_id"));
+        return lessonSlot;
     }
 }

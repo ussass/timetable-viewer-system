@@ -9,6 +9,8 @@ import java.sql.SQLException;
 public class ClassroomMapper implements RowMapper<Classroom> {
     @Override
     public Classroom mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new Classroom(resultSet.getInt("classroom_id"), resultSet.getInt("classroom_number"));
+        Classroom classroom = new Classroom(resultSet.getInt("classroom_number"));
+        classroom.setId(resultSet.getLong("classroom_id"));
+        return classroom;
     }
 }

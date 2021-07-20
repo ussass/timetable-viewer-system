@@ -6,8 +6,7 @@ public class LessonSlot implements Entity<Long> {
     private Long id;
     private int number;
 
-    public LessonSlot(Long id, int number) {
-        this.id = id;
+    public LessonSlot(int number) {
         this.number = number;
     }
 
