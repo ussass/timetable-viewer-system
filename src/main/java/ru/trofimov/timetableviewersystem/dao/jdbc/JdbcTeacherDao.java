@@ -12,6 +12,7 @@ import ru.trofimov.timetableviewersystem.model.Teacher;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Component
@@ -24,13 +25,13 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
 
     @Override
     public Teacher create(Teacher entity) throws SQLException {
-        String sql = "INSERT INTO teachers(first_name, last_name) VALUES (?, ?);";
+        String sql = "INSERT INTO teachers(first_name, last_name) VALUES (?, ?) RETURNING teacher_id;";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int updatedRows = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection
-                    .prepareStatement(sql);
+                    .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entity.getFirstName());
             ps.setString(2, entity.getLastName());
             return ps;

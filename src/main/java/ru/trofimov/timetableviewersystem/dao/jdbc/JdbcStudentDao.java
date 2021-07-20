@@ -12,6 +12,7 @@ import ru.trofimov.timetableviewersystem.model.Student;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Component
@@ -24,17 +25,17 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
 
     @Override
     public Student create(Student entity) throws SQLException {
-        String sql = "INSERT INTO students(group_id, first_name, last_name) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO students(group_id, first_name, last_name) VALUES (?, ?, ?) RETURNING student_id;";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int updatedRows = jdbcTemplate.update(connection -> {
-        PreparedStatement ps = connection
-          .prepareStatement(sql);
-          ps.setLong(1, entity.getGroupId());
-          ps.setString(2, entity.getFirstName());
-          ps.setString(3, entity.getLastName());
-          return ps;
+            PreparedStatement ps = connection
+                    .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setLong(1, entity.getGroupId());
+            ps.setString(2, entity.getFirstName());
+            ps.setString(3, entity.getLastName());
+            return ps;
         }, keyHolder);
 
         if (updatedRows == 1) {
@@ -51,7 +52,7 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
 
         String sql = "UPDATE students SET group_id = ?, first_name = ?, last_name = ? WHERE student_id = ?";
         int update = jdbcTemplate.update(sql, entity.getGroupId(), entity.getFirstName(), entity.getLastName(), entity.getId());
-        if (update == 1){
+        if (update == 1) {
             Student student = new Student(entity.getFirstName(), entity.getLastName());
             student.setGroupId(entity.getGroupId());
             student.setId(entity.getId());
@@ -83,7 +84,7 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
     public void delete(Long id) throws SQLException {
         String sql = "DELETE FROM students WHERE student_id = ?";
         int delete = jdbcTemplate.update(sql, id);
-        if (delete == 0){
+        if (delete == 0) {
             throw new SQLException("Unable to delete entity");
         }
     }
