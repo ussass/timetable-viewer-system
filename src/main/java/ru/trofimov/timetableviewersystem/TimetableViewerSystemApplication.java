@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.trofimov.timetableviewersystem.dao.GroupDao;
 import ru.trofimov.timetableviewersystem.dao.StudentDao;
 import ru.trofimov.timetableviewersystem.dao.TeacherDao;
+import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.model.Teacher;
@@ -28,9 +29,14 @@ public class TimetableViewerSystemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TimetableViewerSystemApplication.class, args);
 
-		studentDaoDemonstration();
-		teacherDaoDemonstration();
-		groupDaoDemonstration();
+		List<Classes> classesList = groupDao.getGroupTimetable(2, 1, Long.MAX_VALUE);
+		for (Classes classes : classesList) {
+			System.out.println("Предмет: " + classes.getCourseId());
+			System.out.println("Учитель: " + teacherDao.findById(classes.getTeacherId()).getFirstName());
+			System.out.println("Группа: " + groupDao.findById(classes.getGroupId()).getGroupName());
+			System.out.println("Аудитория: " + classes.getClassroomId());
+			System.out.println("-------------");
+		}
 	}
 
 	public static void studentDaoDemonstration(){

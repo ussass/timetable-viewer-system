@@ -1,10 +1,12 @@
-package ru.trofimov.timetableviewersystem.dao;
+package ru.trofimov.timetableviewersystem.dao.jdbc;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import ru.trofimov.timetableviewersystem.dao.AbstractDao;
+import ru.trofimov.timetableviewersystem.dao.GroupDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.ClassesMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.GroupMapper;
 import ru.trofimov.timetableviewersystem.model.Classes;
@@ -85,7 +87,7 @@ public class JdbcGroupDao extends AbstractDao<Group> implements GroupDao {
     }
 
     @Override
-    public List<Classes> getGroupSchedule(long groupId, Date startDate, Date finishDate) {
+    public List<Classes> getGroupTimetable(long groupId, long startDate, long finishDate) {
         String sql = "SELECT * FROM classes WHERE group_id = ? AND classes_date BETWEEN ? AND ?";
         return jdbcTemplate.query(sql, new ClassesMapper(), groupId, startDate, finishDate);
     }

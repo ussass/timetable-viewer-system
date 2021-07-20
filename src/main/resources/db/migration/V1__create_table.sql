@@ -45,5 +45,6 @@ CREATE TABLE classes(
     "teacher_id" BIGINT REFERENCES teachers (teacher_id),
     "group_id" BIGINT REFERENCES groups (group_id),
     "classroom_id" INTEGER REFERENCES classrooms (classroom_id),
+    "lesson_slot_id" INTEGER REFERENCES lesson_slot (lesson_slot_id),
     classes_date BIGINT
 );

@@ -1,10 +1,12 @@
-package ru.trofimov.timetableviewersystem.dao;
+package ru.trofimov.timetableviewersystem.dao.jdbc;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import ru.trofimov.timetableviewersystem.dao.AbstractDao;
+import ru.trofimov.timetableviewersystem.dao.StudentDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.StudentMapper;
 import ru.trofimov.timetableviewersystem.model.Student;
 

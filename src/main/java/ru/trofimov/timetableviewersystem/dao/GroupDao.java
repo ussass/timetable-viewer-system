@@ -7,5 +7,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface GroupDao extends Dao<Group, Long> {
-    List<Classes> getGroupSchedule(long groupId, Date startDate, Date finishDate);
+    List<Classes> getGroupTimetable(long groupId, long startDate, long finishDate);
 }
