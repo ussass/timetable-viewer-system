@@ -1,20 +1,14 @@
 package ru.trofimov.timetableviewersystem.model;
 
-public class Course {
-    private int courseId;
+import ru.trofimov.timetableviewersystem.dao.Entity;
+
+public class Course implements Entity<Long> {
+    private Long courseId;
     private String courseName;
 
-    public Course(int courseId, String courseName) {
+    public Course(long courseId, String courseName) {
         this.courseId = courseId;
         this.courseName = courseName;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
     }
 
     public String getCourseName() {
@@ -23,5 +17,15 @@ public class Course {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    @Override
+    public Long getId() {
+        return courseId;
+    }
+
+    @Override
+    public void setId(Long value) {
+        this.courseId = value;
     }
 }

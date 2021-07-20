@@ -1,20 +1,22 @@
 package ru.trofimov.timetableviewersystem.model;
 
-public class LessonSlot {
-    private int id;
+import ru.trofimov.timetableviewersystem.dao.Entity;
+
+public class LessonSlot implements Entity<Long> {
+    private Long id;
     private int number;
 
-    public LessonSlot(int id, int number) {
+    public LessonSlot(Long id, int number) {
         this.id = id;
         this.number = number;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Long value) {
+        this.id = value;
     }
 
     public int getNumber() {
