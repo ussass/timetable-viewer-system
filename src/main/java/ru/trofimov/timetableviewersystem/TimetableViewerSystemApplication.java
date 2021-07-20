@@ -2,13 +2,11 @@ package ru.trofimov.timetableviewersystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.trofimov.timetableviewersystem.dao.GroupDao;
-import ru.trofimov.timetableviewersystem.dao.StudentDao;
-import ru.trofimov.timetableviewersystem.dao.TeacherDao;
-import ru.trofimov.timetableviewersystem.model.Classes;
-import ru.trofimov.timetableviewersystem.model.Group;
-import ru.trofimov.timetableviewersystem.model.Student;
-import ru.trofimov.timetableviewersystem.model.Teacher;
+import ru.trofimov.timetableviewersystem.dao.*;
+import ru.trofimov.timetableviewersystem.model.*;
+import ru.trofimov.timetableviewersystem.service.GroupService;
+import ru.trofimov.timetableviewersystem.service.StudentService;
+import ru.trofimov.timetableviewersystem.service.TeacherService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,146 +14,40 @@ import java.util.List;
 @SpringBootApplication
 public class TimetableViewerSystemApplication {
 
-	private static StudentDao studentDao;
-	private static TeacherDao teacherDao;
-	private static GroupDao groupDao;
+	private static StudentService studentService;
+	private static TeacherService teacherService;
+	private static GroupService groupService;
+	private static CourseDao courseDao;
+	private static ClassroomDao classroomDao;
+	private static LessonSlotDao lessonSlotDao;
 
-	public TimetableViewerSystemApplication(StudentDao studentDao, TeacherDao teacherDao, GroupDao groupDao) {
-		TimetableViewerSystemApplication.studentDao = studentDao;
-		TimetableViewerSystemApplication.teacherDao = teacherDao;
-		TimetableViewerSystemApplication.groupDao = groupDao;
+	public TimetableViewerSystemApplication(StudentService studentService, GroupService groupService, TeacherService teacherService,
+											ClassroomDao classroomDao, CourseDao courseDao, LessonSlotDao lessonSlotDao) {
+		TimetableViewerSystemApplication.studentService = studentService;
+		TimetableViewerSystemApplication.groupService = groupService;
+		TimetableViewerSystemApplication.courseDao = courseDao;
+		TimetableViewerSystemApplication.classroomDao = classroomDao;
+		TimetableViewerSystemApplication.lessonSlotDao = lessonSlotDao;
+		TimetableViewerSystemApplication.teacherService = teacherService;
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(TimetableViewerSystemApplication.class, args);
 
-		List<Classes> classesList = groupDao.getGroupTimetable(2, 1, Long.MAX_VALUE);
-		for (Classes classes : classesList) {
-			System.out.println("Предмет: " + classes.getCourseId());
-			System.out.println("Учитель: " + teacherDao.findById(classes.getTeacherId()).getFirstName());
-			System.out.println("Группа: " + groupDao.findById(classes.getGroupId()).getGroupName());
-			System.out.println("Аудитория: " + classes.getClassroomId());
-			System.out.println("-------------");
+		List<Classes> classesList = groupService.getGroupTimetable(1, 1, Long.MAX_VALUE);
+		try{
+			for (Classes classes : classesList) {
+
+				System.out.println("Course: " + courseDao.findById(classes.getCourseId()).getCourseName());
+				System.out.println("Teacher: " + teacherService.findById(classes.getTeacherId()).getFullName());
+				System.out.println("Group: " + groupService.findById(classes.getGroupId()).getGroupName());
+				System.out.println("Classroom: " + classroomDao.findById(classes.getClassroomId()).getNumber());
+				System.out.println("LessonSlot: " + lessonSlotDao.findById(classes.getLessonSlotId()).getNumber());
+				System.out.println("Date and time: " + classes.getDateAndTime());
+				System.out.println("-------------");
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
 		}
 	}
-
-	public static void studentDaoDemonstration(){
-		System.out.println("\n All students ----------------\n");
-		List<Student> students = studentDao.findAll();
-		students.forEach(System.out::println);
-
-		System.out.println("\n Add new student ----------------\n");
-		Student student = new Student("Peter", "Parker");
-		student.setGroupId(5);
-		try {
-			student = studentDao.save(student);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println(student);
-
-		System.out.println("\n Update student ----------------\n");
-
-		student.setFirstName("Miles");
-		student.setLastName("Morales");
-		student.setGroupId(6);
-
-		try {
-			student = studentDao.update(student);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println(student);
-
-		System.out.println("\n Delete student and show all ----------------\n");
-
-		try {
-			studentDao.delete(1L);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		students = studentDao.findAll();
-		students.forEach(System.out::println);
-	}
-
-	public static void teacherDaoDemonstration(){
-		System.out.println("\n All teachers ----------------\n");
-		List<Teacher> teachers = teacherDao.findAll();
-		teachers.forEach(System.out::println);
-
-		System.out.println("\n Add new teacher ----------------\n");
-		Teacher teacher = new Teacher("Ethan", "Williams");
-		try {
-			teacher = teacherDao.save(teacher);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println(teacher);
-
-		System.out.println("\n Update teacher ----------------\n");
-
-		teacher.setFirstName("Noah");
-		teacher.setLastName("Jones");
-
-		try {
-			teacher = teacherDao.update(teacher);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println(teacher);
-
-		System.out.println("\n Delete teacher and show all ----------------\n");
-
-		try {
-			teacherDao.delete(1L);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		teachers = teacherDao.findAll();
-		teachers.forEach(System.out::println);
-	}
-
-	public static void groupDaoDemonstration(){
-		System.out.println("\n All groups ----------------\n");
-		List<Group> groups = groupDao.findAll();
-		groups.forEach(System.out::println);
-
-		System.out.println("\n Add new group ----------------\n");
-		Group group = new Group("ad-08");
-		try {
-			group = groupDao.save(group);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println(group);
-
-		System.out.println("\n Update group ----------------\n");
-
-		group.setGroupName("ad-09");
-
-		try {
-			group = groupDao.update(group);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println(group);
-
-		System.out.println("\n Delete group and show all ----------------\n");
-
-		try {
-			groupDao.delete(1L);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		groups = groupDao.findAll();
-		groups.forEach(System.out::println);
-	}
-
-
 }

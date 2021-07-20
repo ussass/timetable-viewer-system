@@ -8,8 +8,8 @@ public class Classes {
     private long courseId;
     private long teacherId;
     private long groupId;
-    private int classroomId;
-    private int lessonSlotId;
+    private long classroomId;
+    private long lessonSlotId;
     private Date date;
 
     public Classes(long courseId, long teacherId, long groupId, int classroomId, int lessonSlotId, Date date) {
@@ -53,7 +53,7 @@ public class Classes {
         this.groupId = groupId;
     }
 
-    public int getClassroomId() {
+    public long getClassroomId() {
         return classroomId;
     }
 
@@ -61,7 +61,7 @@ public class Classes {
         this.classroomId = classroomId;
     }
 
-    public int getLessonSlotId() {
+    public long getLessonSlotId() {
         return lessonSlotId;
     }
 
@@ -75,5 +75,10 @@ public class Classes {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDateAndTime() {
+        return date.getDate() + "." + (date.getMonth() < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) + "."
+                + (date.getYear() + 1900) + " " + date.getHours() + ":" + date.getMinutes();
     }
 }
