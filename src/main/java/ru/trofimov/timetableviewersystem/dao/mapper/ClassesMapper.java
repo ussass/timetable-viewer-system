@@ -10,7 +10,7 @@ import java.util.Date;
 public class ClassesMapper implements RowMapper<Classes> {
     @Override
     public Classes mapRow(ResultSet resultSet, int i) throws SQLException {
-        Classes classes = new Classes(
+        return new Classes(
                 resultSet.getInt("course_id"),
                 resultSet.getLong("teacher_id"),
                 resultSet.getLong("group_id"),
@@ -18,6 +18,5 @@ public class ClassesMapper implements RowMapper<Classes> {
                 resultSet.getInt("classroom_id"),
                 new Date(resultSet.getLong("classes_date"))
                 );
-        return classes;
     }
 }

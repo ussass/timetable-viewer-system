@@ -7,11 +7,11 @@ INSERT INTO students (group_id, first_name, last_name) values (1, 'Tony', 'Stark
 INSERT INTO teachers (first_name, last_name) values ('Jacob', 'Smith');
 INSERT INTO teachers (first_name, last_name) values ('Mason', 'Johnson');
 
-INSERT INTO classrooms (classroom_name) values (101);
-INSERT INTO classrooms (classroom_name) values (201);
+INSERT INTO classrooms (classroom_number) values (101);
+INSERT INTO classrooms (classroom_number) values (201);
 
-INSERT INTO lesson_slot (lesson_slot_name) values (1);
-INSERT INTO lesson_slot (lesson_slot_name) values (2);
+INSERT INTO lesson_slot (lesson_slot_number) values (1);
+INSERT INTO lesson_slot (lesson_slot_number) values (2);
 
 INSERT INTO courses (course_name) values ('Math');
 INSERT INTO courses (course_name) values ('Biology');

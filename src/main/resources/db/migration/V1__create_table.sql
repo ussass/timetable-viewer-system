@@ -26,12 +26,12 @@ CREATE TABLE teachers(
 
 CREATE TABLE classrooms(
     classroom_id SERIAL NOT NULL PRIMARY KEY,
-    classroom_name INTEGER NOT NULL
+    classroom_number INTEGER NOT NULL
     );
 
 CREATE TABLE lesson_slot(
     lesson_slot_id SERIAL NOT NULL PRIMARY KEY,
-    lesson_slot_name INTEGER NOT NULL
+    lesson_slot_number INTEGER NOT NULL
     );
 
 CREATE TABLE courses(
