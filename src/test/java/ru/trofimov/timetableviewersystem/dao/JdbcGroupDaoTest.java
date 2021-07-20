@@ -26,7 +26,7 @@ class JdbcGroupDaoTest {
 
     @Test
     @Sql({ "/group/recreate_schema.sql", "/group/insert_data.sql" })
-    void shouldFindById() {
+    void shouldFindById() throws SQLException {
         Group group = groupDao.findById(1L);
         assertEquals("it-01_test", group.getGroupName());
     }
