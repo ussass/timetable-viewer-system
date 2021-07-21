@@ -51,7 +51,7 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
     public Teacher update(Teacher entity) throws SQLException {
         String sql = "UPDATE teachers SET first_name = ?, last_name = ? WHERE teacher_id = ?";
         int update = jdbcTemplate.update(sql, entity.getFirstName(), entity.getLastName(), entity.getId());
-        if (update == 1){
+        if (update == 1) {
             Teacher teacher = new Teacher(entity.getFirstName(), entity.getLastName());
             teacher.setId(entity.getId());
             return teacher;
@@ -82,7 +82,7 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
     public void delete(Long id) throws SQLException {
         String sql = "DELETE FROM teachers WHERE teacher_id = ?";
         int delete = jdbcTemplate.update(sql, id);
-        if (delete == 0){
+        if (delete == 0) {
             throw new SQLException("Unable to delete entity");
         }
     }

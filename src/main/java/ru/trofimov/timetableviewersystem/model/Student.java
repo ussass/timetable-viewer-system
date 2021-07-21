@@ -35,7 +35,7 @@ public class Student extends User implements Entity<Long> {
         return "Student{" +
                 "studentId=" + id +
                 ", groupId=" + groupId +
-                ", " + getFirstName() + " "  + getLastName() +
+                ", " + getFirstName() + " " + getLastName() +
                 '}';
     }
 

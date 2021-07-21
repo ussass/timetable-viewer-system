@@ -24,7 +24,7 @@ public class Teacher extends User implements Entity<Long> {
     public String toString() {
         return "Teacher{" +
                 "id=" + id +
-                ", " + getFirstName() + " "  + getLastName() +
+                ", " + getFirstName() + " " + getLastName() +
                 '}';
     }
 }
