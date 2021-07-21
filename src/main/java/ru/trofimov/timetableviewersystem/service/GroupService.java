@@ -1,11 +1,10 @@
-package ru.trofimov.timetableviewersystem.dao;
+package ru.trofimov.timetableviewersystem.service;
 
 import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Group;
 
-import java.util.Date;
 import java.util.List;
 
-public interface GroupDao extends Dao<Group, Long> {
+public interface GroupService extends Service<Group, Long> {
     List<Classes> getGroupTimetable(long groupId, long startDate, long finishDate);
 }

@@ -22,6 +22,10 @@ public class User {
         return lastName;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }

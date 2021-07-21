@@ -27,7 +27,7 @@ class JdbcTeacherDaoTest {
 
     @Test
     @Sql({ "/teacher/recreate_schema.sql", "/teacher/insert_data.sql" })
-    void shouldFindById() {
+    void shouldFindById() throws SQLException {
         Teacher teacher = teacherDao.findById(1L);
         assertEquals("Teacher{id=1, Jacob_test Smith_test}", teacher.toString());
     }
