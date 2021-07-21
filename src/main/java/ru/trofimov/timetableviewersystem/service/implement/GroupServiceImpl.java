@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-@Transactional
 public class GroupServiceImpl implements GroupService {
 
     private final GroupDao groupDao;
@@ -21,7 +20,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Group save(Group entity) throws SQLException {
         return groupDao.save(entity);
     }
@@ -39,13 +38,13 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Group update(Group entity) throws SQLException {
         return groupDao.update(entity);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void delete(Long id) throws SQLException {
         groupDao.delete(id);
     }

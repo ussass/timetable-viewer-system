@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-@Transactional
 public class ClassesServiceImpl implements ClassesService {
 
     private final ClassesDao classesDao;
@@ -20,7 +19,7 @@ public class ClassesServiceImpl implements ClassesService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Classes save(Classes entity) throws SQLException {
         return classesDao.save(entity);
     }
@@ -38,13 +37,13 @@ public class ClassesServiceImpl implements ClassesService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Classes update(Classes entity) throws SQLException {
         return classesDao.update(entity);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void delete(Long id) throws SQLException {
         classesDao.delete(id);
     }
