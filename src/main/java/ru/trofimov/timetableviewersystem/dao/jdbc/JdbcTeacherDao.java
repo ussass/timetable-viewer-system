@@ -7,7 +7,9 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.TeacherDao;
+import ru.trofimov.timetableviewersystem.dao.mapper.ClassesMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.TeacherMapper;
+import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 
 import java.sql.PreparedStatement;
@@ -83,5 +85,11 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
         if (delete == 0){
             throw new SQLException("Unable to delete entity");
         }
+    }
+
+    @Override
+    public List<Classes> getTeacherTimetable(long teacherId, long startDate, long finishDate) {
+        String sql = "SELECT * FROM classes WHERE teacher_id = ? AND classes_date BETWEEN ? AND ?";
+        return jdbcTemplate.query(sql, new ClassesMapper(), teacherId, startDate, finishDate);
     }
 }

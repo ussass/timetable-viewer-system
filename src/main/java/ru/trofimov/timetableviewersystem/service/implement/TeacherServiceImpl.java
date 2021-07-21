@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.TeacherDao;
+import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.service.TeacherService;
 
@@ -48,5 +49,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional(readOnly = true)
     public void delete(Long id) throws SQLException {
         teacherDao.delete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Classes> getTeacherTimetable(long teacherId, long startDate, long finishDate) {
+        return teacherDao.getTeacherTimetable(teacherId, startDate, finishDate);
     }
 }
