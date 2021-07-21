@@ -1,8 +1,10 @@
 package ru.trofimov.timetableviewersystem.model;
 
+import ru.trofimov.timetableviewersystem.dao.Entity;
+
 import java.util.Date;
 
-public class Classes {
+public class Classes implements Entity<Long> {
 
     private long id;
     private long courseId;
@@ -12,7 +14,7 @@ public class Classes {
     private long lessonSlotId;
     private Date date;
 
-    public Classes(long courseId, long teacherId, long groupId, int classroomId, int lessonSlotId, Date date) {
+    public Classes(long courseId, long teacherId, long groupId, long classroomId, long lessonSlotId, Date date) {
         this.courseId = courseId;
         this.teacherId = teacherId;
         this.groupId = groupId;
@@ -21,11 +23,11 @@ public class Classes {
         this.date = date;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
