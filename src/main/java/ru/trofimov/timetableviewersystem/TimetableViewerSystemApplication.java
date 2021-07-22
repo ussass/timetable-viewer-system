@@ -1,10 +1,15 @@
 package ru.trofimov.timetableviewersystem;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.trofimov.timetableviewersystem.model.*;
 import ru.trofimov.timetableviewersystem.service.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,6 +22,8 @@ public class TimetableViewerSystemApplication {
     private static CourseService courseService;
     private static ClassroomService classroomService;
     private static LessonSlotService lessonSlotService;
+    private static final Logger logger = LoggerFactory.getLogger(TimetableViewerSystemApplication.class);
+    private static final String FILENAME = "/file/does/not/exist";
 
     public TimetableViewerSystemApplication(StudentService studentService, GroupService groupService, TeacherService teacherService,
                                             ClassroomService classroomService, CourseService courseService, LessonSlotService lessonSlotService) {
@@ -29,16 +36,25 @@ public class TimetableViewerSystemApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(TimetableViewerSystemApplication.class, args);
+//        SpringApplication.run(TimetableViewerSystemApplication.class, args);
+//
+//        System.out.println("\nGroup's timetable:");
+//        showTimetable(groupService.getGroupTimetable(1, 1, Long.MAX_VALUE));
+//
+//        System.out.println("\nTeacher's timetable:");
+//        showTimetable(teacherService.getTeacherTimetable(1, 1, Long.MAX_VALUE));
+//
+//        System.out.println("\nClassroom's timetable:");
+//        showTimetable(classroomService.getClassroomTimetable(1, 1, Long.MAX_VALUE));
 
-        System.out.println("\nGroup's timetable:");
-        showTimetable(groupService.getGroupTimetable(1, 1, Long.MAX_VALUE));
 
-        System.out.println("\nTeacher's timetable:");
-        showTimetable(teacherService.getTeacherTimetable(1, 1, Long.MAX_VALUE));
-
-        System.out.println("\nClassroom's timetable:");
-        showTimetable(classroomService.getClassroomTimetable(1, 1, Long.MAX_VALUE));
+        logger.info("Just a log message.");
+        logger.debug("Message for debug level.");
+        try {
+            Files.readAllBytes(Paths.get(FILENAME));
+        } catch (IOException e) {
+            logger.error("Failed to read file {}.", FILENAME, e);
+        }
     }
 
     public static void showTimetable(List<Classes> classesList) {
