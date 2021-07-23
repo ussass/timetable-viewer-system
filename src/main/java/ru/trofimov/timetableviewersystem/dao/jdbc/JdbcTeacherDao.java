@@ -44,7 +44,7 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
             teacher.setId(keyHolder.getKey().longValue());
             return teacher;
         }
-        throw new SQLException("Unable to insert entity");
+        throw new SQLException("Unable to insert into teachers");
     }
 
     @Override
@@ -56,7 +56,7 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
             teacher.setId(entity.getId());
             return teacher;
         }
-        throw new SQLException("Unable to update entity");
+        throw new SQLException("Unable to update teachers");
     }
 
     @Override
@@ -66,16 +66,15 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
     }
 
     @Override
-    public Teacher findById(Long id) {
+    public Teacher findById(Long id) throws SQLException {
         String sql = "SELECT * FROM teachers WHERE teacher_id = ?";
-        Teacher teacher = null;
         try {
-            teacher = jdbcTemplate.queryForObject(sql, new Object[]{id}, new TeacherMapper());
+            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new TeacherMapper());
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
 
-        return teacher;
+        throw new SQLException("Unable to update teacher");
     }
 
     @Override
@@ -83,7 +82,7 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
         String sql = "DELETE FROM teachers WHERE teacher_id = ?";
         int delete = jdbcTemplate.update(sql, id);
         if (delete == 0) {
-            throw new SQLException("Unable to delete entity");
+            throw new SQLException("Unable to delete teacher");
         }
     }
 

@@ -43,7 +43,7 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
             classroom.setId(keyHolder.getKey().longValue());
             return classroom;
         }
-        throw new SQLException("Unable to insert entity");
+        throw new SQLException("Unable to insert into classrooms");
     }
 
     @Override
@@ -61,7 +61,7 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
             e.printStackTrace();
         }
 
-        throw new SQLException("Unable to find by id entity");
+        throw new SQLException("Unable to find by id classroom");
     }
 
     @Override
@@ -73,7 +73,7 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
             classroom.setId(entity.getId());
             return classroom;
         }
-        throw new SQLException("Unable to update entity");
+        throw new SQLException("Unable to update classroom");
     }
 
     @Override
@@ -81,7 +81,7 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
         String sql = "DELETE FROM classrooms WHERE classroom_id = ?";
         int delete = jdbcTemplate.update(sql, id);
         if (delete == 0) {
-            throw new SQLException("Unable to delete entity");
+            throw new SQLException("Unable to delete classroom");
         }
     }
 

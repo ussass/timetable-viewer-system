@@ -41,7 +41,7 @@ public class JdbcLessonSlotDao extends AbstractDao<LessonSlot> implements Lesson
             lessonSlot.setId(keyHolder.getKey().longValue());
             return lessonSlot;
         }
-        throw new SQLException("Unable to insert entity");
+        throw new SQLException("Unable to insert into lesson_slot");
     }
 
     @Override
@@ -59,7 +59,7 @@ public class JdbcLessonSlotDao extends AbstractDao<LessonSlot> implements Lesson
             e.printStackTrace();
         }
 
-        throw new SQLException("Unable to find by id entity");
+        throw new SQLException("Unable to find by id lesson slot");
     }
 
     @Override
@@ -71,7 +71,7 @@ public class JdbcLessonSlotDao extends AbstractDao<LessonSlot> implements Lesson
             lessonSlot.setId(entity.getId());
             return lessonSlot;
         }
-        throw new SQLException("Unable to update entity");
+        throw new SQLException("Unable to update lesson slot");
     }
 
     @Override
@@ -79,7 +79,7 @@ public class JdbcLessonSlotDao extends AbstractDao<LessonSlot> implements Lesson
         String sql = "DELETE FROM lesson_slot WHERE lesson_slot_id = ?";
         int delete = jdbcTemplate.update(sql, id);
         if (delete == 0) {
-            throw new SQLException("Unable to delete entity");
+            throw new SQLException("Unable to delete lesson slot");
         }
     }
 }

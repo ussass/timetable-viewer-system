@@ -43,7 +43,7 @@ public class JdbcGroupDao extends AbstractDao<Group> implements GroupDao {
             group.setId(keyHolder.getKey().longValue());
             return group;
         }
-        throw new SQLException("Unable to insert entity");
+        throw new SQLException("Unable to insert into groups");
     }
 
     @Override
@@ -55,7 +55,7 @@ public class JdbcGroupDao extends AbstractDao<Group> implements GroupDao {
             group.setId(entity.getId());
             return group;
         }
-        throw new SQLException("Unable to update entity");
+        throw new SQLException("Unable to update group");
     }
 
     @Override
@@ -65,16 +65,15 @@ public class JdbcGroupDao extends AbstractDao<Group> implements GroupDao {
     }
 
     @Override
-    public Group findById(Long id) {
+    public Group findById(Long id) throws SQLException {
         String sql = "SELECT * FROM groups WHERE group_id = ?";
-        Group group = null;
         try {
-            group = jdbcTemplate.queryForObject(sql, new Object[]{id}, new GroupMapper());
+            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new GroupMapper());
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
 
-        return group;
+        throw new SQLException("Unable to find by id group");
     }
 
     @Override
@@ -82,7 +81,7 @@ public class JdbcGroupDao extends AbstractDao<Group> implements GroupDao {
         String sql = "DELETE FROM groups WHERE group_id = ?";
         int delete = jdbcTemplate.update(sql, id);
         if (delete == 0) {
-            throw new SQLException("Unable to delete entity");
+            throw new SQLException("Unable to delete group");
         }
     }
 

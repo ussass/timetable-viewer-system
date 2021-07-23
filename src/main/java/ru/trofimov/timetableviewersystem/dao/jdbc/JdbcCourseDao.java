@@ -41,7 +41,7 @@ public class JdbcCourseDao extends AbstractDao<Course> implements CourseDao {
             course.setId(keyHolder.getKey().longValue());
             return course;
         }
-        throw new SQLException("Unable to insert entity");
+        throw new SQLException("Unable to insert courses");
     }
 
     @Override
@@ -59,7 +59,7 @@ public class JdbcCourseDao extends AbstractDao<Course> implements CourseDao {
             e.printStackTrace();
         }
 
-        throw new SQLException("Unable to find by id entity");
+        throw new SQLException("Unable to find by id course");
     }
 
     @Override
@@ -71,7 +71,7 @@ public class JdbcCourseDao extends AbstractDao<Course> implements CourseDao {
             course.setId(entity.getId());
             return course;
         }
-        throw new SQLException("Unable to update entity");
+        throw new SQLException("Unable to update course");
     }
 
     @Override
@@ -79,7 +79,7 @@ public class JdbcCourseDao extends AbstractDao<Course> implements CourseDao {
         String sql = "DELETE FROM courses WHERE course_id = ?";
         int delete = jdbcTemplate.update(sql, id);
         if (delete == 0) {
-            throw new SQLException("Unable to delete entity");
+            throw new SQLException("Unable to delete course");
         }
     }
 }
