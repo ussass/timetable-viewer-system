@@ -1,5 +1,7 @@
 package ru.trofimov.timetableviewersystem.service.implement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.StudentDao;
@@ -13,6 +15,7 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentDao studentDao;
+    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
 
     public StudentServiceImpl(StudentDao studentDao) {
         this.studentDao = studentDao;
@@ -21,30 +24,35 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public Student save(Student entity) throws SQLException {
+        logger.info("saved new student");
         return studentDao.save(entity);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Student> findAll() {
+        logger.info("Got all students");
         return studentDao.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Student findById(Long id) throws SQLException {
+        logger.info("Got student by id = {}", id);
         return studentDao.findById(id);
     }
 
     @Override
     @Transactional
     public Student update(Student entity) throws SQLException {
+        logger.info("updated student with id = {}", entity.getId());
         return studentDao.update(entity);
     }
 
     @Override
     @Transactional
     public void delete(Long id) throws SQLException {
+        logger.info("deleted student with id = {}", id);
         studentDao.delete(id);
     }
 }
