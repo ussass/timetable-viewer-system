@@ -10,13 +10,15 @@ import java.util.Date;
 public class ClassesMapper implements RowMapper<Classes> {
     @Override
     public Classes mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new Classes(
-                resultSet.getInt("course_id"),
+        Classes classes = new Classes(
+                resultSet.getLong("course_id"),
                 resultSet.getLong("teacher_id"),
                 resultSet.getLong("group_id"),
-                resultSet.getInt("classroom_id"),
-                resultSet.getInt("classroom_id"),
+                resultSet.getLong("classroom_id"),
+                resultSet.getLong("classroom_id"),
                 new Date(resultSet.getLong("classes_date"))
         );
+        classes.setId(resultSet.getLong("classes_id"));
+        return classes;
     }
 }
