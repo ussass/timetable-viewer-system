@@ -25,8 +25,9 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public Group save(Group entity) throws SQLException {
-        logger.info("saved new group");
-        return groupDao.save(entity);
+        Group group = groupDao.save(entity);
+        logger.info("saved new group with id={}", group.getId());
+        return group;
     }
 
     @Override

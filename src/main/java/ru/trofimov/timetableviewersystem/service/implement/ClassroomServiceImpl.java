@@ -25,8 +25,9 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Override
     @Transactional
     public Classroom save(Classroom entity) throws SQLException {
-        logger.info("saved new classroom");
-        return classroomDao.save(entity);
+        Classroom classroom = classroomDao.save(entity);
+        logger.info("saved new classroom with id={}", classroom.getId());
+        return classroom;
     }
 
     @Override

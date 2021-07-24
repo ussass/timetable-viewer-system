@@ -24,8 +24,9 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public Course save(Course entity) throws SQLException {
-        logger.info("saved new course");
-        return courseDao.save(entity);
+        Course course = courseDao.save(entity);
+        logger.info("saved new course with id={}", course.getId());
+        return course;
     }
 
     @Override
