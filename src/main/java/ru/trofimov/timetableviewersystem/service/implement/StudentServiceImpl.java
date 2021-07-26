@@ -24,8 +24,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public Student save(Student entity) throws SQLException {
-        logger.info("saved new student");
-        return studentDao.save(entity);
+        Student student = studentDao.save(entity);
+        logger.info("saved new student with id={}", student.getId());
+        return student;
     }
 
     @Override

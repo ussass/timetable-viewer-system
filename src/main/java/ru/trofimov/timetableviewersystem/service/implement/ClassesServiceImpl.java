@@ -24,8 +24,9 @@ public class ClassesServiceImpl implements ClassesService {
     @Override
     @Transactional
     public Classes save(Classes entity) throws SQLException {
-        logger.info("saved new classes");
-        return classesDao.save(entity);
+        Classes classes = classesDao.save(entity);
+        logger.info("saved new classes with id={}", classes.getId());
+        return classes;
     }
 
     @Override

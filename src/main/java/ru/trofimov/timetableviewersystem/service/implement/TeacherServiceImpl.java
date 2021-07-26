@@ -25,8 +25,9 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional
     public Teacher save(Teacher entity) throws SQLException {
-        logger.info("saved new teacher");
-        return teacherDao.save(entity);
+        Teacher teacher = teacherDao.save(entity);
+        logger.info("saved new teacher with id={}", teacher.getId());
+        return teacher;
     }
 
     @Override

@@ -24,8 +24,9 @@ public class LessonSlotServiceImpl implements LessonSlotService {
     @Override
     @Transactional
     public LessonSlot save(LessonSlot entity) throws SQLException {
-        logger.info("saved new lessonSlot");
-        return lessonSlotDao.save(entity);
+        LessonSlot lessonSlot = lessonSlotDao.save(entity);
+        logger.info("saved new lessonSlot with id={}", lessonSlot.getId());
+        return lessonSlot;
     }
 
     @Override
