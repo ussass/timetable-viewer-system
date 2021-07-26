@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <title>Home</title>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="/js/bootstrap.js"></script>
 </head>
 <body>
-Groups
+<header class="container d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="fs-4">Timetable viewer system</span>
+    </a>
+
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Classes</a></li>
+        <li class="nav-item"><a href="/groups" class="nav-link active">Groups</a></li>
+        <li class="nav-item"><a href="/students" class="nav-link">Students</a></li>
+        <li class="nav-item"><a href="/teachers" class="nav-link">Teachers</a></li>
+    </ul>
+</header>
+<div class="container">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table100">
+                <table>
+                    <thead>
+                    <tr class="table100-head">
+                        <th class="column1">Group ID</th>
+                        <th class="column3">Group Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="group : ${groups}">
+                        <td class="column1" th:text="${group.getId}">Group ID</td>
+                        <td class="column3" th:text="${group.getGroupName()}">Group Name</td>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
