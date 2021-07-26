@@ -27,4 +27,12 @@ public class Course implements Entity<Long> {
     public void setId(Long value) {
         this.courseId = value;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseId=" + courseId +
+                ", courseName='" + courseName + '\'' +
+                '}';
+    }
 }

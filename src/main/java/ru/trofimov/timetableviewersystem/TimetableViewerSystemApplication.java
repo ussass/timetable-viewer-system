@@ -1,5 +1,7 @@
 package ru.trofimov.timetableviewersystem;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.trofimov.timetableviewersystem.model.*;
@@ -17,15 +19,20 @@ public class TimetableViewerSystemApplication {
     private static CourseService courseService;
     private static ClassroomService classroomService;
     private static LessonSlotService lessonSlotService;
+    private static ClassesService classesService;
+    private static final Logger logger = LoggerFactory.getLogger(TimetableViewerSystemApplication.class);
 
-    public TimetableViewerSystemApplication(StudentService studentService, GroupService groupService, TeacherService teacherService,
-                                            ClassroomService classroomService, CourseService courseService, LessonSlotService lessonSlotService) {
+    public TimetableViewerSystemApplication(StudentService studentService, GroupService groupService,
+                                            TeacherService teacherService, ClassroomService classroomService,
+                                            CourseService courseService, LessonSlotService lessonSlotService,
+                                            ClassesService classesService) {
         TimetableViewerSystemApplication.studentService = studentService;
         TimetableViewerSystemApplication.groupService = groupService;
         TimetableViewerSystemApplication.courseService = courseService;
         TimetableViewerSystemApplication.classroomService = classroomService;
         TimetableViewerSystemApplication.lessonSlotService = lessonSlotService;
         TimetableViewerSystemApplication.teacherService = teacherService;
+        TimetableViewerSystemApplication.classesService = classesService;
     }
 
     public static void main(String[] args) {
@@ -39,6 +46,7 @@ public class TimetableViewerSystemApplication {
 
         System.out.println("\nClassroom's timetable:");
         showTimetable(classroomService.getClassroomTimetable(1, 1, Long.MAX_VALUE));
+
     }
 
     public static void showTimetable(List<Classes> classesList) {
@@ -54,6 +62,7 @@ public class TimetableViewerSystemApplication {
                 System.out.println("-------------");
             }
         } catch (SQLException e) {
+            logger.error(String.valueOf(e));
             e.printStackTrace();
         }
     }

@@ -6,7 +6,7 @@ import java.util.List;
 public interface Service<T, K> {
     T save(T entity) throws SQLException;
 
-    List<T> findAll();
+    List<T> findAll() throws SQLException;
 
     T findById(K id) throws SQLException;
 
