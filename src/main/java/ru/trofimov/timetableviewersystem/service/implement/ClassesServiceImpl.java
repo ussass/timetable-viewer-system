@@ -30,7 +30,7 @@ public class ClassesServiceImpl implements ClassesService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Classes> findAll() {
+    public List<Classes> findAll() throws SQLException {
         logger.info("Got all classes");
         return classesDao.findAll();
     }

@@ -1,5 +1,7 @@
 package ru.trofimov.timetableviewersystem.dao.jdbc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -11,6 +13,7 @@ import ru.trofimov.timetableviewersystem.dao.mapper.ClassesMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.ClassroomMapper;
 import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Classroom;
+import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,6 +23,7 @@ import java.util.List;
 @Component
 public class JdbcClassroomDao extends AbstractDao<Classroom> implements ClassroomDao {
     private final JdbcTemplate jdbcTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
 
     public JdbcClassroomDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -31,64 +35,85 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        int updatedRows = jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection
-                    .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, entity.getNumber());
-            return ps;
-        }, keyHolder);
+        try {
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection
+                        .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, entity.getNumber());
+                return ps;
+            }, keyHolder);
 
-        if (updatedRows == 1) {
             Classroom classroom = new Classroom(entity.getNumber());
             classroom.setId(keyHolder.getKey().longValue());
             return classroom;
+        } catch (DataAccessException e) {
+            logger.error("Unable to insert into classrooms {} due " + e.getMessage(), entity);
+            throw new SQLException("Unable to insert into classrooms due " + e.getMessage(), e);
         }
-        throw new SQLException("Unable to insert into classrooms");
     }
 
     @Override
-    public List<Classroom> findAll() {
+    public List<Classroom> findAll() throws SQLException {
         String sql = "SELECT * from classrooms";
-        return jdbcTemplate.query(sql, new ClassroomMapper());
+
+        try {
+            return jdbcTemplate.query(sql, new ClassroomMapper());
+        } catch (DataAccessException e) {
+            logger.error("Unable to find all classrooms due " + e.getMessage());
+            throw new SQLException("Unable to find all classrooms due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public Classroom findById(Long id) throws SQLException {
         String sql = "SELECT * FROM classrooms WHERE classroom_id = ?";
+
         try {
             return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ClassroomMapper());
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            logger.error("Unable to find classroom by id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to find classroom by id due " + e.getMessage(), e);
         }
-
-        throw new SQLException("Unable to find by id classroom");
     }
 
     @Override
     public Classroom update(Classroom entity) throws SQLException {
         String sql = "UPDATE classrooms SET classroom_number = ? WHERE classroom_id = ?";
-        int update = jdbcTemplate.update(sql, entity.getNumber(), entity.getId());
-        if (update == 1) {
+
+        try {
+            jdbcTemplate.update(sql, entity.getNumber(), entity.getId());
             Classroom classroom = new Classroom(entity.getNumber());
             classroom.setId(entity.getId());
             return classroom;
+        } catch (DataAccessException e) {
+            logger.error("Unable to update {} due " + e.getMessage(), entity);
+            throw new SQLException("Unable to update classroom due " + e.getMessage(), e);
         }
-        throw new SQLException("Unable to update classroom");
     }
 
     @Override
     public void delete(Long id) throws SQLException {
         String sql = "DELETE FROM classrooms WHERE classroom_id = ?";
-        int delete = jdbcTemplate.update(sql, id);
-        if (delete == 0) {
-            throw new SQLException("Unable to delete classroom");
+
+        try {
+            jdbcTemplate.update(sql, id);
+        } catch (DataAccessException e) {
+            logger.error("Unable to delete classroom with id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to delete classroom due " + e.getMessage(), e);
         }
     }
 
     @Override
-    public List<Classes> getClassroomTimetable(long classroomId, long startDate, long finishDate) {
+    public List<Classes> getClassroomTimetable(long classroomId, long startDate, long finishDate) throws SQLException {
         String sql = "SELECT * FROM classes WHERE classroom_id = ? AND classes_date BETWEEN ? AND ?";
-        return jdbcTemplate.query(sql, new ClassesMapper(), classroomId, startDate, finishDate);
 
+        try {
+            return jdbcTemplate.query(sql, new ClassesMapper(), classroomId, startDate, finishDate);
+
+        } catch (DataAccessException e) {
+            logger.error("Unable to get classroom's timetable with classroomId = {}, startDate = {}, finishDate = {} due "
+                    + e.getMessage(), classroomId, startDate, finishDate, e);
+            throw new SQLException("Unable to get classroom's timetable due " + e.getMessage(), e);
+        }
     }
 }
