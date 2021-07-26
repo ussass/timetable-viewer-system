@@ -25,4 +25,12 @@ public class Classroom implements Entity<Long> {
     public void setNumber(int number) {
         this.number = number;
     }
+
+    @Override
+    public String toString() {
+        return "Classroom{" +
+                "id=" + id +
+                ", number=" + number +
+                '}';
+    }
 }

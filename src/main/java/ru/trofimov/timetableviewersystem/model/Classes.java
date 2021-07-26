@@ -83,4 +83,17 @@ public class Classes implements Entity<Long> {
         return date.getDate() + "." + (date.getMonth() < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) + "."
                 + (date.getYear() + 1900) + " " + date.getHours() + ":" + date.getMinutes();
     }
+
+    @Override
+    public String toString() {
+        return "Classes{" +
+                "id=" + id +
+                ", courseId=" + courseId +
+                ", teacherId=" + teacherId +
+                ", groupId=" + groupId +
+                ", classroomId=" + classroomId +
+                ", lessonSlotId=" + lessonSlotId +
+                ", date=" + date +
+                '}';
+    }
 }
