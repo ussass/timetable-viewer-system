@@ -20,7 +20,7 @@ class JdbcTeacherDaoTest {
 
     @Test
     @Sql({ "/teacher/recreate_schema.sql", "/teacher/insert_data.sql" })
-    void shouldFindAll() {
+    void shouldFindAll() throws SQLException {
         List<Teacher> teachers = teacherDao.findAll();
         assertEquals(2, teachers.size());
     }

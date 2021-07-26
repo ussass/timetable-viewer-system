@@ -31,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Student> findAll() {
+    public List<Student> findAll() throws SQLException {
         logger.info("Got all students");
         return studentDao.findAll();
     }

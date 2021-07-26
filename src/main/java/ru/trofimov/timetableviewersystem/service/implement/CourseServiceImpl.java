@@ -31,7 +31,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Course> findAll() {
+    public List<Course> findAll() throws SQLException {
         logger.info("Got all courses");
         return courseDao.findAll();
     }

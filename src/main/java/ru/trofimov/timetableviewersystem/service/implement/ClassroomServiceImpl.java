@@ -32,7 +32,7 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Classroom> findAll() {
+    public List<Classroom> findAll() throws SQLException {
         logger.info("Got all classrooms");
         return classroomDao.findAll();
     }
@@ -60,7 +60,7 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Classes> getClassroomTimetable(long classroomId, long startDate, long finishDate) {
+    public List<Classes> getClassroomTimetable(long classroomId, long startDate, long finishDate) throws SQLException {
         logger.info("Got schedule for classroom with id = {} for dates {} - {}", classroomId, startDate, finishDate);
         return classroomDao.getClassroomTimetable(classroomId, startDate, finishDate);
     }

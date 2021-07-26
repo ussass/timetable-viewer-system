@@ -37,15 +37,18 @@ public class TimetableViewerSystemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TimetableViewerSystemApplication.class, args);
+        try{
+            System.out.println("\nGroup's timetable:");
+            showTimetable(groupService.getGroupTimetable(1, 1, Long.MAX_VALUE));
 
-        System.out.println("\nGroup's timetable:");
-        showTimetable(groupService.getGroupTimetable(1, 1, Long.MAX_VALUE));
+            System.out.println("\nTeacher's timetable:");
+            showTimetable(teacherService.getTeacherTimetable(1, 1, Long.MAX_VALUE));
 
-        System.out.println("\nTeacher's timetable:");
-        showTimetable(teacherService.getTeacherTimetable(1, 1, Long.MAX_VALUE));
-
-        System.out.println("\nClassroom's timetable:");
-        showTimetable(classroomService.getClassroomTimetable(1, 1, Long.MAX_VALUE));
+            System.out.println("\nClassroom's timetable:");
+            showTimetable(classroomService.getClassroomTimetable(1, 1, Long.MAX_VALUE));
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 

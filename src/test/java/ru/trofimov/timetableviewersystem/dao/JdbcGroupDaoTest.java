@@ -19,7 +19,7 @@ class JdbcGroupDaoTest {
 
     @Test
     @Sql({ "/group/recreate_schema.sql", "/group/insert_data.sql" })
-    void shouldFindAll() {
+    void shouldFindAll() throws SQLException {
         List<Group> groups = groupDao.findAll();
         assertEquals(2, groups.size());
     }
