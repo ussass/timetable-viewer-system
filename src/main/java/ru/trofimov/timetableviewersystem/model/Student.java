@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Student extends User implements Entity<Long> {
     private long id;
     private int groupId;
+    private String groupName;
 
     public Student(String firstName, String lastName, Role... roles) {
         super(firstName, lastName, roles);
@@ -28,6 +29,14 @@ public class Student extends User implements Entity<Long> {
 
     public void setGroupId(int groupId) {
         this.groupId = groupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     @Override
