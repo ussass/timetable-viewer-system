@@ -18,7 +18,8 @@ public class ClassesController {
     }
 
     @GetMapping()
-    public String showAll(Model model) {
+    public String showIndex(Model model) {
+        model.addAttribute("active","classes");
         return "classes/index";
     }
 

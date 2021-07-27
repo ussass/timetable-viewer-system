@@ -19,6 +19,7 @@ public class GroupController {
 
     @GetMapping()
     public String showAll(Model model) {
+        model.addAttribute("active","groups");
         try {
             model.addAttribute("groups", groupService.findAll());
         } catch (SQLException e) {

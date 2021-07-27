@@ -40,6 +40,7 @@ public class StudentController {
                         .findFirst().get().getGroupName())
         );
 
+        model.addAttribute("active","students");
         model.addAttribute("students", studentList);
 
         return "students/index";

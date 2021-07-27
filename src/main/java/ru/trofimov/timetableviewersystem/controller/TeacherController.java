@@ -19,6 +19,7 @@ public class TeacherController {
 
     @GetMapping()
     public String showAll(Model model) {
+        model.addAttribute("active","teachers");
         try {
             model.addAttribute("teachers", teacherService.findAll());
         } catch (SQLException e) {
