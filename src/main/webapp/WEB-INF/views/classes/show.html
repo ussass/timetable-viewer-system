@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Classes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<header th:insert="templates/header :: header"></header>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Course</th>
+            <th scope="col">Teacher</th>
+            <th scope="col">Group</th>
+            <th scope="col">Classroom</th>
+            <th scope="col">LessonSlot</th>
+            <th scope="col">Date</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="classes : ${classesList}">
+            <th th:text="${classes.getId()}">Id</th>
+            <td th:text="${classes.getCourseId()}">Course</td>
+            <td th:text="${classes.getTeacherId()}">Teacher</td>
+            <td th:text="${classes.getGroupId()}">Group</td>
+            <td th:text="${classes.getClassroomId()}">Classroom</td>
+            <td th:text="${classes.getLessonSlotId()}">LessonSlot</td>
+            <td th:text="${classes.getDateAndTime()}">Date</td>
+            <td>Edit</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>
