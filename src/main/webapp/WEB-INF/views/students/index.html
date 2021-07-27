@@ -34,10 +34,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="group : ${students}">
-            <th th:text="${group.getId()}">Group ID</th>
-            <td th:text="${group.getGroupName()}">Group</td>
-            <td th:text="${group.getFullName()}">Name</td>
+        <tr th:each="student : ${students}">
+            <th th:text="${student.getId()}">Group ID</th>
+            <td th:text="${student.getGroupName()}">Group</td>
+            <td th:text="${student.getFullName()}">Name</td>
             <td>Edit</td>
         </tr>
         </tbody>
