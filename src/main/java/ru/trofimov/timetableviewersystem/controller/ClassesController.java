@@ -51,9 +51,12 @@ public class ClassesController {
         Date dateEnd;
         try {
             dateStart = simpleDateFormat.parse(start);
-            dateEnd = simpleDateFormat.parse(end);
         } catch (ParseException e) {
             dateStart = new Date(1);
+        }
+        try {
+            dateEnd = simpleDateFormat.parse(end);
+        } catch (ParseException e) {
             dateEnd = new Date(Long.MAX_VALUE);
         }
         attributes.addAttribute("groupId", group);
