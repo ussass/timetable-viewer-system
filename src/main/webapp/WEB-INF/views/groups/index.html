@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Home</title>
+    <title>Groups</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.css">
-    <script src="/js/bootstrap.js"></script>
 </head>
 <body>
 <header class="container d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -25,27 +24,23 @@
     </ul>
 </header>
 <div class="container">
-    <div class="container-table100">
-        <div class="wrap-table100">
-            <div class="table100">
-                <table>
-                    <thead>
-                    <tr class="table100-head">
-                        <th class="column1">Group ID</th>
-                        <th class="column3">Group Name</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="group : ${groups}">
-                        <td class="column1" th:text="${group.getId}">Group ID</td>
-                        <td class="column3" th:text="${group.getGroupName()}">Group Name</td>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Group</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="group : ${groups}">
+            <th th:text="${group.getId()}">Group ID</th>
+            <td th:text="${group.getGroupName()}">Group Name</td>
+            <td>Edit</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+<script src="/js/bootstrap.js"></script>
 </body>
 </html>
