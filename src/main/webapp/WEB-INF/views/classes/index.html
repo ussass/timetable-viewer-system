@@ -4,17 +4,28 @@
     <title>Classes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
 <header th:insert="templates/header :: header"></header>
 <div class="container">
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select>
+    <form method="post" action="/classes/search">
+        <div class="d-flex flex-row">
+            <select name="group" class="form-select m-1" aria-label="Default select example">
+                <option selected value="0">Select group</option>
+                <th:block th:each="group : ${groups}">
+                    <option th:value="${group.getId()}" th:text="${group.getGroupName()}">GroupName</option>
+                </th:block>
+            </select>
+        </div>
+        <div class="d-flex flex-row">
+            <input class="form-control m-1" type="date" name="start"
+                   min="2018-01-01" max="2018-12-31">
+            <input class="form-control m-1" type="date" name="end"
+                   min="2018-01-01" max="2018-12-31">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block m-1">Submit</button>
+    </form>
 </div>
 <script src="/js/bootstrap.js"></script>
 </body>
