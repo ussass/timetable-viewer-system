@@ -8,7 +8,11 @@
 </head>
 <body>
 <header th:insert="templates/header :: header"></header>
+
 <div class="container">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/groups/new" class="btn btn-primary" type="button">Add new group</a>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -21,7 +25,7 @@
         <tr th:each="group : ${groups}">
             <th th:text="${group.getId()}">Group ID</th>
             <td th:text="${group.getGroupName()}">Group Name</td>
-            <td>Edit</td>
+            <td><a class="btn btn-warning btn-sm" type="button" th:href="'/groups/edit/' + ${group.getId()}">Edit</a></td>
         </tr>
         </tbody>
     </table>
