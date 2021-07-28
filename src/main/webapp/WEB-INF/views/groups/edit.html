@@ -11,10 +11,10 @@
 
 <div class="container">
     <form method="post" action="/groups/edit">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default">Group name</span>
-            <input type="text" class="form-control" name="groupName" th:value="${group.getGroupName()}"
-                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <div class="mb-3">
+            <label for="groupName" class="form-label">Group name</label>
+            <input type="email" class="form-control" id="groupName" aria-describedby="emailHelp"
+                   th:value="${group.getGroupName()}" name="groupName">
         </div>
         <input type="text" class="d-none" th:value="${group.getId}">
         <br>

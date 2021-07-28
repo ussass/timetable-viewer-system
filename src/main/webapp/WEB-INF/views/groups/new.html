@@ -11,10 +11,9 @@
 
 <div class="container">
     <form method="post" action="/groups/new">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default">Group name</span>
-            <input type="text" class="form-control" name="groupName"
-                   aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <div class="mb-3">
+            <label for="groupName" class="form-label">Group name</label>
+            <input type="email" class="form-control" id="groupName" aria-describedby="emailHelp" name="groupName">
         </div>
         <br>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
