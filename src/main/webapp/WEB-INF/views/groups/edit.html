@@ -19,10 +19,10 @@
     <form method="post" action="/groups/edit" th:if="${errorMessage == null}">
         <div class="mb-3">
             <label for="groupName" class="form-label">Group name</label>
-            <input type="email" class="form-control" id="groupName" aria-describedby="emailHelp"
+            <input type="text" class="form-control" id="groupName"
                    th:value="${group.getGroupName()}" name="groupName">
         </div>
-        <input type="text" class="d-none" th:value="${group.getId}">
+        <input type="text" class="d-none" th:value="${group.getId}" name="id">
         <br>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-primary" type="submit">Edit group</button>
