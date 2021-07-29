@@ -14,7 +14,7 @@
             <p class="h5">Teachers List</p>
         </div>
         <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/teachers/new" class="btn btn-primary disabled" type="button">Add new teacher</a>
+            <a href="/teachers/new" class="btn btn-primary" type="button">Add new teacher</a>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
         <tr th:each="teacher : ${teachers}">
             <th th:text="${teacher.getId()}">Group ID</th>
             <td th:text="${teacher.getFullName()}">Name</td>
-            <td><a class="btn btn-warning btn-sm disabled" type="button" th:href="'/teachers/edit/' + ${teacher.getId()}">Edit</a></td>
+            <td><a class="btn btn-warning btn-sm" type="button" th:href="'/teachers/edit/' + ${teacher.getId()}">Edit</a></td>
         </tr>
         </tbody>
     </table>
