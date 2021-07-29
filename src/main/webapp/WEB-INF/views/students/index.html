@@ -18,6 +18,10 @@
         </div>
     </div>
 
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
     <table class="table table-striped">
         <thead>
         <tr>

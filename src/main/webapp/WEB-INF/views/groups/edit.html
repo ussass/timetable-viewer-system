@@ -8,10 +8,15 @@
 </head>
 <body>
 <header th:insert="templates/header :: header"></header>
-<p class="h5">Edit group</p>
 
 <div class="container">
-    <form method="post" action="/groups/edit">
+    <p class="h5">Edit group</p>
+    <br>
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
+    <form method="post" action="/groups/edit" th:if="${errorMessage == null}">
         <div class="mb-3">
             <label for="groupName" class="form-label">Group name</label>
             <input type="email" class="form-control" id="groupName" aria-describedby="emailHelp"

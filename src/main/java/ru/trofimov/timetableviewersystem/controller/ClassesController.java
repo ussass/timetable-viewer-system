@@ -34,7 +34,7 @@ public class ClassesController {
         try {
             model.addAttribute("groups", groupService.findAll());
         } catch (SQLException e) {
-            e.printStackTrace();
+            model.addAttribute("errorMessage", "Failed to load data");
         }
         return "classes/index";
     }
@@ -78,7 +78,7 @@ public class ClassesController {
         try {
             classesList = groupService.getGroupTimetable(groupId, dateStart, dateEnd);
         } catch (SQLException e) {
-            e.printStackTrace();
+            model.addAttribute("errorMessage", "Failed to load data");
         }
         model.addAttribute("classesList", classesList);
         return "classes/show";

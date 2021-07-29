@@ -10,7 +10,12 @@
 <header th:insert="templates/header :: header"></header>
 <div class="container">
     <p class="h5">Select group</p>
-    <form method="post" action="/classes/search">
+
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
+    <form method="post" action="/classes/search" th:if="${errorMessage == null}">
         <div class="d-flex flex-row">
             <select name="group" class="form-select mt-1" aria-label="Default select example">
                 <option selected value="0">Select group</option>

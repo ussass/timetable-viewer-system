@@ -23,7 +23,7 @@ public class TeacherController {
         try {
             model.addAttribute("teachers", teacherService.findAll());
         } catch (SQLException e) {
-            e.printStackTrace();
+            model.addAttribute("errorMessage", "Failed to load data");
         }
         return "teachers/index";
     }

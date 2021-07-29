@@ -31,7 +31,7 @@ public class StudentController {
             studentList = studentService.findAll();
             groupList = groupService.findAll();
         } catch (SQLException e) {
-            e.printStackTrace();
+            model.addAttribute("errorMessage", "Failed to load data");
         }
         List<Group> finalGroupList = groupList;
         studentList.forEach(student -> student.setGroupName(
