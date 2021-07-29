@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.service.TeacherService;
 
@@ -21,7 +20,7 @@ public class TeacherController {
 
     @GetMapping()
     public String showAll(Model model) {
-        model.addAttribute("active","teachers");
+        model.addAttribute("active", "teachers");
         try {
             model.addAttribute("teachers", teacherService.findAll());
         } catch (SQLException e) {
@@ -31,15 +30,15 @@ public class TeacherController {
     }
 
     @GetMapping("/new")
-    public String newGroup(Model model) {
+    public String newTeacher(Model model) {
         model.addAttribute("active", "teachers");
         return "teachers/new";
     }
 
     @PostMapping("/new")
-    public String postNewGroup(RedirectAttributes attributes,
-                               @RequestParam String firstName,
-                               @RequestParam String lastName) {
+    public String postNewTeacher(RedirectAttributes attributes,
+                                 @RequestParam String firstName,
+                                 @RequestParam String lastName) {
         if (firstName.length() > 0 && lastName.length() > 0) {
             try {
                 teacherService.save(new Teacher(firstName, lastName));
@@ -51,7 +50,7 @@ public class TeacherController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editGroup(Model model, @PathVariable long id) {
+    public String editTeacher(Model model, @PathVariable long id) {
         model.addAttribute("active", "teachers");
         try {
             model.addAttribute("teacher", teacherService.findById(id));
@@ -63,11 +62,11 @@ public class TeacherController {
     }
 
     @PostMapping("/edit")
-    public String postEditGroup(RedirectAttributes attributes,
-                                @RequestParam String firstName,
-                                @RequestParam String lastName,
-                                @RequestParam Long id) {
-            if (firstName.length() > 0 && lastName.length() > 0) {
+    public String postEditTeacher(RedirectAttributes attributes,
+                                  @RequestParam String firstName,
+                                  @RequestParam String lastName,
+                                  @RequestParam Long id) {
+        if (firstName.length() > 0 && lastName.length() > 0) {
             Teacher teacher = new Teacher(firstName, lastName);
             teacher.setId(id);
             try {
@@ -75,6 +74,17 @@ public class TeacherController {
             } catch (SQLException e) {
                 attributes.addAttribute("errorMessage", "failed to update entry");
             }
+        }
+        return "redirect:/teachers";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTeacher(RedirectAttributes attributes, @PathVariable long id) {
+
+        try {
+            teacherService.delete(id);
+        } catch (SQLException e) {
+            attributes.addAttribute("errorMessage", "failed to delete teacher");
         }
         return "redirect:/teachers";
     }

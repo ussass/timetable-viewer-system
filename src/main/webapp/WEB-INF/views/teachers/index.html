@@ -34,7 +34,10 @@
         <tr th:each="teacher : ${teachers}">
             <th th:text="${teacher.getId()}">Group ID</th>
             <td th:text="${teacher.getFullName()}">Name</td>
-            <td><a class="btn btn-warning btn-sm" type="button" th:href="'/teachers/edit/' + ${teacher.getId()}">Edit</a></td>
+            <td>
+                <a class="btn btn-warning btn-sm" type="button" th:href="'/teachers/edit/' + ${teacher.getId()}">Edit</a>
+                <a class="btn btn-danger btn-sm" type="button" th:href="'/teachers/delete/' + ${teacher.getId()}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
