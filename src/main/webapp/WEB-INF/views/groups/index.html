@@ -8,10 +8,14 @@
 </head>
 <body>
 <header th:insert="templates/header :: header"></header>
-
 <div class="container">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="/groups/new" class="btn btn-primary" type="button">Add new group</a>
+    <div class="row">
+        <div class="col">
+            <p class="h5">Groups List</p>
+        </div>
+        <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/groups/new" class="btn btn-primary" type="button">Add new group</a>
+        </div>
     </div>
     <table class="table table-striped">
         <thead>
