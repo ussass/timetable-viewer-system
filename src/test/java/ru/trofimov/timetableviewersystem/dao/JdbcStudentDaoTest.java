@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
-class JdbcStudentDaoTest {
+class JdbcStudentDaoTest extends BaseDaoTest{
 
     @Autowired
     StudentDao studentDao;
