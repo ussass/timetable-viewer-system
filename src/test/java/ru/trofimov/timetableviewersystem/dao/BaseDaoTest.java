@@ -3,13 +3,11 @@ package ru.trofimov.timetableviewersystem.dao;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 public class BaseDaoTest {
 
-    @Container
     static PostgreSQLContainer postgreSQLContainer = PostgresDatabaseContainer.getInstance();
 
     // update spring connection properties
