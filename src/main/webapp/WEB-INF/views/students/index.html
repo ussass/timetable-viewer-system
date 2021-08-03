@@ -14,7 +14,7 @@
             <p class="h5">Students List</p>
         </div>
         <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/students/new" class="btn btn-primary disabled" type="button">Add new student</a>
+            <a href="/students/new" class="btn btn-primary" type="button">Add new student</a>
         </div>
     </div>
 
@@ -36,7 +36,10 @@
             <th th:text="${student.getId()}">Group ID</th>
             <td th:text="${student.getGroupName()}">Group</td>
             <td th:text="${student.getFullName()}">Name</td>
-            <td><a class="btn btn-warning btn-sm disabled" type="button" th:href="'/students/edit/' + ${student.getId()}">Edit</a></td>
+            <td>
+                <a class="btn btn-warning btn-sm" type="button" th:href="'/students/edit/' + ${student.getId()}">Edit</a>
+                <a class="btn btn-danger btn-sm" type="button" th:href="'/students/delete/' + ${student.getId()}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
