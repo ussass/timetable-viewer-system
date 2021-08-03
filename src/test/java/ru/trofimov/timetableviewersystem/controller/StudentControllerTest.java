@@ -10,6 +10,7 @@ import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.service.GroupService;
 import ru.trofimov.timetableviewersystem.service.StudentService;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
@@ -51,4 +52,17 @@ class StudentControllerTest {
                 )))
                 .andExpect(content().string(containsString("Students List")));
     }
+
+    @Test
+    void shouldGetErrorMessage() throws Exception {
+        String url = "/students";
+        when(studentService.findAll()).thenThrow(new SQLException());
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(view().name("students/index"))
+                .andExpect(model().attribute("active", "students"))
+                .andExpect(model().attribute("errorMessage", "Failed to load data"))
+                .andExpect(content().string(containsString("Students List")));
+    }
+
 }
