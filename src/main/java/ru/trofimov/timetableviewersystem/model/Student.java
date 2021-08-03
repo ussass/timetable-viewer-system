@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Student extends User implements Entity<Long> {
     private long id;
-    private int groupId;
+    private long groupId;
     private String groupName;
 
     public Student(String firstName, String lastName, Role... roles) {
@@ -23,11 +23,11 @@ public class Student extends User implements Entity<Long> {
         this.id = value;
     }
 
-    public int getGroupId() {
+    public long getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(long groupId) {
         this.groupId = groupId;
     }
 

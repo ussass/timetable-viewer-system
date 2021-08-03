@@ -29,7 +29,6 @@ public class GroupController {
         } catch (SQLException e) {
             errorMessages.add("Failed to load data");
         }
-        System.out.println("errorMessage = " + errorMessage);
         if (errorMessage.length() > 0) errorMessages.add(errorMessage);
         if (errorMessages.size() > 0) model.addAttribute("errorMessage", String.join(", ", errorMessages));
 
