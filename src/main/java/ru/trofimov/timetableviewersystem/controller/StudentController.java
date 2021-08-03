@@ -27,22 +27,23 @@ public class StudentController {
     public String showAll(Model model) {
         List<Group> groupList = null;
         List<Student> studentList = null;
+        model.addAttribute("active", "students");
         try {
             studentList = studentService.findAll();
             groupList = groupService.findAll();
         } catch (SQLException e) {
             model.addAttribute("errorMessage", "Failed to load data");
         }
-        List<Group> finalGroupList = groupList;
-        studentList.forEach(student -> student.setGroupName(
-                finalGroupList.stream()
-                        .filter(group -> group.getId() == student.getGroupId())
-                        .findFirst().get().getGroupName())
-        );
+        if (studentList != null && groupList != null) {
+            List<Group> finalGroupList = groupList;
+            studentList.forEach(student -> student.setGroupName(
+                    finalGroupList.stream()
+                            .filter(group -> group.getId() == student.getGroupId())
+                            .findFirst().get().getGroupName())
+            );
 
-        model.addAttribute("active","students");
-        model.addAttribute("students", studentList);
-
+            model.addAttribute("students", studentList);
+        }
         return "students/index";
     }
 
