@@ -13,7 +13,6 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
-@ComponentScan("ru.trofimov.timetableviewersystem")
 @EnableWebMvc
 public class SpringMvcConfig implements WebMvcConfigurer {
 

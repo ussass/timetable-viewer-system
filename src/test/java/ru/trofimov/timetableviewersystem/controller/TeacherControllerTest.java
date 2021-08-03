@@ -20,7 +20,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(TeacherController.class)
 class TeacherControllerTest {
 
@@ -29,27 +28,6 @@ class TeacherControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private JdbcClassesDao jdbcClassesDao;
-
-    @MockBean
-    private JdbcClassroomDao jdbcClassroomDao;
-
-    @MockBean
-    private JdbcCourseDao jdbcCourseDao;
-
-    @MockBean
-    private JdbcGroupDao jdbcGroupDao;
-
-    @MockBean
-    private JdbcLessonSlotDao jdbcLessonSlotDao;
-
-    @MockBean
-    private JdbcStudentDao jdbcStudentDao;
-
-    @MockBean
-    private JdbcTeacherDao jdbcTeacherDao;
 
     @Test
     void shouldGetAllGroups() throws Exception {
