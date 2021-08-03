@@ -35,13 +35,14 @@ public class StudentController {
         } catch (SQLException e) {
             model.addAttribute("errorMessage", "Failed to load data");
         }
+        System.out.println("studentList = " + studentList);
         if (studentList != null && groupList != null) {
             List<Group> finalGroupList = groupList;
             studentList.forEach(student -> student.setGroupName(
                     finalGroupList.stream()
                             .filter(group -> group.getId() == student.getGroupId())
-                            .findFirst().get().getGroupName())
-            );
+                            .findFirst().orElse(new Group("without group")).getGroupName()));
+//            );
 
             model.addAttribute("students", studentList);
         }
@@ -69,7 +70,8 @@ public class StudentController {
                                  @RequestParam Long group,
                                  @RequestParam String firstName,
                                  @RequestParam String lastName) {
-        if (firstName.length() > 0 && lastName.length() > 0 && group > 0) {
+        if (firstName.length() > 0 && lastName.length() > 0) {
+            if (group == 0) group = null;
             try {
                 Student student = new Student(firstName, lastName);
                 student.setGroupId(group);
@@ -102,6 +104,7 @@ public class StudentController {
                                   @RequestParam Long group,
                                   @RequestParam Long id) {
         if (firstName.length() > 0 && lastName.length() > 0) {
+            if (group == 0) group = null;
             Student student = new Student(firstName, lastName);
             student.setGroupId(group);
             student.setId(id);
@@ -120,7 +123,7 @@ public class StudentController {
         try {
             studentService.delete(id);
         } catch (SQLException e) {
-            attributes.addAttribute("errorMessage", "failed to delete teacher");
+            attributes.addAttribute("errorMessage", "failed to delete students");
         }
         return "redirect:/students";
     }

@@ -34,7 +34,10 @@
         <tr th:each="group : ${groups}">
             <th th:text="${group.getId()}">Group ID</th>
             <td th:text="${group.getGroupName()}">Group Name</td>
-            <td><a class="btn btn-warning btn-sm" type="button" th:href="'/groups/edit/' + ${group.getId()}">Edit</a></td>
+            <td>
+                <a class="btn btn-warning btn-sm" type="button" th:href="'/groups/edit/' + ${group.getId()}">Edit</a>
+                <a class="btn btn-danger btn-sm" type="button" th:href="'/groups/delete/' + ${group.getId()}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
