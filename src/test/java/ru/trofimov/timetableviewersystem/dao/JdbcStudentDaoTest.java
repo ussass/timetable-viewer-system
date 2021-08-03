@@ -36,6 +36,7 @@ class JdbcStudentDaoTest extends BaseDaoTest{
     @Sql("/student/recreate_schema.sql")
     void shouldAdd() throws SQLException {
         Student student = new Student("fName", "lName");
+        student.setGroupId(1L);
         student = studentDao.save(student);
 
         assertNotEquals(0, (long) student.getId());
@@ -45,11 +46,12 @@ class JdbcStudentDaoTest extends BaseDaoTest{
     @Sql({ "/student/recreate_schema.sql", "/student/insert_data.sql" })
     void shouldUpdate() throws SQLException {
         Student student = new Student("newFirst", "newLast");
+        student.setGroupId(1L);
         student.setId(1L);
         studentDao.update(student);
         Student studentExpected = studentDao.findById(1L);
 
-        assertEquals("Student{studentId=1, groupId=0, newFirst newLast}", studentExpected.toString());
+        assertEquals("Student{studentId=1, groupId=1, newFirst newLast}", studentExpected.toString());
     }
 
     @Test
