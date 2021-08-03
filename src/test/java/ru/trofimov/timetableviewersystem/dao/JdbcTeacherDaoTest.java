@@ -13,14 +13,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
-class JdbcTeacherDaoTest {
+class JdbcTeacherDaoTest extends BaseDaoTest{
 
     @Autowired
     TeacherDao teacherDao;
 
     @Test
     @Sql({ "/teacher/recreate_schema.sql", "/teacher/insert_data.sql" })
-    void shouldFindAll() {
+    void shouldFindAll() throws SQLException {
         List<Teacher> teachers = teacherDao.findAll();
         assertEquals(2, teachers.size());
     }

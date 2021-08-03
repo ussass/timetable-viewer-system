@@ -32,7 +32,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Group> findAll() {
+    public List<Group> findAll() throws SQLException {
         logger.info("Got all groups");
         return groupDao.findAll();
     }
@@ -60,7 +60,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Classes> getGroupTimetable(long groupId, long startDate, long finishDate) {
+    public List<Classes> getGroupTimetable(long groupId, long startDate, long finishDate) throws SQLException {
         logger.info("Got schedule for group with id = {} for dates {} - {}", groupId, startDate, finishDate);
         return groupDao.getGroupTimetable(groupId, startDate, finishDate);
     }

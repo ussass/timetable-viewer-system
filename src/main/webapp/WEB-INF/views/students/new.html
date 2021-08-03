@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Add new student</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<header th:insert="templates/header :: header"></header>
+
+<div class="container">
+    <p class="h5">Add new student</p>
+    <br>
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
+    <form method="post" action="/students/new" th:if="${errorMessage == null}">
+        <div class="mb-3">
+            <label for="selectGroup" class="form-label">Select group</label>
+            <select name="group" class="form-select mt-1" aria-label="Default select example" id="selectGroup">
+                <option selected value="0">Select group</option>
+                <th:block th:each="group : ${groups}">
+                    <option th:value="${group.getId()}" th:text="${group.getGroupName()}">GroupName</option>
+                </th:block>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName">
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName">
+        </div>
+        <br>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary" type="submit">Add new student</button>
+        </div>
+    </form>
+</div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

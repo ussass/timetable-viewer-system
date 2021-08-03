@@ -31,7 +31,7 @@ public class LessonSlotServiceImpl implements LessonSlotService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LessonSlot> findAll() {
+    public List<LessonSlot> findAll() throws SQLException {
         logger.info("Got all lessonSlots");
         return lessonSlotDao.findAll();
     }

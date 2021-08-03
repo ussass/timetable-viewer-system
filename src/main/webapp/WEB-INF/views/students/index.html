@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Students</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<header th:insert="templates/header :: header"></header>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p class="h5">Students List</p>
+        </div>
+        <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/students/new" class="btn btn-primary" type="button">Add new student</a>
+        </div>
+    </div>
+
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Group</th>
+            <th scope="col">Name</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <th th:text="${student.getId()}">Group ID</th>
+            <td th:text="${student.getGroupName()}">Group</td>
+            <td th:text="${student.getFullName()}">Name</td>
+            <td>
+                <a class="btn btn-warning btn-sm" type="button" th:href="'/students/edit/' + ${student.getId()}">Edit</a>
+                <a class="btn btn-danger btn-sm" type="button" th:href="'/students/delete/' + ${student.getId()}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

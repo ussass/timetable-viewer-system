@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Edit teacher</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<header th:insert="templates/header :: header"></header>
+
+<div class="container">
+    <p class="h5">Edit teacher</p>
+    <br>
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
+    <form method="post" action="/teachers/edit" th:if="${errorMessage == null}">
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName"
+                   th:value="${teacher.getFirstName()}" name="firstName">
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName"
+                   th:value="${teacher.getLastName()}" name="lastName">
+        </div>
+        <input type="text" class="d-none" th:value="${teacher.getId}" name="id">
+        <br>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary" type="submit">Edit teacher</button>
+        </div>
+    </form>
+</div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

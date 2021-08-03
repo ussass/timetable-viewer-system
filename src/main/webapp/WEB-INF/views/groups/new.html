@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Add new group</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<header th:insert="templates/header :: header"></header>
+
+<div class="container">
+    <p class="h5">Add new group</p>
+    <br>
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
+    <form method="post" action="/groups/new" th:if="${errorMessage == null}">
+        <div class="mb-3">
+            <label for="groupName" class="form-label">Group name</label>
+            <input type="text" class="form-control" id="groupName" name="groupName">
+        </div>
+        <br>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary" type="submit">Add new group</button>
+        </div>
+    </form>
+</div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

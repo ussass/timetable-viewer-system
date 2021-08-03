@@ -16,6 +16,7 @@ import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.List;
 
 @Component
@@ -32,12 +33,18 @@ public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
         String sql = "INSERT INTO students(group_id, first_name, last_name) VALUES (?, ?, ?) RETURNING student_id;";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        System.out.println("entity = " + entity);
 
         try {
             jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection
                         .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                ps.setLong(1, entity.getGroupId());
+                if (entity.getGroupId() == null){
+                    ps.setNull(1, Types.BIGINT);
+                }
+                else {
+                    ps.setLong(1, entity.getGroupId());
+                }
                 ps.setString(2, entity.getFirstName());
                 ps.setString(3, entity.getLastName());
                 return ps;
