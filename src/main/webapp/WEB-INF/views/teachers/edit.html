@@ -16,7 +16,7 @@
         <p th:text="${errorMessage}" class="h6">Error message</p>
     </div>
 
-    <form method="post" action="/teachers/edit" th:if="${errorMessage == null}">
+    <form method="post" th:action="@{/teachers/edit}" th:if="${errorMessage == null}">
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
             <input type="text" class="form-control" id="firstName"

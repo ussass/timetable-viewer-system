@@ -16,7 +16,7 @@
         <p th:text="${errorMessage}" class="h6">Error message</p>
     </div>
 
-    <form method="post" action="/groups/edit" th:if="${errorMessage == null}">
+    <form method="post" th:action="@{/groups/edit}" th:if="${errorMessage == null}">
         <div class="mb-3">
             <label for="groupName" class="form-label">Group name</label>
             <input type="text" class="form-control" id="groupName"
