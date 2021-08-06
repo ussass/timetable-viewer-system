@@ -12,15 +12,15 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/home")
-    public String showIndex2(Model model){
-        model.addAttribute("active","home");
-        return "index";
-    }
-
     @GetMapping("/login")
     public String showLogin(Model model){
         model.addAttribute("active","login");
         return "login";
+    }
+
+    @GetMapping("/error")
+    public String error(Model model){
+//        model.addAttribute("active","home");
+        return "index";
     }
 }

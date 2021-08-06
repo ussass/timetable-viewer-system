@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
     <title>Teachers</title>
     <meta charset="UTF-8">
@@ -14,7 +17,8 @@
             <p class="h5">Teachers List</p>
         </div>
         <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/teachers/new" class="btn btn-primary" type="button">Add new teacher</a>
+            <a href="/teachers/new" class="btn btn-primary" type="button"
+               sec:authorize="hasRole('ADMIN')">Add new teacher</a>
         </div>
     </div>
 
@@ -27,14 +31,14 @@
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
-            <th scope="col">Action</th>
+            <th scope="col" sec:authorize="hasRole('ADMIN')">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="teacher : ${teachers}">
             <th th:text="${teacher.getId()}">Group ID</th>
             <td th:text="${teacher.getFullName()}">Name</td>
-            <td>
+            <td sec:authorize="hasRole('ADMIN')">
                 <a class="btn btn-warning btn-sm" type="button" th:href="'/teachers/edit/' + ${teacher.getId()}">Edit</a>
                 <a class="btn btn-danger btn-sm" type="button" th:href="'/teachers/delete/' + ${teacher.getId()}">Delete</a>
             </td>
