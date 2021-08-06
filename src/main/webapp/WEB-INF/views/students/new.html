@@ -16,7 +16,7 @@
         <p th:text="${errorMessage}" class="h6">Error message</p>
     </div>
 
-    <form method="post" action="/students/new" th:if="${errorMessage == null}">
+    <form method="post" th:if="${errorMessage == null}" th:action="@{/students/new}">
         <div class="mb-3">
             <label for="selectGroup" class="form-label">Select group</label>
             <select name="group" class="form-select mt-1" aria-label="Default select example" id="selectGroup">

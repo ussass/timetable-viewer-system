@@ -18,4 +18,16 @@
         <li class="nav-item"><a href="/teachers" class="nav-link"
                                 th:classappend="${active == 'teachers' ? 'active' : ''}">Teachers</a></li>
     </ul>
+
+    <div class="col-md-3 text-end">
+
+    <a href="/login" class="btn btn-outline-primary me-2"
+       th:classappend="${active == 'login' ? 'btn-primary text-white' : 'btn-outline-primary'}">Login</a>
+
+        <form th:action="@{/logout}" method="post" class="d-inline">
+            <input type="submit" class="btn btn-outline-primary me-2" value="Logout"/>
+        </form>
+
+        <button type="button" class="btn btn-primary" disabled>Sign-up</button>
+    </div>
 </div>
