@@ -28,6 +28,6 @@
             <input type="submit" class="btn btn-outline-primary me-2" value="Logout"/>
         </form>
 
-        <button type="button" class="btn btn-primary" disabled sec:authorize="isAnonymous()">Sign-up</button>
+        <a href="/signup" type="button" class="btn btn-primary" sec:authorize="isAnonymous()">Sign-up</a>
     </div>
 </div>

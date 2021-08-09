@@ -58,19 +58,22 @@ public class User implements Entity<Long> {
         return roles;
     }
 
-    public void addRole(Role role){
+    public void addRole(Role role) {
         roles.add(role);
     }
 
-    public String getStringRoles(){
+    public String getStringRoles() {
+        if (roles.size() == 0) return "";
         StringBuilder builder = new StringBuilder();
         roles.forEach(role -> builder.append(role.name()).append(","));
         return builder.toString().substring(0, builder.toString().length() - 1);
     }
 
-    public void setStringRoles(String roles){
-        Arrays.stream(roles.split(","))
-                .forEach(s -> addRole(Role.valueOf(s)));
+    public void setStringRoles(String roles) {
+        if (roles.contains(",")) {
+            Arrays.stream(roles.split(","))
+                    .forEach(s -> addRole(Role.valueOf(s)));
+        }
     }
 
     public void setFirstName(String firstName) {
