@@ -73,10 +73,8 @@ public class User implements Entity<Long> {
     }
 
     public void setStringRoles(String roles) {
-        if (roles.contains(",")) {
-            Arrays.stream(roles.split(","))
-                    .forEach(s -> addRole(Role.valueOf(s)));
-        }
+        Arrays.stream(roles.split(","))
+                .forEach(s -> addRole(Role.valueOf(s)));
     }
 
     public void setFirstName(String firstName) {
@@ -108,7 +106,9 @@ public class User implements Entity<Long> {
     }
 
     public Set<SimpleGrantedAuthority> getAuthorities() {
-        authorities.add(new SimpleGrantedAuthority(Role.ADMIN.name()));
+        for (Role role: roles){
+            authorities.add(new SimpleGrantedAuthority(role.name()));
+        }
         return authorities;
     }
 
