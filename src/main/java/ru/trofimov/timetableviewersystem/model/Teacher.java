@@ -6,8 +6,8 @@ public class Teacher extends User implements Entity<Long> {
 
     private long id;
 
-    public Teacher(String firstName, String lastName, Role... roles) {
-        super(firstName, lastName, roles);
+    public Teacher(String firstName, String lastName) {
+        super(firstName, lastName);
     }
 
     @Override
