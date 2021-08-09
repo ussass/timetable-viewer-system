@@ -50,4 +50,10 @@ public class UserServiceImpl implements UserService {
         logger.info("deleted user with id = {}", id);
         userDao.delete(id);
     }
+
+    @Override
+    public User findByLogin(String login) throws SQLException {
+        logger.info("Got user by login = {}", login);
+        return userDao.findByLogin(login);
+    }
 }

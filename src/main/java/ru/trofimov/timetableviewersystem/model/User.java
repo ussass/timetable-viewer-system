@@ -1,5 +1,6 @@
 package ru.trofimov.timetableviewersystem.model;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import ru.trofimov.timetableviewersystem.dao.Entity;
 
 import java.util.Arrays;
@@ -16,9 +17,11 @@ public class User implements Entity<Long> {
     private String login;
     private String password;
     private Set<Role> roles;
+    private Set<SimpleGrantedAuthority> authorities;
 
     public User(String firstName, String lastName) {
         roles = new HashSet<>();
+        authorities = new HashSet<>();
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -98,6 +101,19 @@ public class User implements Entity<Long> {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<SimpleGrantedAuthority> getAuthorities() {
+        authorities.add(new SimpleGrantedAuthority(Role.ADMIN.name()));
+        return authorities;
+    }
+
+    public void setAuthorities(Set<SimpleGrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override

@@ -111,4 +111,16 @@ public class JdbcUserDao implements UserDao {
             throw new SQLException("Unable to delete user due " + e.getMessage(), e);
         }
     }
+
+    @Override
+    public User findByLogin(String login) throws SQLException {
+        String sql = "SELECT * FROM users WHERE login = ?";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{login}, new UserMapper());
+        } catch (DataAccessException e) {
+            logger.error("Unable to find user by login {} due " + e.getMessage(), login);
+            throw new SQLException("Unable to find user by login due " + e.getMessage(), e);
+        }
+    }
 }
