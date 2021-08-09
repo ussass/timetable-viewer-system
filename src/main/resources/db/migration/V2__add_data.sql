@@ -1,3 +1,5 @@
+INSERT INTO users (first_name, last_name, login, password, roles) values ('The', 'Architect', 'admin', 'admin', 'ADMIN');
+
 INSERT INTO groups (group_name) values ('it-01');
 INSERT INTO groups (group_name) values ('up-11');
 
