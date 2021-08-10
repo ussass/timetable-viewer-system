@@ -6,6 +6,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.UserMapper;
@@ -20,6 +22,8 @@ import java.util.List;
 @Component
 public class JdbcUserDao implements UserDao {
     private final JdbcTemplate jdbcTemplate;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
 
     public JdbcUserDao(JdbcTemplate jdbcTemplate) {
@@ -40,7 +44,7 @@ public class JdbcUserDao implements UserDao {
                 ps.setString(1, entity.getFirstName());
                 ps.setString(2, entity.getLastName());
                 ps.setString(3, entity.getLogin());
-                ps.setString(4, entity.getPassword());
+                ps.setString(4, passwordEncoder.encode(entity.getPassword()));
                 ps.setString(5, entity.getStringRoles());
                 return ps;
             }, keyHolder);
