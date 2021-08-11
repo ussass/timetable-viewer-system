@@ -1,12 +1,10 @@
 package ru.trofimov.timetableviewersystem.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Role;
-import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
@@ -37,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editTeacher(Model model, HttpServletRequest request, @PathVariable long id) {
+    public String editUser(Model model, HttpServletRequest request, @PathVariable long id) {
         model.addAttribute("active", "users");
         if (!request.isUserInRole("ROLE_ADMIN")) return "redirect:/";
         try {
@@ -50,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String postEditTeacher(RedirectAttributes attributes,
+    public String postEditUser(RedirectAttributes attributes,
                                   @RequestParam String firstName,
                                   @RequestParam String lastName,
                                   @RequestParam(defaultValue = "false") boolean switchCheckAdmin,
@@ -87,5 +85,15 @@ public class UserController {
         return "redirect:/users";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteUser(RedirectAttributes attributes, @PathVariable long id) {
+
+        try {
+            userService.delete(id);
+        } catch (SQLException e) {
+            attributes.addAttribute("errorMessage", "failed to delete user");
+        }
+        return "redirect:/users";
+    }
 
 }
