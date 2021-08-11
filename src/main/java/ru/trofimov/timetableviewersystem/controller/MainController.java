@@ -1,5 +1,7 @@
 package ru.trofimov.timetableviewersystem.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,7 +87,16 @@ public class MainController {
     }
 
     @GetMapping("/profile")
-    public String showProfile() {
+    public String showProfile(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails)principal).getUsername();
+        try {
+            model.addAttribute("user", userService.findByLogin(username));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return "profile";
     }
 }

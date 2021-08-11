@@ -13,21 +13,10 @@
 <body>
 <header th:insert="templates/header :: header"></header>
 <div class="container">
-    <p class="display-4">Hello [[${#httpServletRequest.remoteUser}]]!</p>
-    <div sec:authorize="hasRole('USER')">
-        This content is only shown to users.
-    </div>
-    <div sec:authorize="hasRole('ADMIN')">
-        This content is only shown to Admin.
-    </div>
-    <div sec:authorize="isAuthenticated()">
-        Text visible only to authenticated users.
-    </div>
-    <div sec:authorize="isAnonymous()">
-        Who are you?
-    </div>
-    Authenticated username:
-    <div sec:authentication="name"></div>
+    <p class="h5">profile information</p>
+    <br>
+    <p th:text="${user.getFullName()}">Full name</p>
+
 </div>
 </body>
 </html>
