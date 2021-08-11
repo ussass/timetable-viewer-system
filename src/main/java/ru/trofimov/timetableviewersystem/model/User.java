@@ -74,7 +74,9 @@ public class User implements Entity<Long> {
 
     public void setStringRoles(String roles) {
         Arrays.stream(roles.split(","))
-                .forEach(s -> addRole(Role.valueOf(s)));
+                .forEach(s -> {
+                    if(s.length() > 2) addRole(Role.valueOf(s));
+                });
     }
 
     public void setFirstName(String firstName) {

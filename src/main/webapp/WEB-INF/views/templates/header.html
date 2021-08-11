@@ -17,6 +17,9 @@
                                 th:classappend="${active == 'students' ? 'active' : ''}">Students</a></li>
         <li class="nav-item"><a href="/teachers" class="nav-link"
                                 th:classappend="${active == 'teachers' ? 'active' : ''}">Teachers</a></li>
+        <li class="nav-item"><a href="/users" class="nav-link" sec:authorize="hasRole('ADMIN')"
+                                th:classappend="${active == 'users' ? 'active' : ''}">Users</a></li>
+
     </ul>
 
     <div class="col-md-3 text-end">
