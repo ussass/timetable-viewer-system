@@ -118,6 +118,23 @@ public class User implements Entity<Long> {
         this.authorities = authorities;
     }
 
+    public boolean isAdmin(){
+        return roles.contains(Role.ADMIN);
+    }
+
+    public boolean isTeacher(){
+        return roles.contains(Role.TEACHER);
+    }
+
+    public boolean isStudent(){
+        return roles.contains(Role.STUDENT);
+    }
+
+    public boolean isStuff(){
+        return roles.contains(Role.STUFF);
+    }
+
+
     @Override
     public String toString() {
         return "User{" +
