@@ -32,5 +32,6 @@
         </form>
 
         <a href="/signup" type="button" class="btn btn-primary" sec:authorize="isAnonymous()">Sign-up</a>
+        <a href="/profile" type="button" class="btn btn-primary" sec:authorize="isAuthenticated()">My profile</a>
     </div>
 </div>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <title>Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+<header th:insert="templates/header :: header"></header>
+<div class="container">
+    <p class="display-4">Hello [[${#httpServletRequest.remoteUser}]]!</p>
+    <div sec:authorize="hasRole('USER')">
+        This content is only shown to users.
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        This content is only shown to Admin.
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        Text visible only to authenticated users.
+    </div>
+    <div sec:authorize="isAnonymous()">
+        Who are you?
+    </div>
+    Authenticated username:
+    <div sec:authentication="name"></div>
+</div>
+</body>
+</html>

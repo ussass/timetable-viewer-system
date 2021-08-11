@@ -22,27 +22,27 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String showIndex(Model model){
-        model.addAttribute("active","home");
+    public String showIndex(Model model) {
+        model.addAttribute("active", "home");
         return "index";
     }
 
     @GetMapping("/login")
-    public String showLogin(Model model){
-        model.addAttribute("active","login");
+    public String showLogin(Model model) {
+        model.addAttribute("active", "login");
         return "login";
     }
 
     @GetMapping("/error")
-    public String error(Model model){
+    public String error(Model model) {
 //        model.addAttribute("active","home");
         return "index";
     }
 
     @GetMapping("/signup")
-    public String SignUp(Model model, @RequestParam(required = false, value="errorMessage") String errorMessage){
+    public String SignUp(Model model, @RequestParam(required = false, value = "errorMessage") String errorMessage) {
         System.out.println("errorMessage = " + errorMessage);
-        if (errorMessage != null){
+        if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);
         }
         return "signup";
@@ -53,13 +53,13 @@ public class MainController {
                              @RequestParam String login,
                              @RequestParam String password,
                              @RequestParam String firstName,
-                             @RequestParam String lastName){
-        if (login.length() == 0 || password.length() == 0 || firstName.length() == 0 || lastName.length() == 0){
+                             @RequestParam String lastName) {
+        if (login.length() == 0 || password.length() == 0 || firstName.length() == 0 || lastName.length() == 0) {
             attributes.addAttribute("errorMessage", "fields must be filled");
             return "redirect:/signup";
         }
 
-        User user = new User(firstName,lastName);
+        User user = new User(firstName, lastName);
         user.setLogin(login);
         user.setPassword(password);
         List<User> users = null;
@@ -70,19 +70,22 @@ public class MainController {
             return "redirect:/signup";
         }
         boolean match = users.stream().anyMatch(user1 -> login.equals(user1.getLogin()));
-        if (!match){
+        if (!match) {
             try {
                 userService.save(user);
             } catch (SQLException e) {
                 attributes.addAttribute("errorMessage", "An error has occurred. Please try again");
                 return "redirect:/signup";
             }
-        }
-        else {
+        } else {
             attributes.addAttribute("errorMessage", "User with this login already exists");
             return "redirect:/signup";
         }
         return "redirect:/";
     }
 
+    @GetMapping("/profile")
+    public String showProfile() {
+        return "profile";
+    }
 }
