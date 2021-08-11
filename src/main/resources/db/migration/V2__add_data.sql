@@ -1,4 +1,9 @@
-INSERT INTO users (first_name, last_name, login, password, roles) values ('The', 'Architect', 'admin', 'admin', 'ADMIN');
+-- admin/admin
+INSERT INTO users (first_name, last_name, login, password, roles) values ('The', 'Architect', 'admin', '$2a$10$csznBGiCXAQ.v4QyRSkbV.x8//TvJISzzRse21AgHTIgQoVF3jpfK', 'ADMIN');
+-- xxx/123
+INSERT INTO users (first_name, last_name, login, password, roles) values ('The', 'Student', 'student', '$2a$10$EOv4C4b69cJf1Jx9YCKLCe3No7Rui1CTywg6rFw5/i4yhHF/GIR2S', 'STUDENT');
+INSERT INTO users (first_name, last_name, login, password, roles) values ('The', 'Teacher', 'teacher', '$2a$10$EOv4C4b69cJf1Jx9YCKLCe3No7Rui1CTywg6rFw5/i4yhHF/GIR2S', 'TEACHER');
+INSERT INTO users (first_name, last_name, login, password, roles) values ('The', 'Stuff', 'stuff', '$2a$10$EOv4C4b69cJf1Jx9YCKLCe3No7Rui1CTywg6rFw5/i4yhHF/GIR2S', 'STUFF');
 
 INSERT INTO groups (group_name) values ('it-01');
 INSERT INTO groups (group_name) values ('up-11');
