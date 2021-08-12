@@ -39,4 +39,19 @@ class MainControllerTest {
                 .andExpect(content().string(containsString("Timetable viewer system")));
     }
 
+    @Test
+    void shouldGetSignupForm() throws Exception {
+        String url = "/signup";
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(view().name("signup"))
+                .andExpect(content().string(containsString("Sign-up")));
+    }
+
+    @Test
+    void shouldGetUnauthorized() throws Exception {
+        String url = "/profile";
+        mockMvc.perform(get(url)).andExpect(status().is(401));
+    }
+
 }
