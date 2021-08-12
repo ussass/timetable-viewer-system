@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Student;
-import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.service.GroupService;
 import ru.trofimov.timetableviewersystem.service.StudentService;
+import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,10 +18,12 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
     private final GroupService groupService;
+    private final UserService userService;
 
-    public StudentController(StudentService studentService, GroupService groupService) {
+    public StudentController(StudentService studentService, GroupService groupService, UserService userService) {
         this.studentService = studentService;
         this.groupService = groupService;
+        this.userService = userService;
     }
 
     @GetMapping()
@@ -30,12 +32,12 @@ public class StudentController {
         List<Student> studentList = null;
         model.addAttribute("active", "students");
         try {
+            System.out.println("userService.findAllStudent() = " + userService.findAllStudent());
             studentList = studentService.findAll();
             groupList = groupService.findAll();
         } catch (SQLException e) {
             model.addAttribute("errorMessage", "Failed to load data");
         }
-        System.out.println("studentList = " + studentList);
         if (studentList != null && groupList != null) {
             List<Group> finalGroupList = groupList;
             studentList.forEach(student -> student.setGroupName(

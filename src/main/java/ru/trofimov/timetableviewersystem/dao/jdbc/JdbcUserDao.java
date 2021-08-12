@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.UserMapper;
+import ru.trofimov.timetableviewersystem.model.Role;
 import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
@@ -125,6 +126,30 @@ public class JdbcUserDao implements UserDao {
         } catch (DataAccessException e) {
             logger.error("Unable to find user by login {} due " + e.getMessage(), login);
             throw new SQLException("Unable to find user by login due " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<User> findAllStudent() throws SQLException {
+        String sql = "SELECT * FROM public.users WHERE roles LIKE '%" + Role.STUDENT.name() + "%'";
+
+        try {
+            return jdbcTemplate.query(sql, new UserMapper());
+        } catch (DataAccessException e) {
+            logger.error("Unable to find all students due " + e.getMessage());
+            throw new SQLException("Unable to find all students due " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<User> findAllTeacher() throws SQLException {
+        String sql = "SELECT * FROM public.users WHERE roles LIKE '%" + Role.TEACHER.name() + "%'";
+
+        try {
+            return jdbcTemplate.query(sql, new UserMapper());
+        } catch (DataAccessException e) {
+            logger.error("Unable to find all teacher due " + e.getMessage());
+            throw new SQLException("Unable to find all teacher due " + e.getMessage(), e);
         }
     }
 }
