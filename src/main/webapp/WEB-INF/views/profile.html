@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       lang="en">
 <head>
     <title>Profile</title>
@@ -13,9 +12,22 @@
 <body>
 <header th:insert="templates/header :: header"></header>
 <div class="container">
-    <p class="h5">profile information</p>
+    <p class="h5">Profile information</p>
     <br>
-    <p th:text="${user.getFullName()}">Full name</p>
+    <div class="border-bottom">
+        <span><b>Login: </b></span>
+        <span th:text="${user.getLogin()}">Full name</span>
+    </div>
+    <br>
+    <div class="border-bottom">
+        <span><b>Full name: </b></span>
+        <span th:text="${user.getFullName()}">Full name</span>
+    </div>
+    <br>
+    <div class="border-bottom">
+        <span><b>Role: </b></span>
+        <span th:text="${user.getStringRoles()}">Roles</span>
+    </div>
 
 </div>
 </body>
