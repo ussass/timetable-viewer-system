@@ -2,8 +2,11 @@ package ru.trofimov.timetableviewersystem.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.service.TeacherService;
@@ -23,9 +26,14 @@ class TeacherControllerTest {
     @MockBean
     private TeacherService teacherService;
 
+    @Qualifier("userDetailServiceIml")
+    @MockBean
+    UserDetailsService userDetailsService;
+
     @Autowired
     private MockMvc mockMvc;
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetAllTeachers() throws Exception {
         String url = "/teachers";
@@ -44,6 +52,16 @@ class TeacherControllerTest {
     }
 
     @Test
+    void shouldGetUnauthorized() throws Exception {
+        String url = "/teachers";
+        Teacher teacher = new Teacher("Test", "test");
+        teacher.setId(1L);
+        when(teacherService.findAll()).thenReturn(Arrays.asList(teacher));
+        mockMvc.perform(get(url)).andExpect(status().is(401));
+    }
+
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
+    @Test
     void shouldGetErrorMessage() throws Exception {
         String url = "/teachers";
         when(teacherService.findAll()).thenThrow(new SQLException());
@@ -55,6 +73,7 @@ class TeacherControllerTest {
                 .andExpect(content().string(containsString("Teachers List")));
     }
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetNewForm() throws Exception {
         String url = "/teachers/new";
@@ -65,6 +84,7 @@ class TeacherControllerTest {
                 .andExpect(content().string(containsString("Add new teacher")));
     }
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetUpdateForm() throws Exception {
         long id = 1L;
@@ -80,6 +100,7 @@ class TeacherControllerTest {
                 .andExpect(content().string(containsString("Edit teacher")));
     }
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetUpdateErrorMessage() throws Exception {
         long id = 1L;

@@ -2,8 +2,14 @@ package ru.trofimov.timetableviewersystem.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.trofimov.timetableviewersystem.config.WebSecurityConfig;
+import ru.trofimov.timetableviewersystem.service.UserService;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,6 +21,13 @@ class MainControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    UserService userService;
+
+    @Qualifier("userDetailServiceIml")
+    @MockBean
+    UserDetailsService userDetailsService;
 
     @Test
     void shouldGetMainPage() throws Exception {
