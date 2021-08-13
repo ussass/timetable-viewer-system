@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllStudent() throws SQLException {
+    public List<Student> findAllStudent() throws SQLException {
         logger.info("Got all student");
         return userDao.findAllStudent();
     }
@@ -68,5 +68,11 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllTeacher() throws SQLException {
         logger.info("Got all teacher");
         return userDao.findAllTeacher();
+    }
+
+    @Override
+    public Student findStudentById(Long id) throws SQLException {
+        logger.info("Got student by id = {}", id);
+        return userDao.findStudentById(id);
     }
 }

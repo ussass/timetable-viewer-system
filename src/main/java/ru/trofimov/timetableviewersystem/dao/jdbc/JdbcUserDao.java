@@ -10,8 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
+import ru.trofimov.timetableviewersystem.dao.mapper.UserGroupMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.UserMapper;
 import ru.trofimov.timetableviewersystem.model.Role;
+import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
@@ -130,18 +132,6 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public List<User> findAllStudent() throws SQLException {
-        String sql = "SELECT * FROM public.users WHERE roles LIKE '%" + Role.STUDENT.name() + "%'";
-
-        try {
-            return jdbcTemplate.query(sql, new UserMapper());
-        } catch (DataAccessException e) {
-            logger.error("Unable to find all students due " + e.getMessage());
-            throw new SQLException("Unable to find all students due " + e.getMessage(), e);
-        }
-    }
-
-    @Override
     public List<User> findAllTeacher() throws SQLException {
         String sql = "SELECT * FROM public.users WHERE roles LIKE '%" + Role.TEACHER.name() + "%'";
 
@@ -150,6 +140,40 @@ public class JdbcUserDao implements UserDao {
         } catch (DataAccessException e) {
             logger.error("Unable to find all teacher due " + e.getMessage());
             throw new SQLException("Unable to find all teacher due " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<Student> findAllStudent() throws SQLException {
+        String sql = "SELECT users.user_id, users.first_name, users.last_name, users.login, users.password, users.roles, groups.group_id, groups.group_name\n" +
+                "  FROM users \n" +
+                "LEFT OUTER JOIN users_groups\n" +
+                "  ON users.user_id = users_groups.user_id \n" +
+                "LEFT OUTER JOIN groups\n" +
+                "  ON users_groups.group_id = groups.group_id WHERE roles LIKE '%" + Role.STUDENT.name() + "%'";
+
+        try {
+            return jdbcTemplate.query(sql, new UserGroupMapper());
+        } catch (DataAccessException e) {
+            logger.error("Unable to find all students due " + e.getMessage());
+            throw new SQLException("Unable to find all students due " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Student findStudentById(Long id) throws SQLException {
+        String sql = "SELECT users.user_id, users.first_name, users.last_name, users.login, users.password, users.roles, groups.group_id, groups.group_name\n" +
+                "  FROM users \n" +
+                "LEFT OUTER JOIN users_groups\n" +
+                "  ON users.user_id = users_groups.user_id \n" +
+                "LEFT OUTER JOIN groups\n" +
+                "  ON users_groups.group_id = groups.group_id WHERE users.user_id = ?";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new UserGroupMapper());
+        } catch (DataAccessException e) {
+            logger.error("Unable to find student by id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to find student by id due " + e.getMessage(), e);
         }
     }
 }
