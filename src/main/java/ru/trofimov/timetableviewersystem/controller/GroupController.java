@@ -8,21 +8,21 @@ import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.service.GroupService;
 import ru.trofimov.timetableviewersystem.service.StudentService;
+import ru.trofimov.timetableviewersystem.service.UserGroupService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/groups")
 public class GroupController {
     private final GroupService groupService;
-    private final StudentService studentService;
+    private final UserGroupService userGroupService;
 
-    public GroupController(GroupService groupService, StudentService studentService) {
+    public GroupController(GroupService groupService, UserGroupService userGroupService) {
         this.groupService = groupService;
-        this.studentService = studentService;
+        this.userGroupService = userGroupService;
     }
 
     @GetMapping()
@@ -89,26 +89,9 @@ public class GroupController {
 
     @GetMapping("/delete/{id}")
     public String deleteTeacher(RedirectAttributes attributes, @PathVariable long id) {
-        List<Student> studentList = null;
-        try {
-            studentList = studentService.findAll();
-        } catch (SQLException e) {
-            attributes.addAttribute("errorMessage", "failed to delete group");
-        }
-
-        studentList.stream()
-                .filter(student -> student.getGroupId() == id)
-                .peek(student -> student.setGroupId(null))
-                .forEach(student -> {
-                    try {
-                        studentService.update(student);
-                    } catch (SQLException e) {
-                        attributes.addAttribute("errorMessage", "failed to delete group");
-                    }
-                });
-
         try {
             groupService.delete(id);
+            userGroupService.deleteByGroupId(id);
         } catch (SQLException e) {
             attributes.addAttribute("errorMessage", "failed to delete group");
         }
