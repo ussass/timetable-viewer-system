@@ -16,10 +16,6 @@
         <div class="col">
             <p class="h5">Teachers List</p>
         </div>
-        <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/teachers/new" class="btn btn-primary disabled" type="button"
-               sec:authorize="hasRole('ADMIN')">Add new teacher</a>
-        </div>
     </div>
 
     <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
