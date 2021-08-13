@@ -4,9 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.model.User;
-import ru.trofimov.timetableviewersystem.service.TeacherService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
@@ -14,11 +12,9 @@ import java.sql.SQLException;
 @Controller
 @RequestMapping("/teachers")
 public class TeacherController {
-    private final TeacherService teacherService;
     private final UserService userService;
 
-    public TeacherController(TeacherService teacherService, UserService userService) {
-        this.teacherService = teacherService;
+    public TeacherController(UserService userService) {
         this.userService = userService;
     }
 
@@ -32,26 +28,6 @@ public class TeacherController {
         }
         return "teachers/index";
     }
-
-//    @GetMapping("/new")
-//    public String newTeacher(Model model) {
-//        model.addAttribute("active", "teachers");
-//        return "teachers/new";
-//    }
-//
-//    @PostMapping("/new")
-//    public String postNewTeacher(RedirectAttributes attributes,
-//                                 @RequestParam String firstName,
-//                                 @RequestParam String lastName) {
-//        if (firstName.length() > 0 && lastName.length() > 0) {
-//            try {
-//                teacherService.save(new Teacher(firstName, lastName));
-//            } catch (SQLException e) {
-//                attributes.addAttribute("errorMessage", "failed to add entry");
-//            }
-//        }
-//        return "redirect:/teachers";
-//    }
 
     @GetMapping("/edit/{id}")
     public String editTeacher(Model model, @PathVariable long id) {
@@ -71,19 +47,11 @@ public class TeacherController {
                                   @RequestParam String lastName,
                                   @RequestParam Long id) {
         if (firstName.length() > 0 && lastName.length() > 0) {
-            User user = null;
             try {
-                user = userService.findById(id);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-//            Teacher teacher = new Teacher(firstName, lastName);
-//            teacher.setId(id);
-            try {
+                User user = userService.findById(id);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
                 userService.update(user);
-//                teacherService.update(teacher);
             } catch (SQLException e) {
                 attributes.addAttribute("errorMessage", "failed to update entry");
             }
@@ -95,7 +63,6 @@ public class TeacherController {
     public String deleteTeacher(RedirectAttributes attributes, @PathVariable long id) {
 
         try {
-//            teacherService.delete(id);
             userService.delete(id);
         } catch (SQLException e) {
             attributes.addAttribute("errorMessage", "failed to delete teacher");
