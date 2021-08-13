@@ -12,6 +12,7 @@ import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.service.GroupService;
 import ru.trofimov.timetableviewersystem.service.StudentService;
+import ru.trofimov.timetableviewersystem.service.UserGroupService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class StudentControllerTest {
 
     @MockBean
-    private StudentService studentService;
+    private UserGroupService userGroupService;
 
     @MockBean
     private GroupService groupService;
@@ -51,8 +52,7 @@ class StudentControllerTest {
         student.setGroupId(1L);
         Group group = new Group("Test");
         group.setId(1L);
-        when(studentService.findAll()).thenReturn(Arrays.asList(student));
-        when(groupService.findAll()).thenReturn(Arrays.asList(group));
+        when(userService.findAllStudent()).thenReturn(Arrays.asList(student));
         mockMvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(view().name("students/index"))
@@ -72,8 +72,7 @@ class StudentControllerTest {
         student.setGroupId(1L);
         Group group = new Group("Test");
         group.setId(1L);
-        when(studentService.findAll()).thenReturn(Arrays.asList(student));
-        when(groupService.findAll()).thenReturn(Arrays.asList(group));
+        when(userService.findAllStudent()).thenReturn(Arrays.asList(student));
         mockMvc.perform(get(url)).andExpect(status().is(401));
     }
 
@@ -81,7 +80,7 @@ class StudentControllerTest {
     @Test
     void shouldGetErrorMessage() throws Exception {
         String url = "/students";
-        when(studentService.findAll()).thenThrow(new SQLException());
+        when(userService.findAllStudent()).thenThrow(new SQLException());
         mockMvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(view().name("students/index"))
