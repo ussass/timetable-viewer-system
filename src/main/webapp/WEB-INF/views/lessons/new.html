@@ -17,305 +17,38 @@
     </div>
 
     <form method="post" th:action="@{/lessons/new}" th:if="${errorMessage == null}">
+
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col"> </th>
-                <th scope="col">101</th>
-                <th scope="col">102</th>
-                <th scope="col">103</th>
-                <th scope="col">104</th>
-                <th scope="col">105</th>
+                <th scope="col">Classroom</th>
+                <th:block th:each="slot : ${slots}">
+                    <th scope="col" th:text="${slot.getNumber} + ' ' + ${slot.lessonTime}">lessonSlot</th>
+                </th:block>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="col">1</th>
-                <th scope="col">
-                    <select name="group1" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option >1</option>
-                        <option >2</option>
-                        <option >3</option>
-                        <option >4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group1" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group1" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group1" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group1" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-            </tr>
-            <tr>
-                <th scope="col">2</th>
-                <th scope="col">
-                    <select name="group2" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group2" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group2" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group2" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group2" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-            </tr>
-            <tr>
-                <th scope="col">3</th>
-                <th scope="col">
-                    <select name="group3" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group3" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group3" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group3" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group3" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-            </tr>
-            <tr>
-                <th scope="col">4</th>
-                <th scope="col">
-                    <select name="group4" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group4" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group4" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group4" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group4" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-            </tr>
-            <tr>
-                <th scope="col">5</th>
-                <th scope="col">
-                    <select name="group5" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group5" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group5" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group5" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group5" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-            </tr>
-            <tr>
-                <th scope="col">6</th>
-                <th scope="col">
-                    <select name="group6" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group6" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group6" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group6" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
-                <th scope="col">
-                    <select name="group6" class="form-select mt-1" aria-label="Default select example">
-                        <option>Select group</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </th>
+            <tr th:each="classroom : ${classrooms}">
+                <th scope="col" th:text="${classroom.getNumber}">classroom</th>
+                <th:block th:each="slot : ${slots}">
+                    <th scope="col">
+                        <select name="group" class="form-select mt-1" aria-label="Default select example">
+                            <option th:value="'0-' + ${slot.getNumber} + '-' + ${classroom.getNumber}">Select group</option>
+                            <th:block th:each="group : ${groups}">
+                                <option th:value="${group.getId()} + '-' + ${slot.getNumber} + '-' + ${classroom.getNumber}"
+                                        th:text="${group.getGroupName}">group name</option>
+                            </th:block>
+                        </select>
+                        <select name="teacher" class="form-select mt-1" aria-label="Default select example">
+                            <option value="0">Select teacher</option>
+                            <th:block th:each="teacher : ${teachers}">
+                                <option th:value="${teacher.getId()}"
+                                        th:text="${teacher.getFullName}">teacher name</option>
+                            </th:block>
+
+                        </select>
+                    </th>
+                </th:block>
             </tr>
             </tbody>
         </table>

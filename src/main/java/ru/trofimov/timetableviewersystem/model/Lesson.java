@@ -76,4 +76,17 @@ public class Lesson implements Entity<Long> {
     public void setDate(int dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id=" + id +
+                ", courseId=" + courseId +
+                ", teacherId=" + teacherId +
+                ", groupId=" + groupId +
+                ", classroomId=" + classroomId +
+                ", lessonSlotId=" + lessonSlotId +
+                ", dayOfWeek=" + dayOfWeek +
+                '}';
+    }
 }

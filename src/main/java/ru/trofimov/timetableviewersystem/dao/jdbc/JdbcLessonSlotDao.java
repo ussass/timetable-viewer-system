@@ -29,7 +29,7 @@ public class JdbcLessonSlotDao extends AbstractDao<LessonSlot> implements Lesson
 
     @Override
     public LessonSlot create(LessonSlot entity) throws SQLException {
-        String sql = "INSERT INTO lesson_slot(lesson_slot_number) VALUES (?) RETURNING lesson_slot_id;";
+        String sql = "INSERT INTO lesson_slot(lesson_slot_number, min_start) VALUES (?,?) RETURNING lesson_slot_id;";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -38,10 +38,11 @@ public class JdbcLessonSlotDao extends AbstractDao<LessonSlot> implements Lesson
                 PreparedStatement ps = connection
                         .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, entity.getNumber());
+                ps.setInt(2, entity.getMinStart());
                 return ps;
             }, keyHolder);
 
-            LessonSlot lessonSlot = new LessonSlot(entity.getNumber());
+            LessonSlot lessonSlot = new LessonSlot(entity.getNumber(), entity.getMinStart());
             lessonSlot.setId(keyHolder.getKey().longValue());
             return lessonSlot;
         } catch (DataAccessException e) {
@@ -80,7 +81,7 @@ public class JdbcLessonSlotDao extends AbstractDao<LessonSlot> implements Lesson
 
         try {
             jdbcTemplate.update(sql, entity.getNumber(), entity.getId());
-            LessonSlot lessonSlot = new LessonSlot(entity.getNumber());
+            LessonSlot lessonSlot = new LessonSlot(entity.getNumber(), entity.getMinStart());
             lessonSlot.setId(entity.getId());
             return lessonSlot;
         } catch (DataAccessException e) {

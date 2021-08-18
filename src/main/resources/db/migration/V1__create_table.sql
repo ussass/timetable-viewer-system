@@ -49,7 +49,8 @@ CREATE TABLE classrooms
 CREATE TABLE lesson_slot
 (
     lesson_slot_id     BIGSERIAL NOT NULL PRIMARY KEY,
-    lesson_slot_number INTEGER   NOT NULL
+    lesson_slot_number INTEGER   NOT NULL,
+    min_start INTEGER   NOT NULL
 );
 
 CREATE TABLE courses
