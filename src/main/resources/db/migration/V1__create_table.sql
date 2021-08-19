@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS courses CASCADE;
 DROP TABLE IF EXISTS classes CASCADE;
 DROP TABLE IF EXISTS lesson CASCADE;
 DROP TABLE IF EXISTS users_groups CASCADE;
+DROP TABLE IF EXISTS users_courses CASCADE;
 
 CREATE TABLE groups
 (
@@ -50,7 +51,7 @@ CREATE TABLE lesson_slot
 (
     lesson_slot_id     BIGSERIAL NOT NULL PRIMARY KEY,
     lesson_slot_number INTEGER   NOT NULL,
-    min_start INTEGER   NOT NULL
+    min_start          INTEGER   NOT NULL
 );
 
 CREATE TABLE courses
@@ -83,6 +84,12 @@ CREATE TABLE lesson
 
 CREATE TABLE users_groups
 (
-    user_id BIGINT REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    user_id  BIGINT REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
     group_id BIGINT REFERENCES groups (group_id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE users_courses
+(
+    user_id   BIGINT REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    course_id BIGINT REFERENCES courses (course_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
