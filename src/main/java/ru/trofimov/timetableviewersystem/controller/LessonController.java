@@ -1,11 +1,9 @@
 package ru.trofimov.timetableviewersystem.controller;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.trofimov.timetableviewersystem.model.Lesson;
-import ru.trofimov.timetableviewersystem.model.LessonSlot;
 import ru.trofimov.timetableviewersystem.service.ClassroomService;
 import ru.trofimov.timetableviewersystem.service.GroupService;
 import ru.trofimov.timetableviewersystem.service.LessonSlotService;
@@ -31,6 +29,14 @@ public class LessonController {
         this.lessonSlotService = lessonSlotService;
     }
 
+    @GetMapping()
+    public String showAll(Model model) throws SQLException {
+//        model.addAttribute("active", "groups");
+//        List<Lesson> lessons = le
+
+        return "groups/index";
+    }
+
     @GetMapping("/new")
     public String editLesson(Model model) throws SQLException {
 //        model.addAttribute("active", "teachers");
@@ -51,7 +57,7 @@ public class LessonController {
         List<Lesson> lessons = new ArrayList<>();
         for (int i = 0; i < group.length; i++) {
             String[] split = group[i].split("-");
-            lessons.add(new Lesson(i + 1,teacher[i], Long.parseLong(split[0]), Long.parseLong(split[2]), Long.parseLong(split[1]),1));
+            lessons.add(new Lesson(i + 1, teacher[i], Long.parseLong(split[0]), Long.parseLong(split[2]), Long.parseLong(split[1]), 1));
         }
         lessons.forEach(System.out::println);
 

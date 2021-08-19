@@ -73,7 +73,7 @@ CREATE TABLE classes
 
 CREATE TABLE lesson
 (
-    classes_id       BIGSERIAL NOT NULL PRIMARY KEY,
+    lesson_id        BIGSERIAL NOT NULL PRIMARY KEY,
     "course_id"      BIGINT REFERENCES courses (course_id),
     "teacher_id"     BIGINT REFERENCES teachers (teacher_id),
     "group_id"       BIGINT REFERENCES groups (group_id),
