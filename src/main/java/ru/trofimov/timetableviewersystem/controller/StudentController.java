@@ -59,7 +59,6 @@ public class StudentController {
         if (firstName.length() > 0 && lastName.length() > 0) {
             try {
                 Student student = userService.findStudentById(id);
-                System.out.println("Test: " + student.getGroupId() + " " + group);
                 if (!student.getGroupId().equals(group)) {
                     if (group != 0) {
                         if (student.getGroupId() == 0) {
