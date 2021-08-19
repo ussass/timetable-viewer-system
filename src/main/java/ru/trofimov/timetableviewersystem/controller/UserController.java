@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Role;
 import ru.trofimov.timetableviewersystem.model.User;
+import ru.trofimov.timetableviewersystem.service.UserCourseService;
 import ru.trofimov.timetableviewersystem.service.UserGroupService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
@@ -19,10 +20,12 @@ import java.util.Set;
 public class UserController {
     private final UserService userService;
     private final UserGroupService userGroupService;
+    private final UserCourseService userCourseService;
 
-    public UserController(UserService userService, UserGroupService userGroupService) {
+    public UserController(UserService userService, UserGroupService userGroupService, UserCourseService userCourseService) {
         this.userService = userService;
         this.userGroupService = userGroupService;
+        this.userCourseService = userCourseService;
     }
 
     @GetMapping()
@@ -79,6 +82,11 @@ public class UserController {
                 attributes.addAttribute("errorMessage", "failed to delete entry");
             }
             if (switchCheckTeacher) roles.add(Role.TEACHER);
+            else try {
+                userCourseService.deleteByUserId(id);
+            } catch (SQLException e) {
+                attributes.addAttribute("errorMessage", "failed to delete entry");
+            }
             if (switchCheckStuff) roles.add(Role.STUFF);
             try {
                 User user = userService.findById(id);
