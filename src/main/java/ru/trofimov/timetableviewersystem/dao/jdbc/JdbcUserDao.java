@@ -10,10 +10,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
+import ru.trofimov.timetableviewersystem.dao.mapper.UserCourseMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.UserGroupMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.UserMapper;
 import ru.trofimov.timetableviewersystem.model.Role;
 import ru.trofimov.timetableviewersystem.model.Student;
+import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
@@ -132,11 +134,16 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public List<User> findAllTeacher() throws SQLException {
-        String sql = "SELECT * FROM public.users WHERE roles LIKE '%" + Role.TEACHER.name() + "%'";
+    public List<Teacher> findAllTeacher() throws SQLException {
+        String sql = "SELECT users.user_id, users.first_name, users.last_name, users.login, users.password, users.roles, courses.course_id, courses.course_name\n" +
+                "  FROM users \n" +
+                "LEFT OUTER JOIN users_courses\n" +
+                "  ON users.user_id = users_courses.user_id\n" +
+                "LEFT OUTER JOIN courses\n" +
+                "  ON users_courses.course_id = courses.course_id WHERE roles LIKE '%" + Role.TEACHER.name() + "%'";
 
         try {
-            return jdbcTemplate.query(sql, new UserMapper());
+            return jdbcTemplate.query(sql, new UserCourseMapper());
         } catch (DataAccessException e) {
             logger.error("Unable to find all teacher due " + e.getMessage());
             throw new SQLException("Unable to find all teacher due " + e.getMessage(), e);
@@ -175,5 +182,23 @@ public class JdbcUserDao implements UserDao {
             logger.error("Unable to find student by id {} due " + e.getMessage(), id);
             throw new SQLException("Unable to find student by id due " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public Teacher findTeacherById(Long id) throws SQLException {
+        String sql = "SELECT users.user_id, users.first_name, users.last_name, users.login, users.password, users.roles, courses.course_id, courses.course_name\n" +
+                "  FROM users \n" +
+                "LEFT OUTER JOIN users_courses\n" +
+                "  ON users.user_id = users_courses.user_id\n" +
+                "LEFT OUTER JOIN courses\n" +
+                "  ON users_courses.course_id = courses.course_id WHERE users.user_id = ?";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new UserCourseMapper());
+        } catch (DataAccessException e) {
+            logger.error("Unable to find teacher by id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to find teacher by id due " + e.getMessage(), e);
+        }
+
     }
 }

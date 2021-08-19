@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
 import ru.trofimov.timetableviewersystem.model.Student;
+import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllTeacher() throws SQLException {
+    public List<Teacher> findAllTeacher() throws SQLException {
         logger.info("Got all teacher");
         return userDao.findAllTeacher();
     }
@@ -74,5 +75,11 @@ public class UserServiceImpl implements UserService {
     public Student findStudentById(Long id) throws SQLException {
         logger.info("Got student by id = {}", id);
         return userDao.findStudentById(id);
+    }
+
+    @Override
+    public Teacher findTeacherById(Long id) throws SQLException {
+        logger.info("Got teacher by id = {}", id);
+        return userDao.findTeacherById(id);
     }
 }
