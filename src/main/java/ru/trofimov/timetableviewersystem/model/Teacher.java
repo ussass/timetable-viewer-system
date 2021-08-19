@@ -38,6 +38,10 @@ public class Teacher extends User implements Entity<Long> {
         this.courseName = courseName;
     }
 
+    public String getCourseNameAndFullName(){
+        return courseName + " - " + getFullName();
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
