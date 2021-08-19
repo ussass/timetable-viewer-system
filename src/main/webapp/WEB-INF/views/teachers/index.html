@@ -26,6 +26,7 @@
         <thead>
         <tr>
             <th scope="col">Id</th>
+            <th scope="col">Course</th>
             <th scope="col">Name</th>
             <th scope="col" sec:authorize="hasRole('ADMIN')">Action</th>
         </tr>
@@ -33,6 +34,7 @@
         <tbody>
         <tr th:each="teacher : ${teachers}">
             <th th:text="${teacher.getId()}">Group ID</th>
+            <th th:text="${teacher.getCourseName()}">Course Name</th>
             <td th:text="${teacher.getFullName()}">Name</td>
             <td sec:authorize="hasRole('ADMIN')">
                 <a class="btn btn-warning btn-sm" type="button" th:href="'/teachers/edit/' + ${teacher.getId()}">Edit</a>
