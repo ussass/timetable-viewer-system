@@ -54,7 +54,7 @@ public class JdbcUserDao implements UserDao {
                 return ps;
             }, keyHolder);
 
-            return new User(entity.getId(), entity.getFirstName(), entity.getLastName(),
+            return new User(keyHolder.getKey().longValue(), entity.getFirstName(), entity.getLastName(),
                     entity.getLogin(), entity.getPassword(), entity.getRoles());
         } catch (DataAccessException e) {
             logger.error("Unable to insert into users {} due " + e.getMessage(), entity);
