@@ -71,11 +71,11 @@ CREATE TABLE classes
     classes_date     BIGINT
 );
 
-CREATE TABLE lesson
+CREATE TABLE lessons
 (
     lesson_id        BIGSERIAL NOT NULL PRIMARY KEY,
     "course_id"      BIGINT REFERENCES courses (course_id),
-    "teacher_id"     BIGINT REFERENCES teachers (teacher_id),
+    "user_id"        BIGINT REFERENCES users (user_id),
     "group_id"       BIGINT REFERENCES groups (group_id),
     "classroom_id"   BIGINT REFERENCES classrooms (classroom_id),
     "lesson_slot_id" BIGINT REFERENCES lesson_slot (lesson_slot_id),
