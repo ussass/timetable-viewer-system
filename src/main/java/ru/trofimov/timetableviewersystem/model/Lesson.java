@@ -12,6 +12,10 @@ public class Lesson implements Entity<Long> {
     private long lessonSlotId;
     private int dayOfWeek;
 
+    private String courseName;
+    private String groupName;
+    private String teacherName;
+
     public Lesson(long courseId, long teacherId, long groupId, long classroomId, long lessonSlotId, int dayOfWeek) {
         this.courseId = courseId;
         this.teacherId = teacherId;
@@ -69,12 +73,36 @@ public class Lesson implements Entity<Long> {
         this.lessonSlotId = lessonSlotId;
     }
 
-    public int getDate() {
+    public int getDayOfWeek() {
         return dayOfWeek;
     }
 
-    public void setDate(int dayOfWeek) {
+    public void setDayOfWeek(int dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     @Override

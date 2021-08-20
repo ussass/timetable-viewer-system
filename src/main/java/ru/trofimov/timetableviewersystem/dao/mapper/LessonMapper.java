@@ -13,7 +13,7 @@ public class LessonMapper implements RowMapper<Lesson> {
     public Lesson mapRow(ResultSet resultSet, int i) throws SQLException {
         Lesson lesson = new Lesson(
                 resultSet.getLong("course_id"),
-                resultSet.getLong("teacher_id"),
+                resultSet.getLong("user_id"),
                 resultSet.getLong("group_id"),
                 resultSet.getLong("classroom_id"),
                 resultSet.getLong("lesson_slot_id"),

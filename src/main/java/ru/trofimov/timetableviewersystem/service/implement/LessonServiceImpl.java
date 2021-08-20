@@ -9,6 +9,7 @@ import ru.trofimov.timetableviewersystem.service.LessonService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LessonServiceImpl implements LessonService {
@@ -22,26 +23,38 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public Lesson save(Lesson entity) throws SQLException {
-        return null;
+        return lessonDao.save(entity);
     }
 
     @Override
     public List<Lesson> findAll() throws SQLException {
-        return null;
+        return lessonDao.findAll();
     }
 
     @Override
     public Lesson findById(Long id) throws SQLException {
-        return null;
+        return lessonDao.findById(id);
     }
 
     @Override
     public Lesson update(Lesson entity) throws SQLException {
-        return null;
+        return lessonDao.update(entity);
     }
 
     @Override
     public void delete(Long id) throws SQLException {
+        lessonDao.delete(id);
+    }
 
+    @Override
+    public List<Lesson> saveAll(List<Lesson> lessons){
+        return lessons.stream().map(lesson -> {
+            try {
+                return lessonDao.save(lesson);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return lesson;
+        }).collect(Collectors.toList());
     }
 }
