@@ -33,19 +33,18 @@
                 <th:block th:each="slot : ${slots}">
                     <th scope="col">
                         <select name="group" class="form-select mt-1" aria-label="Default select example">
-                            <option th:value="'0-' + ${slot.getNumber} + '-' + ${classroom.getNumber}">Select group</option>
+                            <option th:value="'0-' + ${slot.getNumber} + '-' + ${classroom.getId}">Select group</option>
                             <th:block th:each="group : ${groups}">
-                                <option th:value="${group.getId()} + '-' + ${slot.getNumber} + '-' + ${classroom.getNumber}"
+                                <option th:value="${group.getId()} + '-' + ${slot.getNumber} + '-' + ${classroom.getId}"
                                         th:text="${group.getGroupName}">group name</option>
                             </th:block>
                         </select>
-                        <select name="teacher" class="form-select mt-1" aria-label="Default select example">
-                            <option value="0">Select teacher</option>
+                        <select name="courseTeacher" class="form-select mt-1" aria-label="Default select example">
+                            <option value="0-0">Select teacher</option>
                             <th:block th:each="teacher : ${teachers}">
-                                <option th:value="${teacher.getId()}"
+                                <option th:value="${teacher.getCourseId()} + '-' + ${teacher.getId()}"
                                         th:text="${teacher.getCourseNameAndFullName}">teacher name</option>
                             </th:block>
-
                         </select>
                     </th>
                 </th:block>
