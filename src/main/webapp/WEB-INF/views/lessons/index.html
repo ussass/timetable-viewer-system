@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Timetable</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<header th:insert="templates/header :: header"></header>
+
+<div class="container">
+    <p class="h5">Timetable</p>
+    <br>
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Classroom</th>
+            <th:block th:each="slot : ${slots}">
+                <th scope="col" th:text="${slot.getNumber} + ' ' + ${slot.lessonTime}">lessonSlot</th>
+            </th:block>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="classroom : ${classrooms}">
+            <th scope="col" th:text="${classroom.getNumber}">classroom</th>
+            <th:block th:each="slot : ${slots}">
+                <th scope="col">
+                    <th:block th:each="lesson : ${lessons}">
+                        <div th:if="${lesson.getClassroomId == classroom.getId} and ${lesson.getLessonSlotId == slot.getId}">
+                            <p th:text="${lesson.getGroupName}"></p>
+                            <p th:text="${lesson.getCourseName}"></p>
+                            <p th:text="${lesson.getTeacherName}"></p>
+                        </div>
+                    </th:block>
+                </th>
+            </th:block>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>
