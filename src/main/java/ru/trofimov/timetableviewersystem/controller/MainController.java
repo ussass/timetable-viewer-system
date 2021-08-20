@@ -26,6 +26,16 @@ public class MainController {
     @GetMapping("/")
     public String showIndex(Model model) {
         model.addAttribute("active", "home");
+
+        User a = null;
+        try {
+            a = userService.findByLogin("a");
+        } catch (SQLException e) {
+            System.out.println("net takogo usera");
+        }
+        System.out.println(a);
+
+
         return "index";
     }
 
