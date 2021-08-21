@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.TeacherDao;
-import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.service.TeacherService;
 
@@ -16,7 +15,7 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherDao teacherDao;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(TeacherServiceImpl.class);
 
     public TeacherServiceImpl(TeacherDao teacherDao) {
         this.teacherDao = teacherDao;
@@ -56,12 +55,5 @@ public class TeacherServiceImpl implements TeacherService {
     public void delete(Long id) throws SQLException {
         logger.info("deleted teacher with id = {}", id);
         teacherDao.delete(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Classes> getTeacherTimetable(long teacherId, long startDate, long finishDate) throws SQLException {
-        logger.info("Got schedule for teacher with id = {} for dates {} - {}", teacherId, startDate, finishDate);
-        return teacherDao.getTeacherTimetable(teacherId, startDate, finishDate);
     }
 }

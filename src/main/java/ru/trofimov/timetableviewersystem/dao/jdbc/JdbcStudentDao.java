@@ -11,7 +11,6 @@ import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.StudentDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.StudentMapper;
 import ru.trofimov.timetableviewersystem.model.Student;
-import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -22,7 +21,7 @@ import java.util.List;
 @Component
 public class JdbcStudentDao extends AbstractDao<Student> implements StudentDao {
     private final JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcStudentDao.class);
 
     public JdbcStudentDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

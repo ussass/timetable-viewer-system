@@ -7,8 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.UserCourseDao;
 import ru.trofimov.timetableviewersystem.model.UserCourse;
-import ru.trofimov.timetableviewersystem.model.UserGroup;
-import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
 import java.sql.SQLException;
 
@@ -16,7 +14,7 @@ import java.sql.SQLException;
 public class JdbcUserCourseDao implements UserCourseDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcUserCourseDao.class);
 
     public JdbcUserCourseDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

@@ -9,11 +9,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.ClassroomDao;
-import ru.trofimov.timetableviewersystem.dao.mapper.ClassesMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.ClassroomMapper;
-import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Classroom;
-import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,7 +20,7 @@ import java.util.List;
 @Component
 public class JdbcClassroomDao extends AbstractDao<Classroom> implements ClassroomDao {
     private final JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcClassroomDao.class);
 
     public JdbcClassroomDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -100,20 +97,6 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
         } catch (DataAccessException e) {
             logger.error("Unable to delete classroom with id {} due " + e.getMessage(), id);
             throw new SQLException("Unable to delete classroom due " + e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public List<Classes> getClassroomTimetable(long classroomId, long startDate, long finishDate) throws SQLException {
-        String sql = "SELECT * FROM classes WHERE classroom_id = ? AND classes_date BETWEEN ? AND ?";
-
-        try {
-            return jdbcTemplate.query(sql, new ClassesMapper(), classroomId, startDate, finishDate);
-
-        } catch (DataAccessException e) {
-            logger.error("Unable to get classroom's timetable with classroomId = {}, startDate = {}, finishDate = {} due "
-                    + e.getMessage(), classroomId, startDate, finishDate, e);
-            throw new SQLException("Unable to get classroom's timetable due " + e.getMessage(), e);
         }
     }
 }

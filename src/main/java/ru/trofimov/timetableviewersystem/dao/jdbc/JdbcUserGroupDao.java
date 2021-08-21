@@ -4,23 +4,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.UserGroupDao;
-import ru.trofimov.timetableviewersystem.model.Course;
 import ru.trofimov.timetableviewersystem.model.UserGroup;
-import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 @Component
 public class JdbcUserGroupDao implements UserGroupDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcUserGroupDao.class);
 
     public JdbcUserGroupDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

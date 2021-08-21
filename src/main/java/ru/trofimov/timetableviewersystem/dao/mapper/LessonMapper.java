@@ -1,7 +1,6 @@
 package ru.trofimov.timetableviewersystem.dao.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Lesson;
 
 import java.sql.ResultSet;

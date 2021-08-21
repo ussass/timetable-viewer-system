@@ -9,11 +9,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.TeacherDao;
-import ru.trofimov.timetableviewersystem.dao.mapper.ClassesMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.TeacherMapper;
-import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Teacher;
-import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,7 +20,7 @@ import java.util.List;
 @Component
 public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
     private final JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcTeacherDao.class);
 
     public JdbcTeacherDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -101,19 +98,6 @@ public class JdbcTeacherDao extends AbstractDao<Teacher> implements TeacherDao {
         } catch (DataAccessException e) {
             logger.error("Unable to delete teacher with id {} due " + e.getMessage(), id);
             throw new SQLException("Unable to delete teacher due " + e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public List<Classes> getTeacherTimetable(long teacherId, long startDate, long finishDate) throws SQLException {
-        String sql = "SELECT * FROM classes WHERE teacher_id = ? AND classes_date BETWEEN ? AND ?";
-
-        try {
-            return jdbcTemplate.query(sql, new ClassesMapper(), teacherId, startDate, finishDate);
-        } catch (DataAccessException e) {
-            logger.error("Unable to get teacher's timetable with teacherId = {}, startDate = {}, finishDate = {} due "
-                    + e.getMessage(), teacherId, startDate, finishDate, e);
-            throw new SQLException("Unable to get teacher's timetable due " + e.getMessage(), e);
         }
     }
 }

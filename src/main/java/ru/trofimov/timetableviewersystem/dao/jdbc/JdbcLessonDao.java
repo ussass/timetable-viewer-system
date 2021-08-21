@@ -9,10 +9,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.trofimov.timetableviewersystem.dao.LessonDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.LessonMapper;
-import ru.trofimov.timetableviewersystem.dao.mapper.UserMapper;
 import ru.trofimov.timetableviewersystem.model.Lesson;
-import ru.trofimov.timetableviewersystem.model.User;
-import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,7 +21,7 @@ import java.util.List;
 public class JdbcLessonDao implements LessonDao {
 
     private final JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcLessonDao.class);
 
     public JdbcLessonDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

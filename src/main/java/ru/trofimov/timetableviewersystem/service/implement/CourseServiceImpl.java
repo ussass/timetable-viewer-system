@@ -15,7 +15,7 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseDao courseDao;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
 
     public CourseServiceImpl(CourseDao courseDao) {
         this.courseDao = courseDao;

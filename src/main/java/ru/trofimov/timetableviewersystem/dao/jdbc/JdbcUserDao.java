@@ -17,7 +17,6 @@ import ru.trofimov.timetableviewersystem.model.Role;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.model.User;
-import ru.trofimov.timetableviewersystem.service.implement.ClassesServiceImpl;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,7 +28,7 @@ public class JdbcUserDao implements UserDao {
     private final JdbcTemplate jdbcTemplate;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcUserDao.class);
 
     public JdbcUserDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
