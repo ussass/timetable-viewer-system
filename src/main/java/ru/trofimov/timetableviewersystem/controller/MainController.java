@@ -27,15 +27,6 @@ public class MainController {
     public String showIndex(Model model) {
         model.addAttribute("active", "home");
 
-        User a = null;
-        try {
-            a = userService.findByLogin("a");
-        } catch (SQLException e) {
-            System.out.println("net takogo usera");
-        }
-        System.out.println(a);
-
-
         return "index";
     }
 
@@ -53,7 +44,6 @@ public class MainController {
 
     @GetMapping("/signup")
     public String SignUp(Model model, @RequestParam(required = false, value = "errorMessage") String errorMessage) {
-        System.out.println("errorMessage = " + errorMessage);
         if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);
         }
@@ -74,15 +64,15 @@ public class MainController {
         User user = new User(firstName, lastName);
         user.setLogin(login);
         user.setPassword(password);
-        List<User> users = null;
+        boolean loginIsExists;
         try {
-            users = userService.findAll();
+            userService.findByLogin(login);
+            loginIsExists = true;
         } catch (SQLException e) {
-            attributes.addAttribute("errorMessage", "An error has occurred. Please try again");
-            return "redirect:/signup";
+            loginIsExists = false;
         }
-        boolean match = users.stream().anyMatch(user1 -> login.equals(user1.getLogin()));
-        if (!match) {
+
+        if (!loginIsExists) {
             try {
                 userService.save(user);
             } catch (SQLException e) {
