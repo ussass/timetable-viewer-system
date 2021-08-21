@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS teachers CASCADE;
 DROP TABLE IF EXISTS classrooms CASCADE;
 DROP TABLE IF EXISTS lesson_slot CASCADE;
 DROP TABLE IF EXISTS courses CASCADE;
-DROP TABLE IF EXISTS classes CASCADE;
 DROP TABLE IF EXISTS lesson CASCADE;
 DROP TABLE IF EXISTS users_groups CASCADE;
 DROP TABLE IF EXISTS users_courses CASCADE;
@@ -58,17 +57,6 @@ CREATE TABLE courses
 (
     course_id   BIGSERIAL    NOT NULL PRIMARY KEY,
     course_name VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE classes
-(
-    classes_id       BIGSERIAL NOT NULL PRIMARY KEY,
-    "course_id"      BIGINT REFERENCES courses (course_id),
-    "teacher_id"     BIGINT REFERENCES teachers (teacher_id),
-    "group_id"       BIGINT REFERENCES groups (group_id),
-    "classroom_id"   BIGINT REFERENCES classrooms (classroom_id),
-    "lesson_slot_id" BIGINT REFERENCES lesson_slot (lesson_slot_id),
-    classes_date     BIGINT
 );
 
 CREATE TABLE lessons
