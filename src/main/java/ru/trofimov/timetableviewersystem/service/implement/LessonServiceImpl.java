@@ -57,4 +57,9 @@ public class LessonServiceImpl implements LessonService {
             return lesson;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Lesson> getLessonsForDay(int day) throws SQLException {
+        return lessonDao.getLessonsForDay(day);
+    }
 }

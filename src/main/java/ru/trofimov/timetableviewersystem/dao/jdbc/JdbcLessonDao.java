@@ -113,9 +113,9 @@ public class JdbcLessonDao implements LessonDao {
         try {
             jdbcTemplate.update(
                     sql,
-                    entity.getCourseId(),
-                    entity.getTeacherId(),
-                    entity.getGroupId(),
+                    entity.getCourseId() == 0 ? null : entity.getCourseId(),
+                    entity.getTeacherId() == 0 ? null : entity.getTeacherId(),
+                    entity.getGroupId() == 0 ? null : entity.getGroupId(),
                     entity.getClassroomId(),
                     entity.getLessonSlotId(),
                     entity.getDayOfWeek(),
@@ -139,6 +139,17 @@ public class JdbcLessonDao implements LessonDao {
             logger.error("Unable to delete lesson with id {} due " + e.getMessage(), id);
             throw new SQLException("Unable to delete lesson due " + e.getMessage(), e);
         }
+    }
 
+    @Override
+    public List<Lesson> getLessonsForDay(int day) throws SQLException {
+        String sql = "SELECT * from lessons WHERE day_of_week = ?";
+
+        try {
+            return jdbcTemplate.query(sql, new Object[]{day}, new LessonMapper());
+        } catch (DataAccessException e) {
+            logger.error("Unable to find lesson by day {} due " + e.getMessage(), day);
+            throw new SQLException("Unable to find lesson by day due " + e.getMessage(), e);
+        }
     }
 }

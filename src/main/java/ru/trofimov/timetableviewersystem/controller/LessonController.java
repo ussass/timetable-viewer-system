@@ -3,6 +3,7 @@ package ru.trofimov.timetableviewersystem.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Course;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Lesson;
@@ -35,12 +36,13 @@ public class LessonController {
     }
 
     @GetMapping()
-    public String showAll(Model model) throws SQLException {
+    public String showAll(Model model, @RequestParam(defaultValue = "1") Integer day) throws SQLException {
         model.addAttribute("active", "timetable");
+        model.addAttribute("activeDay", day);
         model.addAttribute("slots", lessonSlotService.findAll());
         model.addAttribute("classrooms", classroomService.findAll());
 
-        List<Lesson> lessons = lessonService.findAll();
+        List<Lesson> lessons = lessonService.getLessonsForDay(day);
         List<Group> groups = groupService.findAll();
         List<User> users = userService.findAll();
         List<Course> courses = courseService.findAll();
@@ -59,6 +61,7 @@ public class LessonController {
                     .findFirst().orElse(new Course("no course"))
                     .getCourseName());
         }
+        System.out.println("day = " + day);
 
         model.addAttribute("lessons", lessons);
 
@@ -66,8 +69,9 @@ public class LessonController {
     }
 
     @GetMapping("/new")
-    public String editLesson(Model model) throws SQLException {
+    public String editLesson(Model model, @RequestParam(defaultValue = "1") Integer day) throws SQLException {
         model.addAttribute("active", "timetable");
+        model.addAttribute("activeDay", day);
         model.addAttribute("classrooms", classroomService.findAll());
         model.addAttribute("slots", lessonSlotService.findAll());
         model.addAttribute("groups", groupService.findAll());
@@ -81,17 +85,55 @@ public class LessonController {
             @RequestParam() String[] group,
             @RequestParam() String[] courseTeacher
     ) {
-
+        System.out.println("courseTeacher = " + courseTeacher[0]);
         List<Lesson> lessons = new ArrayList<>();
         for (int i = 0; i < group.length; i++) {
             String[] splitGroup = group[i].split("-");
             String[] splitTeacher = courseTeacher[i].split("-");
             lessons.add(new Lesson(Long.parseLong(splitTeacher[0]), Long.parseLong(splitTeacher[1]),
                     Long.parseLong(splitGroup[0]), Long.parseLong(splitGroup[2]),
-                    Long.parseLong(splitGroup[1]), 1));
+                    Long.parseLong(splitGroup[1]), Integer.parseInt(splitTeacher[2])));
         }
         lessonService.saveAll(lessons);
 
-        return "redirect:/lessons/new";
+        return "redirect:/lessons";
     }
+
+    @GetMapping("/edit/{id}")
+    public String editLesson(Model model, @PathVariable long id) {
+        model.addAttribute("active", "timetable");
+        try {
+            Lesson lesson = lessonService.findById(id);
+            model.addAttribute("lesson", lesson);
+            model.addAttribute("groups", groupService.findAll());
+            model.addAttribute("teachers", userService.findAllTeacher());
+        } catch (SQLException e) {
+            model.addAttribute("errorMessage", "Failed to load data");
+        }
+
+        return "lessons/edit";
+    }
+
+    @PostMapping("/edit")
+    public String postEditLesson(RedirectAttributes attributes,
+                                 @RequestParam Long group,
+                                 @RequestParam String courseTeacher,
+                                 @RequestParam Long id) {
+        System.out.println("courseTeacher = " + courseTeacher);
+        String[] split = courseTeacher.split("-");
+        try {
+            Lesson lesson = lessonService.findById(id);
+            lesson.setGroupId(group);
+            lesson.setCourseId(Long.parseLong(split[0]));
+//            lesson.setCourseId(null);
+//            lesson.setTeacherId(null);
+            lesson.setTeacherId(Long.parseLong(split[1]));
+            lessonService.update(lesson);
+        } catch (SQLException e) {
+            attributes.addAttribute("errorMessage", "failed to update entry");
+        }
+
+        return "redirect:/lessons/";
+    }
+
 }

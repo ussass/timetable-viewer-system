@@ -10,7 +10,21 @@
 <header th:insert="templates/header :: header"></header>
 
 <div class="container">
-    <p class="h5">Add new lessons</p>
+    <p class="h5">Add new lessons on</p>
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/lessons/new?day=1" class="nav-link" aria-current="page"
+                                th:classappend="${activeDay == 1 ? 'active' : ''}">Monday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=2" class="nav-link"
+                                th:classappend="${activeDay == 2 ? 'active' : ''}">Tuesday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=3" class="nav-link"
+                                th:classappend="${activeDay == 3 ? 'active' : ''}">Wednesday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=4" class="nav-link"
+                                th:classappend="${activeDay == 4 ? 'active' : ''}">Thursday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=5" class="nav-link"
+                                th:classappend="${activeDay == 5 ? 'active' : ''}">Friday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=6" class="nav-link"
+                                th:classappend="${activeDay == 6 ? 'active' : ''}">Saturday</a></li>
+    </ul>
     <br>
     <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
         <p th:text="${errorMessage}" class="h6">Error message</p>
@@ -40,9 +54,9 @@
                             </th:block>
                         </select>
                         <select name="courseTeacher" class="form-select mt-1" aria-label="Default select example">
-                            <option value="0-0">Select teacher</option>
+                            <option th:value="'0-0-' + ${activeDay}">Select teacher</option>
                             <th:block th:each="teacher : ${teachers}">
-                                <option th:value="${teacher.getCourseId()} + '-' + ${teacher.getId()}"
+                                <option th:value="${teacher.getCourseId()} + '-' + ${teacher.getId()} + '-' + ${activeDay}"
                                         th:text="${teacher.getCourseNameAndFullName}">teacher name</option>
                             </th:block>
                         </select>

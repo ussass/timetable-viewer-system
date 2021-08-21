@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Timetable</title>
     <meta charset="UTF-8">
@@ -10,7 +11,30 @@
 <header th:insert="templates/header :: header"></header>
 
 <div class="container">
-    <p class="h5">Timetable</p>
+    <div class="row">
+        <div class="col">
+            <p class="h5">Time table on</p>
+        </div>
+        <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/lessons/new" class="btn btn-primary" type="button"
+               sec:authorize="hasRole('ADMIN')">Add new timetable</a>
+        </div>
+    </div>
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/lessons?day=1" class="nav-link" aria-current="page"
+                                th:classappend="${activeDay == 1 ? 'active' : ''}">Monday</a></li>
+        <li class="nav-item"><a href="/lessons?day=2" class="nav-link"
+                                th:classappend="${activeDay == 2 ? 'active' : ''}">Tuesday</a></li>
+        <li class="nav-item"><a href="/lessons?day=3" class="nav-link"
+                                th:classappend="${activeDay == 3 ? 'active' : ''}">Wednesday</a></li>
+        <li class="nav-item"><a href="/lessons?day=4" class="nav-link"
+                                th:classappend="${activeDay == 4 ? 'active' : ''}">Thursday</a></li>
+        <li class="nav-item"><a href="/lessons?day=5" class="nav-link"
+                                th:classappend="${activeDay == 5 ? 'active' : ''}">Friday</a></li>
+        <li class="nav-item"><a href="/lessons?day=6" class="nav-link"
+                                th:classappend="${activeDay == 6 ? 'active' : ''}">Saturday</a></li>
+    </ul>
+
     <br>
     <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
         <p th:text="${errorMessage}" class="h6">Error message</p>
@@ -35,6 +59,8 @@
                             <p th:text="${lesson.getGroupName}"></p>
                             <p th:text="${lesson.getCourseName}"></p>
                             <p th:text="${lesson.getTeacherName}"></p>
+                            <a class="btn btn-warning btn-sm" type="button" sec:authorize="hasRole('ADMIN')"
+                               th:href="'/lessons/edit/' + ${lesson.getId()}">Edit</a>
                         </div>
                     </th:block>
                 </th>

@@ -37,7 +37,7 @@ public class Lesson implements Entity<Long> {
         return courseId;
     }
 
-    public void setCourseId(long courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
@@ -45,7 +45,7 @@ public class Lesson implements Entity<Long> {
         return teacherId;
     }
 
-    public void setTeacherId(long teacherId) {
+    public void setTeacherId(Long teacherId) {
         this.teacherId = teacherId;
     }
 
