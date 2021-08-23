@@ -29,8 +29,8 @@ INSERT INTO courses (course_name) values ('Geography');
 INSERT INTO courses (course_name) values ('Psychology');
 INSERT INTO courses (course_name) values ('Computer science');
 
-INSERT INTO users_groups values (5,1);
-INSERT INTO users_groups values (6,2);
+INSERT INTO users_groups values (6,1);
+INSERT INTO users_groups values (7,2);
 
 INSERT INTO users_courses values (8,1);
 INSERT INTO users_courses values (9,2);
