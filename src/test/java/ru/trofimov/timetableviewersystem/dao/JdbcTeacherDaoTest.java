@@ -29,7 +29,7 @@ class JdbcTeacherDaoTest extends BaseDaoTest{
     @Sql({ "/teacher/recreate_schema.sql", "/teacher/insert_data.sql" })
     void shouldFindById() throws SQLException {
         Teacher teacher = teacherDao.findById(1L);
-        assertEquals("Teacher{id=1, Jacob_test Smith_test}", teacher.toString());
+        assertEquals("Teacher{id=1, courseId=null, courseName='null', Jacob_test Smith_test}", teacher.toString());
     }
 
     @Test
@@ -49,7 +49,7 @@ class JdbcTeacherDaoTest extends BaseDaoTest{
         teacherDao.update(teacher);
         Teacher teacherExpected = teacherDao.findById(1L);
 
-        assertEquals("Teacher{id=1, newFirst newLast}", teacherExpected.toString());
+        assertEquals("Teacher{id=1, courseId=null, courseName='null', newFirst newLast}", teacherExpected.toString());
     }
 
     @Test
