@@ -24,10 +24,10 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String showIndex(Model model) {
+    public String showIndex(Model model) throws SQLException {
         model.addAttribute("active", "home");
-
-        return "index";
+        throw new SQLException("custom error");
+//        return "index";
     }
 
     @GetMapping("/login")
@@ -36,11 +36,11 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/error")
-    public String error(Model model) {
-//        model.addAttribute("active","home");
-        return "index";
-    }
+//    @GetMapping("/error")
+//    public String error(Model model) {
+////        model.addAttribute("active","home");
+//        return "index";
+//    }
 
     @GetMapping("/signup")
     public String SignUp(Model model, @RequestParam(required = false, value = "errorMessage") String errorMessage) {
