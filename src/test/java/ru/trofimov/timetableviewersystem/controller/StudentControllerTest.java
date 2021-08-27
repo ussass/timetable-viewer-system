@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.service.GroupService;
-import ru.trofimov.timetableviewersystem.service.StudentService;
 import ru.trofimov.timetableviewersystem.service.UserGroupService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
@@ -88,5 +87,4 @@ class StudentControllerTest {
                 .andExpect(model().attribute("errorMessage", "Failed to load data"))
                 .andExpect(content().string(containsString("Students List")));
     }
-
 }

@@ -12,7 +12,6 @@ import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @Controller
 public class MainController {
@@ -24,10 +23,10 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String showIndex(Model model) throws SQLException {
+    public String showIndex(Model model) {
         model.addAttribute("active", "home");
-        throw new SQLException("custom error");
-//        return "index";
+//        int i = 5 / 0; test @ExceptionHandler
+        return "index";
     }
 
     @GetMapping("/login")

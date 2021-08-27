@@ -125,8 +125,6 @@ public class LessonController {
             Lesson lesson = lessonService.findById(id);
             lesson.setGroupId(group);
             lesson.setCourseId(Long.parseLong(split[0]));
-//            lesson.setCourseId(null);
-//            lesson.setTeacherId(null);
             lesson.setTeacherId(Long.parseLong(split[1]));
             lessonService.update(lesson);
         } catch (SQLException e) {
@@ -135,5 +133,4 @@ public class LessonController {
 
         return "redirect:/lessons/";
     }
-
 }

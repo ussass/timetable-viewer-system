@@ -13,18 +13,6 @@ import java.time.ZonedDateTime;
 @ControllerAdvice
 public class SQLExceptionHandler {
 
-//    @ExceptionHandler(value = {SQLException.class})
-//    public ResponseEntity<Object> handleSQLException(SQLException e){
-//        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-//        SQLNoAccessToDatabaseException sqlNoAccessToDatabaseException = new SQLNoAccessToDatabaseException(
-//                e.getMessage(),
-//                e,
-//                badRequest,
-//                ZonedDateTime.now(ZoneId.of("Z"))
-//        );
-//        return new ResponseEntity<>(sqlNoAccessToDatabaseException, badRequest);
-//    }
-
     @ExceptionHandler(value = {SQLException.class})
     public String handleSQLException(SQLException e){
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
@@ -35,5 +23,14 @@ public class SQLExceptionHandler {
                 ZonedDateTime.now(ZoneId.of("Z"))
         );
         return "error";
+    }
+
+    @ExceptionHandler(ArithmeticException.class)
+    ModelAndView handleException(HttpServletRequest request,  ArithmeticException exception){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("errorMessage", exception.getMessage());
+        mav.addObject("url", request.getRequestURL());
+        mav.setViewName("groups/index");
+        return mav;
     }
 }
