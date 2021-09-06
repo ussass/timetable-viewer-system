@@ -7,18 +7,25 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.ClassroomDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.ClassroomMapper;
 import ru.trofimov.timetableviewersystem.model.Classroom;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 @Component
+@Repository
 public class JdbcClassroomDao extends AbstractDao<Classroom> implements ClassroomDao {
+
+    @PersistenceContext
+    private EntityManager entityManager;
     private final JdbcTemplate jdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(JdbcClassroomDao.class);
 
@@ -98,5 +105,10 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
             logger.error("Unable to delete classroom with id {} due " + e.getMessage(), id);
             throw new SQLException("Unable to delete classroom due " + e.getMessage(), e);
         }
+    }
+
+    public List<Classroom> findAllTest() {
+        return entityManager
+                .createQuery("from " + Classroom.class.getName()).getResultList();
     }
 }

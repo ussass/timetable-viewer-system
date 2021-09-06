@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.UserService;
+import ru.trofimov.timetableviewersystem.service.implement.ClassroomServiceImpl;
 
 import java.sql.SQLException;
 
@@ -26,6 +27,8 @@ public class MainController {
     public String showIndex(Model model) {
         model.addAttribute("active", "home");
 //        int i = 5 / 0; test @ExceptionHandler
+        ClassroomServiceImpl classroomService = new ClassroomServiceImpl();
+        classroomService.findAllTest().forEach(System.out::println);
         return "index";
     }
 
