@@ -1,6 +1,6 @@
 package ru.trofimov.timetableviewersystem.dao;
 
-public interface Entity<K> {
+public interface MyEntity<K> {
     K getId();
 
     void setId(K value);

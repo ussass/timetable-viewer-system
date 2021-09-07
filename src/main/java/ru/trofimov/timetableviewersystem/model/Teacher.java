@@ -1,8 +1,8 @@
 package ru.trofimov.timetableviewersystem.model;
 
-import ru.trofimov.timetableviewersystem.dao.Entity;
+import ru.trofimov.timetableviewersystem.dao.MyEntity;
 
-public class Teacher extends User implements Entity<Long> {
+public class Teacher extends User implements MyEntity<Long> {
 
     private long id;
     private Long courseId;

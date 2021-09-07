@@ -1,14 +1,26 @@
 package ru.trofimov.timetableviewersystem.model;
 
-import ru.trofimov.timetableviewersystem.dao.Entity;
+import ru.trofimov.timetableviewersystem.dao.MyEntity;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Group implements Entity<Long> {
+@Entity
+@Table(name = "groups")
+public class Group implements MyEntity<Long> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "group_id")
     private long id;
+
+    @Column(name = "group_name")
     private String groupName;
     private final List<Student> students;
+
+    public Group() {
+        students = new ArrayList<>();
+    }
 
     public Group(String groupName) {
         this.groupName = groupName;

@@ -1,14 +1,13 @@
 package ru.trofimov.timetableviewersystem.model;
 
-import ru.trofimov.timetableviewersystem.dao.Entity;
+import ru.trofimov.timetableviewersystem.dao.MyEntity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@javax.persistence.Entity
-public class Classroom implements Entity<Long> {
+@Entity
+@Table(name = "classrooms")
+public class Classroom implements MyEntity<Long> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "classroom_id")
