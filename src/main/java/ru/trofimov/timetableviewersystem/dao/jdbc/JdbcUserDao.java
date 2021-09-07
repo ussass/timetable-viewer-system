@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.UserCourseMapper;
 import ru.trofimov.timetableviewersystem.dao.mapper.UserGroupMapper;
@@ -23,7 +24,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-@Component
+@Repository
 public class JdbcUserDao implements UserDao {
     private final JdbcTemplate jdbcTemplate;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

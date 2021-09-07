@@ -20,7 +20,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-@Component
 @Repository
 public class JdbcClassroomDao extends AbstractDao<Classroom> implements ClassroomDao {
 
