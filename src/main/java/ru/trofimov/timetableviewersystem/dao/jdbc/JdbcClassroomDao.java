@@ -1,5 +1,8 @@
 package ru.trofimov.timetableviewersystem.dao.jdbc;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -24,10 +27,12 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
 
     @PersistenceContext
     private EntityManager entityManager;
+    protected final SessionFactory sessionFactory;
     private final JdbcTemplate jdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(JdbcClassroomDao.class);
 
-    public JdbcClassroomDao(JdbcTemplate jdbcTemplate) {
+    public JdbcClassroomDao(SessionFactory sessionFactory, JdbcTemplate jdbcTemplate) {
+        this.sessionFactory = sessionFactory;
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -56,14 +61,22 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
 
     @Override
     public List<Classroom> findAll() throws SQLException {
-        String sql = "SELECT * from classrooms";
-
-        try {
-            return jdbcTemplate.query(sql, new ClassroomMapper());
-        } catch (DataAccessException e) {
-            logger.error("Unable to find all classrooms due " + e.getMessage());
-            throw new SQLException("Unable to find all classrooms due " + e.getMessage(), e);
+//        String sql = "SELECT * from classrooms";
+//
+//        try {
+//            return jdbcTemplate.query(sql, new ClassroomMapper());
+//        } catch (DataAccessException e) {
+//            logger.error("Unable to find all classrooms due " + e.getMessage());
+//            throw new SQLException("Unable to find all classrooms due " + e.getMessage(), e);
+//        }
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            String getAll = "FROM " + Classroom.class.getSimpleName();
+            List<Classroom> classrooms = session.createQuery(getAll, Classroom.class).list();
+            transaction.commit();
+            return classrooms;
         }
+
     }
 
     @Override
