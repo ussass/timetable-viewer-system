@@ -2,12 +2,8 @@ package ru.trofimov.timetableviewersystem.model;
 
 import ru.trofimov.timetableviewersystem.dao.MyEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Objects;
 
-@Entity
-@Table(name = "students")
 public class Student extends User implements MyEntity<Long> {
     private long id;
     private Long groupId;

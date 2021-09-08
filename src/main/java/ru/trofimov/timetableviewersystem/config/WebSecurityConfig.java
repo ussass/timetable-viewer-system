@@ -47,10 +47,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("a").password("{noop}a").roles("ADMIN")
-//                .and()
-//                .withUser("user").password("{noop}user").roles("USER");
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
