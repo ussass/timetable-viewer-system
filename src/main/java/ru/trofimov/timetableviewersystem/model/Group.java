@@ -16,6 +16,8 @@ public class Group implements MyEntity<Long> {
 
     @Column(name = "group_name")
     private String groupName;
+
+    @Transient
     private final List<Student> students;
 
     public Group() {

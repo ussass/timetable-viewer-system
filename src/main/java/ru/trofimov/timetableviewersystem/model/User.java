@@ -26,8 +26,15 @@ public class User implements MyEntity<Long> {
     private String login;
 
     private String password;
+
+    @Transient
     private Set<Role> roles;
+
+    @Transient
     private Set<SimpleGrantedAuthority> authorities;
+
+    @Column(name = "roles")
+    private String stringRoles;
 
     public User() {
     }
