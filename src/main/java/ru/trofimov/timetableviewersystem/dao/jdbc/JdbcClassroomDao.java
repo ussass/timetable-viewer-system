@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -27,12 +28,14 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
 
     @PersistenceContext
     private EntityManager entityManager;
-    protected final SessionFactory sessionFactory;
+
+    @Autowired
+    private SessionFactory sessionFactory;
+//    protected final SessionFactory sessionFactory;
     private final JdbcTemplate jdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(JdbcClassroomDao.class);
 
-    public JdbcClassroomDao(SessionFactory sessionFactory, JdbcTemplate jdbcTemplate) {
-        this.sessionFactory = sessionFactory;
+    public JdbcClassroomDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -81,13 +84,20 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
 
     @Override
     public Classroom findById(Long id) throws SQLException {
-        String sql = "SELECT * FROM classrooms WHERE classroom_id = ?";
+//        String sql = "SELECT * FROM classrooms WHERE classroom_id = ?";
+//
+//        try {
+//            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ClassroomMapper());
+//        } catch (DataAccessException e) {
+//            logger.error("Unable to find classroom by id {} due " + e.getMessage(), id);
+//            throw new SQLException("Unable to find classroom by id due " + e.getMessage(), e);
+//        }
 
-        try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{id}, new ClassroomMapper());
-        } catch (DataAccessException e) {
-            logger.error("Unable to find classroom by id {} due " + e.getMessage(), id);
-            throw new SQLException("Unable to find classroom by id due " + e.getMessage(), e);
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Classroom t = session.get(Classroom.class, id);
+            transaction.commit();
+            return t;
         }
     }
 
