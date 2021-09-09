@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
-import ru.trofimov.timetableviewersystem.model.*;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -35,24 +37,16 @@ public class HibernateConfig {
     @Value("${hibernate.show.sql}")
     private String hibernateShowSqlStatus;
 
-    @Bean
-    public SessionFactory sessionFactory() {
-        Configuration configuration = configuration();
-        addAnnotatedClasses(configuration);
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().
-                applySetting(Environment.DATASOURCE, dataSource()).
-                applySettings(hibernateProperties()).
-                build();
-        return configuration.buildSessionFactory(serviceRegistry);
-    }
 
-    private void addAnnotatedClasses(Configuration configuration) {
-        configuration.addAnnotatedClass(Classroom.class);
-        configuration.addAnnotatedClass(Course.class);
-        configuration.addAnnotatedClass(Group.class);
-        configuration.addAnnotatedClass(Lesson.class);
-        configuration.addAnnotatedClass(LessonSlot.class);
-        configuration.addAnnotatedClass(User.class);
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setPackagesToScan(
+                new String[]{"ru.trofimov.timetableviewersystem.model"});
+        sessionFactory.setHibernateProperties(hibernateProperties());
+
+        return sessionFactory;
     }
 
     @Bean
@@ -62,20 +56,25 @@ public class HibernateConfig {
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
+
         return dataSource;
     }
 
     @Bean
-    public Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.put("hibernate.dialect", hibernateDialect);
-        properties.put("hibernate.hbm2ddl.auto", hibernateAuto);
-        properties.put("hibernate.show_sql", hibernateShowSqlStatus);
-        return properties;
+    public PlatformTransactionManager hibernateTransactionManager() {
+        HibernateTransactionManager transactionManager
+                = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory().getObject());
+        return transactionManager;
     }
 
-    @Bean
-    public Configuration configuration() {
-        return new Configuration();
+    private final Properties hibernateProperties() {
+        Properties hibernateProperties = new Properties();
+        hibernateProperties.setProperty(
+                "hibernate.hbm2ddl.auto", hibernateAuto);
+        hibernateProperties.setProperty(
+                "hibernate.dialect", hibernateDialect);
+
+        return hibernateProperties;
     }
 }
