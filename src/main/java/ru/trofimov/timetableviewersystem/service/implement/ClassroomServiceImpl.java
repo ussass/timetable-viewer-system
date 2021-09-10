@@ -16,18 +16,12 @@ import java.util.List;
 @Service
 public class ClassroomServiceImpl implements ClassroomService {
 
-    @Autowired
-    private JdbcClassroomDao dao;
+    private static final Logger logger = LoggerFactory.getLogger(ClassroomServiceImpl.class);
 
     private final ClassroomDao classroomDao;
-    private static final Logger logger = LoggerFactory.getLogger(ClassroomServiceImpl.class);
 
     public ClassroomServiceImpl(ClassroomDao classroomDao) {
         this.classroomDao = classroomDao;
-    }
-
-    public ClassroomServiceImpl() {
-        classroomDao = null;
     }
 
     @Override
@@ -67,6 +61,6 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     public List<Classroom> findAllTest() {
-        return dao.findAllTest();
+        return classroomDao.findAllTest();
     }
 }

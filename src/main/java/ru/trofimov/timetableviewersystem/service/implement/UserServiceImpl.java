@@ -15,8 +15,9 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    private final UserDao userDao;
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;

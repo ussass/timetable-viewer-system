@@ -14,8 +14,9 @@ import java.util.stream.Collectors;
 @Service
 public class LessonServiceImpl implements LessonService {
 
-    private final LessonDao lessonDao;
     private static final Logger logger = LoggerFactory.getLogger(LessonServiceImpl.class);
+
+    private final LessonDao lessonDao;
 
     public LessonServiceImpl(LessonDao lessonDao) {
         this.lessonDao = lessonDao;

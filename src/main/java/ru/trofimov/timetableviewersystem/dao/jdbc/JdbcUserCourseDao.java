@@ -4,13 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.dao.UserCourseDao;
 import ru.trofimov.timetableviewersystem.model.UserCourse;
 
 import java.sql.SQLException;
 
-@Repository
+// @Repository
 public class JdbcUserCourseDao implements UserCourseDao {
 
     private final JdbcTemplate jdbcTemplate;

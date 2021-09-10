@@ -12,8 +12,9 @@ import java.sql.SQLException;
 @Service
 public class UserGroupServiceImpl implements UserGroupService {
 
-    private final UserGroupDao userGroupDao;
     private static final Logger logger = LoggerFactory.getLogger(UserGroupServiceImpl.class);
+
+    private final UserGroupDao userGroupDao;
 
     public UserGroupServiceImpl(UserGroupDao userGroupDao) {
         this.userGroupDao = userGroupDao;

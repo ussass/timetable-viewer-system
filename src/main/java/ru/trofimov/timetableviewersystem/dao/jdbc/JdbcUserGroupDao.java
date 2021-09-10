@@ -4,13 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.dao.UserGroupDao;
 import ru.trofimov.timetableviewersystem.model.UserGroup;
 
 import java.sql.SQLException;
 
-@Repository
+// @Repository
 public class JdbcUserGroupDao implements UserGroupDao {
 
     private final JdbcTemplate jdbcTemplate;

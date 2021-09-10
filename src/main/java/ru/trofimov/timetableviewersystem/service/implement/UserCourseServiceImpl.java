@@ -12,8 +12,9 @@ import java.sql.SQLException;
 @Service
 public class UserCourseServiceImpl implements UserCourseService {
 
-    private final UserCourseDao userCourseDao;
     private static final Logger logger = LoggerFactory.getLogger(UserCourseServiceImpl.class);
+
+    private final UserCourseDao userCourseDao;
 
     public UserCourseServiceImpl(UserCourseDao userCourseDao) {
         this.userCourseDao = userCourseDao;

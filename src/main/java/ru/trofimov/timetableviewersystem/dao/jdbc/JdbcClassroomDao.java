@@ -10,10 +10,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.ClassroomDao;
-import ru.trofimov.timetableviewersystem.dao.mapper.ClassroomMapper;
 import ru.trofimov.timetableviewersystem.model.Classroom;
 
 import javax.persistence.EntityManager;
@@ -23,7 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-@Repository
+// @Repository
 public class JdbcClassroomDao extends AbstractDao<Classroom> implements ClassroomDao {
 
     @PersistenceContext
@@ -128,6 +126,7 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
         }
     }
 
+    @Override
     public List<Classroom> findAllTest() {
         return entityManager
                 .createQuery("from " + Classroom.class.getName()).getResultList();

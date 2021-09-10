@@ -6,7 +6,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.LessonSlotDao;
 import ru.trofimov.timetableviewersystem.dao.mapper.LessonSlotMapper;
@@ -17,7 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-@Repository
+// @Repository
 public class JdbcLessonSlotDao extends AbstractDao<LessonSlot> implements LessonSlotDao {
     private final JdbcTemplate jdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(JdbcLessonSlotDao.class);
