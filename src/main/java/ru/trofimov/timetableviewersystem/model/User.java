@@ -37,6 +37,8 @@ public class User implements MyEntity<Long> {
     private String stringRoles;
 
     public User() {
+        roles = new HashSet<>();
+        authorities = new HashSet<>();
     }
 
     public User(String firstName, String lastName) {
@@ -89,11 +91,19 @@ public class User implements MyEntity<Long> {
         if (roles.size() == 0) return "";
         StringBuilder builder = new StringBuilder();
         roles.forEach(role -> builder.append(role.name()).append(","));
-        return builder.toString().substring(0, builder.toString().length() - 1);
+        stringRoles = builder.toString().substring(0, builder.toString().length() - 1);
+        return stringRoles;
     }
 
     public void setStringRoles(String roles) {
         Arrays.stream(roles.split(","))
+                .forEach(s -> {
+                    if(s.length() > 2) addRole(Role.valueOf(s));
+                });
+    }
+
+    public void setStringRoles() {
+        Arrays.stream(stringRoles.split(","))
                 .forEach(s -> {
                     if(s.length() > 2) addRole(Role.valueOf(s));
                 });
@@ -164,6 +174,7 @@ public class User implements MyEntity<Long> {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
+                ", stringRoles=" + stringRoles +
                 '}';
     }
 }
