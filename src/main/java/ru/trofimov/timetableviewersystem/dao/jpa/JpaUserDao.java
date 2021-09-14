@@ -4,10 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
-import ru.trofimov.timetableviewersystem.model.Student;
-import ru.trofimov.timetableviewersystem.model.Teacher;
-import ru.trofimov.timetableviewersystem.model.User;
+import ru.trofimov.timetableviewersystem.model.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class JpaUserDao implements UserDao {
+public class JpaUserDao extends AbstractDao<User> implements UserDao {
 
     private static final Logger logger = LoggerFactory.getLogger(JpaUserDao.class);
 
@@ -29,28 +28,31 @@ public class JpaUserDao implements UserDao {
     }
 
     @Override
-    public User save(User entity) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public List<User> findAll() throws SQLException {
-        return null;
-    }
-
-    @Override
-    public User findById(Long id) throws SQLException {
-        return null;
+    public User create(User entity) throws SQLException {
+        entityManager.persist(entity);
+        return entity;
     }
 
     @Override
     public User update(User entity) throws SQLException {
-        return null;
+        return entityManager.merge(entity);
+    }
+
+    @Override
+    public List<User> findAll() throws SQLException {
+        return entityManager.createQuery("from " + User.class.getName()).getResultList();
+    }
+
+    @Override
+    public User findById(Long id) throws SQLException {
+        return entityManager.find(User.class, id);
     }
 
     @Override
     public void delete(Long id) throws SQLException {
-
+        entityManager.createQuery("delete from " + User.class.getName() + " where id=:id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override

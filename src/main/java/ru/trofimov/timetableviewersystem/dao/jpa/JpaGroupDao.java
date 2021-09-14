@@ -22,27 +22,30 @@ public class JpaGroupDao extends AbstractDao<Group> implements GroupDao {
 
     @Override
     public Group create(Group entity) throws SQLException {
-        return null;
+        entityManager.persist(entity);
+        return entity;
     }
 
     @Override
     public Group update(Group entity) throws SQLException {
-        return null;
+        return entityManager.merge(entity);
     }
 
     @Override
     public List<Group> findAll() throws SQLException {
-        return null;
+        return entityManager.createQuery("from " + Group.class.getName()).getResultList();
     }
 
     @Override
     public Group findById(Long id) throws SQLException {
-        return null;
+        return entityManager.find(Group.class, id);
     }
 
     @Override
     public void delete(Long id) throws SQLException {
-
+        entityManager.createQuery("delete from " + Group.class.getName() + " where id=:id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }
 

@@ -22,26 +22,29 @@ public class JpaLessonSlotDao extends AbstractDao<LessonSlot> implements LessonS
 
     @Override
     public LessonSlot create(LessonSlot entity) throws SQLException {
-        return null;
+        entityManager.persist(entity);
+        return entity;
     }
 
     @Override
     public LessonSlot update(LessonSlot entity) throws SQLException {
-        return null;
+        return entityManager.merge(entity);
     }
 
     @Override
     public List<LessonSlot> findAll() throws SQLException {
-        return null;
+        return entityManager.createQuery("from " + LessonSlot.class.getName()).getResultList();
     }
 
     @Override
     public LessonSlot findById(Long id) throws SQLException {
-        return null;
+        return entityManager.find(LessonSlot.class, id);
     }
 
     @Override
     public void delete(Long id) throws SQLException {
-
+        entityManager.createQuery("delete from " + LessonSlot.class.getName() + " where id=:id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }
