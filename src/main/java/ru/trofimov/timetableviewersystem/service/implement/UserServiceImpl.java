@@ -3,6 +3,7 @@ package ru.trofimov.timetableviewersystem.service.implement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.model.Teacher;
@@ -24,61 +25,81 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User save(User entity) throws SQLException {
         User user = userDao.save(entity);
+        user.setStringRoles();
         logger.info("saved new user with id={}", user.getId());
         return user;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> findAll() throws SQLException {
         logger.info("Got all users");
-        return userDao.findAll();
+        List<User> users = userDao.findAll();
+        users.forEach(User::setStringRoles);
+        return users;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findById(Long id) throws SQLException {
         logger.info("Got user by id = {}", id);
-        return userDao.findById(id);
+        User user = userDao.findById(id);
+        user.setStringRoles();
+        return user;
     }
 
     @Override
+    @Transactional
     public User update(User entity) throws SQLException {
+        entity.getStringRoles();
         logger.info("updated user with id = {}", entity.getId());
-        return userDao.update(entity);
+        User user = userDao.update(entity);
+        user.setStringRoles();
+        return user;
     }
 
     @Override
+    @Transactional
     public void delete(Long id) throws SQLException {
         logger.info("deleted user with id = {}", id);
         userDao.delete(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByLogin(String login) throws SQLException {
         logger.info("Got user by login = {}", login);
-        return userDao.findByLogin(login);
+        User user = userDao.findByLogin(login);
+        user.setStringRoles();
+        return user;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Student> findAllStudent() throws SQLException {
         logger.info("Got all student");
         return userDao.findAllStudent();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Teacher> findAllTeacher() throws SQLException {
         logger.info("Got all teacher");
         return userDao.findAllTeacher();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Student findStudentById(Long id) throws SQLException {
         logger.info("Got student by id = {}", id);
         return userDao.findStudentById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Teacher findTeacherById(Long id) throws SQLException {
         logger.info("Got teacher by id = {}", id);
         return userDao.findTeacherById(id);
