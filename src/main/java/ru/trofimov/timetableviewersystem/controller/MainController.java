@@ -31,10 +31,7 @@ public class MainController {
     public String showIndex(Model model) throws SQLException {
         model.addAttribute("active", "home");
 //        int i = 5 / 0; test @ExceptionHandler
-//        List<Classroom> classrooms = classroomService.findAll();
-//        classrooms.forEach(System.out::println);
-        Classroom byId = classroomService.findById(1L);
-        System.out.println("byId = " + byId);
+
         return "index";
     }
 
