@@ -63,15 +63,6 @@ public class UserController {
                                   @RequestParam(defaultValue = "false") boolean switchCheckStuff,
                                   @RequestParam Long id) {
 
-        System.out.println("firstName = " + firstName);
-        System.out.println("lastName = " + lastName);
-        System.out.println("switchCheckAdmin = " + switchCheckAdmin);
-        System.out.println("switchCheckStudent = " + switchCheckStudent);
-        System.out.println("switchCheckTeacher = " + switchCheckTeacher);
-        System.out.println("switchCheckStuff = " + switchCheckStuff);
-        System.out.println("id = " + id);
-
-
         if (firstName.length() > 0 && lastName.length() > 0) {
             Set<Role> roles = new HashSet<>();
             if (switchCheckAdmin) roles.add(Role.ADMIN);
