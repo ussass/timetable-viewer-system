@@ -125,10 +125,4 @@ public class JdbcClassroomDao extends AbstractDao<Classroom> implements Classroo
             throw new SQLException("Unable to delete classroom due " + e.getMessage(), e);
         }
     }
-
-    @Override
-    public List<Classroom> findAllTest() {
-        return entityManager
-                .createQuery("from " + Classroom.class.getName()).getResultList();
-    }
 }

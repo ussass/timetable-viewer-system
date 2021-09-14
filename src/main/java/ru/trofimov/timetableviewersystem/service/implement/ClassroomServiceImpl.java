@@ -59,8 +59,4 @@ public class ClassroomServiceImpl implements ClassroomService {
         logger.info("deleted classroom with id = {}", id);
         classroomDao.delete(id);
     }
-
-    public List<Classroom> findAllTest() {
-        return classroomDao.findAllTest();
-    }
 }
