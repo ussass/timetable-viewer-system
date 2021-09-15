@@ -62,6 +62,7 @@ public class JpaUserDao extends AbstractDao<User> implements UserDao {
             List<User> users = entityManager.createQuery("select u from User u where u.login=:login")
                     .setParameter("login", login)
                     .getResultList();
+            System.out.println("users.size() = " + users.size());
             return users.size() == 1 ? users.get(0) : null;
         } catch (Exception e) {
             logger.error("Unable to find user by login {} due " + e.getMessage(), login);

@@ -69,15 +69,17 @@ public class MainController {
         User user = new User(firstName, lastName);
         user.setLogin(login);
         user.setPassword(password);
-        boolean loginIsExists;
+        boolean loginIsExists = false;
         try {
-            userService.findByLogin(login);
-            loginIsExists = true;
+            if (userService.findByLogin(login) == null) {
+                loginIsExists = true;
+            }
         } catch (SQLException e) {
-            loginIsExists = false;
+            attributes.addAttribute("errorMessage", "An error has occurred. Please try again");
+            return "redirect:/signup";
         }
 
-        if (!loginIsExists) {
+        if (loginIsExists) {
             try {
                 userService.save(user);
             } catch (SQLException e) {

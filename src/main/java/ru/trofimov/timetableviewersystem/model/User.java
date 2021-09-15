@@ -88,10 +88,13 @@ public class User implements MyEntity<Long> {
     }
 
     public String getStringRoles() {
-        if (roles.size() == 0) return "";
-        StringBuilder builder = new StringBuilder();
-        roles.forEach(role -> builder.append(role.name()).append(","));
-        stringRoles = builder.toString().substring(0, builder.toString().length() - 1);
+        if (roles.size() == 0) {
+            stringRoles = "";
+        } else {
+            StringBuilder builder = new StringBuilder();
+            roles.forEach(role -> builder.append(role.name()).append(","));
+            stringRoles = builder.toString().substring(0, builder.toString().length() - 1);
+        }
         return stringRoles;
     }
 

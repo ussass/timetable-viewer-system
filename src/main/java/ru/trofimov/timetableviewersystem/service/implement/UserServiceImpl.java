@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(User entity) throws SQLException {
+        entity.getStringRoles();
         User user = userDao.save(entity);
         user.setStringRoles();
         logger.info("saved new user with id={}", user.getId());
@@ -73,7 +74,9 @@ public class UserServiceImpl implements UserService {
     public User findByLogin(String login) throws SQLException {
         logger.info("Got user by login = {}", login);
         User user = userDao.findByLogin(login);
-        user.setStringRoles();
+        if (user != null){
+            user.setStringRoles();
+        }
         return user;
     }
 
