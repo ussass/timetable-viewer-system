@@ -15,15 +15,6 @@ CREATE TABLE groups
     group_name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE users
-(
-    user_id    BIGSERIAL    NOT NULL PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name  VARCHAR(255) NOT NULL,
-    login      VARCHAR(255) NOT NULL,
-    password   VARCHAR(255) NOT NULL,
-    roles      VARCHAR(255) NOT NULL
-);
 
 CREATE TABLE students
 (
@@ -59,6 +50,19 @@ CREATE TABLE courses
     course_name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE users
+(
+    user_id         BIGSERIAL    NOT NULL PRIMARY KEY,
+    first_name      VARCHAR(255) NOT NULL,
+    last_name       VARCHAR(255) NOT NULL,
+    login           VARCHAR(255) NOT NULL,
+    password        VARCHAR(255) NOT NULL,
+    "course_id"     BIGINT REFERENCES courses (course_id),
+    "group_id"      BIGINT REFERENCES groups (group_id),
+    roles           VARCHAR(255) NOT NULL
+);
+
+
 CREATE TABLE lessons
 (
     lesson_id        BIGSERIAL NOT NULL PRIMARY KEY,
@@ -78,6 +82,7 @@ CREATE TABLE users_groups
 
 CREATE TABLE users_courses
 (
+    uc_id     BIGSERIAL NOT NULL PRIMARY KEY,
     user_id   BIGINT REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
     course_id BIGINT REFERENCES courses (course_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
