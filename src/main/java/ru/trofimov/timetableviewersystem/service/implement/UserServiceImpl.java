@@ -97,15 +97,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Student findStudentById(Long id) throws SQLException {
-        logger.info("Got student by id = {}", id);
-        return userDao.findStudentById(id);
+    public List<User> findAllByGroup(Long id) throws SQLException {
+        logger.info("Got all users by Group");
+        List<User> users = userDao.findAll();
+        users.forEach(User::addRolesFromString);
+        return users;
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Teacher findTeacherById(Long id) throws SQLException {
-        logger.info("Got teacher by id = {}", id);
-        return userDao.findTeacherById(id);
-    }
 }

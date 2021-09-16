@@ -62,7 +62,6 @@ public class JpaUserDao extends AbstractDao<User> implements UserDao {
             List<User> users = entityManager.createQuery("select u from User u where u.login=:login")
                     .setParameter("login", login)
                     .getResultList();
-            System.out.println("users.size() = " + users.size());
             return users.size() == 1 ? users.get(0) : null;
         } catch (Exception e) {
             logger.error("Unable to find user by login {} due " + e.getMessage(), login);
@@ -95,12 +94,14 @@ public class JpaUserDao extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public Student findStudentById(Long id) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public Teacher findTeacherById(Long id) throws SQLException {
-        return null;
+    public List<User> findAllByGroup(Long id) throws SQLException {
+        try {
+            return entityManager.createQuery("select u from User u where u.groupId=:groupId")
+                    .setParameter("groupId", id)
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error("Unable to find user by group id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to find user by group id due " + e.getMessage(), e);
+        }
     }
 }

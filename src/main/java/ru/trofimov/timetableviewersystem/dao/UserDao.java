@@ -1,7 +1,5 @@
 package ru.trofimov.timetableviewersystem.dao;
 
-import ru.trofimov.timetableviewersystem.model.Student;
-import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.model.User;
 
 import java.sql.SQLException;
@@ -14,7 +12,5 @@ public interface UserDao extends Dao<User, Long> {
 
     List<User> findAllTeacher() throws SQLException;
 
-    Student findStudentById(Long id) throws SQLException;
-
-    Teacher findTeacherById(Long id) throws SQLException;
+    List<User> findAllByGroup(Long id) throws SQLException;
 }

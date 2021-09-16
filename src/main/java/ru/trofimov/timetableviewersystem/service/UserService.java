@@ -1,6 +1,5 @@
 package ru.trofimov.timetableviewersystem.service;
 
-
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.model.User;
@@ -15,7 +14,5 @@ public interface UserService extends Service<User, Long> {
 
     List<Teacher> findAllTeacher() throws SQLException;
 
-    Student findStudentById(Long id) throws SQLException;
-
-    Teacher findTeacherById(Long id) throws SQLException;
+    List<User> findAllByGroup(Long id) throws SQLException;
 }

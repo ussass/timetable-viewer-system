@@ -5,22 +5,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Group;
+import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.GroupService;
-import ru.trofimov.timetableviewersystem.service.UserGroupService;
+import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 @RequestMapping("/groups")
 public class GroupController {
     private final GroupService groupService;
-    private final UserGroupService userGroupService;
+    private final UserService userService;
 
-    public GroupController(GroupService groupService, UserGroupService userGroupService) {
+    public GroupController(GroupService groupService, UserService userService) {
         this.groupService = groupService;
-        this.userGroupService = userGroupService;
+        this.userService = userService;
     }
 
     @GetMapping()
@@ -87,9 +89,19 @@ public class GroupController {
 
     @GetMapping("/delete/{id}")
     public String deleteTeacher(RedirectAttributes attributes, @PathVariable long id) {
+        AtomicBoolean isUpdated = new AtomicBoolean(true);
         try {
-            groupService.delete(id);
-            userGroupService.deleteByGroupId(id);
+            List<User> users = userService.findAllByGroup(id);
+            users.forEach(user -> user.setGroupId(null));
+            users.forEach(user -> {
+                try {
+                    userService.update(user);
+                } catch (SQLException e) {
+                    attributes.addAttribute("errorMessage", "failed to delete group");
+                    isUpdated.set(false);
+                }
+            });
+            if (isUpdated.get()) groupService.delete(id);
         } catch (SQLException e) {
             attributes.addAttribute("errorMessage", "failed to delete group");
         }
