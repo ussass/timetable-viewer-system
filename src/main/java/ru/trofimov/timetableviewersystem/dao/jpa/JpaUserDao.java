@@ -71,13 +71,27 @@ public class JpaUserDao extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public List<Student> findAllStudent() throws SQLException {
-        return null;
+    public List<User> findAllStudent() throws SQLException {
+        try {
+            return entityManager.createQuery("select u from User u where u.stringRoles LIKE :role")
+                    .setParameter("role", "%" + Role.STUDENT.name() + "%")
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error("Unable to find all students due " + e.getMessage());
+            throw new SQLException("Unable to find all students due " + e.getMessage(), e);
+        }
     }
 
     @Override
-    public List<Teacher> findAllTeacher() throws SQLException {
-        return null;
+    public List<User> findAllTeacher() throws SQLException {
+        try {
+            return entityManager.createQuery("select u from User u where u.stringRoles LIKE :role")
+                    .setParameter("role", "%" + Role.TEACHER.name() + "%")
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error("Unable to find all teachers due " + e.getMessage());
+            throw new SQLException("Unable to find all teachers due " + e.getMessage(), e);
+        }
     }
 
     @Override

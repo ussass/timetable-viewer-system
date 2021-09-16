@@ -5,13 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
-import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.model.Teacher;
+import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -84,14 +85,14 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<Student> findAllStudent() throws SQLException {
         logger.info("Got all student");
-        return userDao.findAllStudent();
+        return userDao.findAllStudent().stream().map(Student::new).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Teacher> findAllTeacher() throws SQLException {
         logger.info("Got all teacher");
-        return userDao.findAllTeacher();
+        return userDao.findAllTeacher().stream().map(Teacher::new).collect(Collectors.toList());
     }
 
     @Override

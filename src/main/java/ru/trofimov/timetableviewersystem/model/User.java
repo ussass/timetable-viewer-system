@@ -97,6 +97,10 @@ public class User implements MyEntity<Long> {
         return roles;
     }
 
+    public String getStringRoles() {
+        return stringRoles;
+    }
+
     public void addRole(Role role) {
         roles.add(role);
     }
@@ -156,6 +160,10 @@ public class User implements MyEntity<Long> {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setStringRoles(String stringRoles) {
+        this.stringRoles = stringRoles;
     }
 
     public void setRoles(Set<Role> roles) {
