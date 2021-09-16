@@ -90,9 +90,17 @@ public class LessonController {
         for (int i = 0; i < group.length; i++) {
             String[] splitGroup = group[i].split("-");
             String[] splitTeacher = courseTeacher[i].split("-");
-            lessons.add(new Lesson(Long.parseLong(splitTeacher[0]), Long.parseLong(splitTeacher[1]),
-                    Long.parseLong(splitGroup[0]), Long.parseLong(splitGroup[2]),
-                    Long.parseLong(splitGroup[1]), Integer.parseInt(splitTeacher[2])));
+            long courseId = Long.parseLong(splitTeacher[0]);
+            long teacherId = Long.parseLong(splitTeacher[1]);
+            long groupId = Long.parseLong(splitGroup[0]);
+            lessons.add(new Lesson(
+                    courseId == 0 ? null : courseId,
+                    teacherId == 0 ? null : teacherId,
+                    groupId == 0 ? null : groupId,
+                    Long.parseLong(splitGroup[2]),      //classroomId
+                    Long.parseLong(splitGroup[1]),      //lessonSlotId
+                    Integer.parseInt(splitTeacher[2]))  //dayOfWeek
+            );
         }
         lessonService.saveAll(lessons);
 

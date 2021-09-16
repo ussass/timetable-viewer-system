@@ -5,40 +5,45 @@ import ru.trofimov.timetableviewersystem.dao.MyEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lesson")
+@Table(name = "lessons")
 public class Lesson implements MyEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lesson_id")
-    private long id;
+    private Long id;
 
     @Column(name = "course_id")
-    private long courseId;
+    private Long courseId;
 
     @Column(name = "user_id")
-    private long teacherId;
+    private Long teacherId;
 
     @Column(name = "group_id")
-    private long groupId;
+    private Long groupId;
 
     @Column(name = "classroom_id")
-    private long classroomId;
+    private Long classroomId;
 
     @Column(name = "lesson_slot_id")
-    private long lessonSlotId;
+    private Long lessonSlotId;
 
     @Column(name = "day_of_week")
     private int dayOfWeek;
 
+    @Transient
     private String courseName;
+
+    @Transient
     private String groupName;
+
+    @Transient
     private String teacherName;
 
     public Lesson() {
     }
 
-    public Lesson(long courseId, long teacherId, long groupId, long classroomId, long lessonSlotId, int dayOfWeek) {
+    public Lesson(Long courseId, Long teacherId, Long groupId, Long classroomId, Long lessonSlotId, int dayOfWeek) {
         this.courseId = courseId;
         this.teacherId = teacherId;
         this.groupId = groupId;
@@ -55,7 +60,7 @@ public class Lesson implements MyEntity<Long> {
         this.id = id;
     }
 
-    public long getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
@@ -63,7 +68,7 @@ public class Lesson implements MyEntity<Long> {
         this.courseId = courseId;
     }
 
-    public long getTeacherId() {
+    public Long getTeacherId() {
         return teacherId;
     }
 
@@ -71,27 +76,27 @@ public class Lesson implements MyEntity<Long> {
         this.teacherId = teacherId;
     }
 
-    public long getGroupId() {
+    public Long getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(long groupId) {
+    public void setGroupId(Long groupId) {
         this.groupId = groupId;
     }
 
-    public long getClassroomId() {
+    public Long getClassroomId() {
         return classroomId;
     }
 
-    public void setClassroomId(int classroomId) {
+    public void setClassroomId(Long classroomId) {
         this.classroomId = classroomId;
     }
 
-    public long getLessonSlotId() {
+    public Long getLessonSlotId() {
         return lessonSlotId;
     }
 
-    public void setLessonSlotId(int lessonSlotId) {
+    public void setLessonSlotId(Long lessonSlotId) {
         this.lessonSlotId = lessonSlotId;
     }
 

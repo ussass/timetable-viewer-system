@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.LessonDao;
 import ru.trofimov.timetableviewersystem.model.Lesson;
+import ru.trofimov.timetableviewersystem.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -50,6 +51,13 @@ public class JpaLessonDao extends AbstractDao<Lesson> implements LessonDao {
 
     @Override
     public List<Lesson> getLessonsForDay(int day) throws SQLException {
-        return null;
+        try {
+            return entityManager.createQuery("select l from Lesson l where l.dayOfWeek=:day")
+                    .setParameter("day", day)
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error("Unable to find lessons by day {} due " + e.getMessage(), day);
+            throw new SQLException("Unable to find lessons by day due " + e.getMessage(), e);
+        }
     }
 }
