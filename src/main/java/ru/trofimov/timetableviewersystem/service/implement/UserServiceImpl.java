@@ -27,9 +27,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(User entity) throws SQLException {
-        entity.getStringRoles();
+        entity.setRolesToStringRoles();
         User user = userDao.save(entity);
-        user.setStringRoles();
+        user.addRolesFromString();
         logger.info("saved new user with id={}", user.getId());
         return user;
     }
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() throws SQLException {
         logger.info("Got all users");
         List<User> users = userDao.findAll();
-        users.forEach(User::setStringRoles);
+        users.forEach(User::addRolesFromString);
         return users;
     }
 
@@ -48,17 +48,17 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) throws SQLException {
         logger.info("Got user by id = {}", id);
         User user = userDao.findById(id);
-        user.setStringRoles();
+        user.addRolesFromString();
         return user;
     }
 
     @Override
     @Transactional
     public User update(User entity) throws SQLException {
-        entity.getStringRoles();
+        entity.setRolesToStringRoles();
         logger.info("updated user with id = {}", entity.getId());
         User user = userDao.update(entity);
-        user.setStringRoles();
+        user.addRolesFromString();
         return user;
     }
 
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         logger.info("Got user by login = {}", login);
         User user = userDao.findByLogin(login);
         if (user != null){
-            user.setStringRoles();
+            user.addRolesFromString();
         }
         return user;
     }

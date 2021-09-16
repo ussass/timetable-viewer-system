@@ -17,7 +17,7 @@ public class UserGroupMapper implements RowMapper<Student> {
         student.setId(resultSet.getLong("user_id"));
         student.setLogin(resultSet.getString("login"));
         student.setPassword(resultSet.getString("password"));
-        student.setStringRoles(resultSet.getString("roles"));
+        student.addRolesFromString(resultSet.getString("roles"));
         student.setGroupId(resultSet.getLong("group_id"));
         student.setGroupName(resultSet.getString("group_name"));
         return student;

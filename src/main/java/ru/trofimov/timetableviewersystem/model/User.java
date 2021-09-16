@@ -15,26 +15,32 @@ public class User implements MyEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    protected Long id;
 
     @Column(name = "first_name")
-    private String firstName;
+    protected String firstName;
 
     @Column(name = "last_name")
-    private String lastName;
+    protected String lastName;
 
-    private String login;
+    protected String login;
 
-    private String password;
+    protected String password;
+
+    @Column(name = "course_id")
+    protected Long courseId;
+
+    @Column(name = "group_id")
+    protected Long groupId;
 
     @Transient
-    private Set<Role> roles;
+    protected Set<Role> roles;
 
     @Transient
-    private Set<SimpleGrantedAuthority> authorities;
+    protected Set<SimpleGrantedAuthority> authorities;
 
     @Column(name = "roles")
-    private String stringRoles;
+    protected String stringRoles;
 
     public User() {
         roles = new HashSet<>();
@@ -79,6 +85,14 @@ public class User implements MyEntity<Long> {
         return firstName + " " + lastName;
     }
 
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -87,7 +101,7 @@ public class User implements MyEntity<Long> {
         roles.add(role);
     }
 
-    public String getStringRoles() {
+    public String setRolesToStringRoles() {
         if (roles.size() == 0) {
             stringRoles = "";
         } else {
@@ -98,14 +112,14 @@ public class User implements MyEntity<Long> {
         return stringRoles;
     }
 
-    public void setStringRoles(String roles) {
+    public void addRolesFromString(String roles) {
         Arrays.stream(roles.split(","))
                 .forEach(s -> {
                     if(s.length() > 2) addRole(Role.valueOf(s));
                 });
     }
 
-    public void setStringRoles() {
+    public void addRolesFromString() {
         Arrays.stream(stringRoles.split(","))
                 .forEach(s -> {
                     if(s.length() > 2) addRole(Role.valueOf(s));
@@ -118,6 +132,14 @@ public class User implements MyEntity<Long> {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     public String getLogin() {
@@ -176,6 +198,8 @@ public class User implements MyEntity<Long> {
                 ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", groupId='" + groupId + '\'' +
                 ", roles=" + roles +
                 ", stringRoles=" + stringRoles +
                 '}';

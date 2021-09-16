@@ -16,7 +16,7 @@ public class UserCourseMapper implements RowMapper<Teacher> {
         teacher.setId(resultSet.getLong("user_id"));
         teacher.setLogin(resultSet.getString("login"));
         teacher.setPassword(resultSet.getString("password"));
-        teacher.setStringRoles(resultSet.getString("roles"));
+        teacher.addRolesFromString(resultSet.getString("roles"));
         teacher.setCourseId(resultSet.getLong("course_id"));
         teacher.setCourseName(resultSet.getString("course_name"));
         return teacher;

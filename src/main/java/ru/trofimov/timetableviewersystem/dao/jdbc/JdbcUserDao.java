@@ -48,7 +48,7 @@ public class JdbcUserDao implements UserDao {
                 ps.setString(2, entity.getLastName());
                 ps.setString(3, entity.getLogin());
                 ps.setString(4, passwordEncoder.encode(entity.getPassword()));
-                ps.setString(5, entity.getStringRoles());
+                ps.setString(5, entity.setRolesToStringRoles());
                 return ps;
             }, keyHolder);
 
@@ -96,7 +96,7 @@ public class JdbcUserDao implements UserDao {
                     entity.getLastName(),
                     entity.getLogin(),
                     entity.getPassword(),
-                    entity.getStringRoles(),
+                    entity.setRolesToStringRoles(),
                     entity.getId()
             );
             return new User(entity.getId(), entity.getFirstName(), entity.getLastName(),
