@@ -16,7 +16,18 @@
         <p th:text="${errorMessage}" class="h6">Error message</p>
     </div>
 
-    <form method="post" action="/teachers/edit" th:if="${errorMessage == null}">
+    <form method="post" th:action="@{/teachers/edit}" th:if="${errorMessage == null}">
+        <div class="mb-3">
+            <label for="selectCourse" class="form-label">Select course</label>
+            <select name="course" class="form-select mt-1" aria-label="Default select example" id="selectCourse">
+                <option th:selected="${teacher.getCourseId() == 0}" value="0">Select course</option>
+                <th:block th:each="course : ${courses}">
+                    <option th:selected="${teacher.getCourseId() == course.getId()}" th:value="${course.getId()}"
+                            th:text="${course.getCourseName()}">CourseName</option>
+                </th:block>
+            </select>
+        </div>
+
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
             <input type="text" class="form-control" id="firstName"

@@ -2,13 +2,16 @@ package ru.trofimov.timetableviewersystem.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.service.GroupService;
-import ru.trofimov.timetableviewersystem.service.StudentService;
+import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -23,15 +26,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class StudentControllerTest {
 
     @MockBean
-    private StudentService studentService;
-
-    @MockBean
     private GroupService groupService;
 
+    @MockBean
+    private UserService userService;
+
+    @Qualifier("userDetailServiceIml")
+    @MockBean
+    UserDetailsService userDetailsService;
 
     @Autowired
     private MockMvc mockMvc;
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetAllStudents() throws Exception {
         String url = "/students";
@@ -40,8 +47,7 @@ class StudentControllerTest {
         student.setGroupId(1L);
         Group group = new Group("Test");
         group.setId(1L);
-        when(studentService.findAll()).thenReturn(Arrays.asList(student));
-        when(groupService.findAll()).thenReturn(Arrays.asList(group));
+        when(userService.findAllStudent()).thenReturn(Arrays.asList(student));
         mockMvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(view().name("students/index"))
@@ -54,9 +60,22 @@ class StudentControllerTest {
     }
 
     @Test
+    void shouldGetUnauthorized() throws Exception {
+        String url = "/students";
+        Student student = new Student("Test", "test");
+        student.setId(1L);
+        student.setGroupId(1L);
+        Group group = new Group("Test");
+        group.setId(1L);
+        when(userService.findAllStudent()).thenReturn(Arrays.asList(student));
+        mockMvc.perform(get(url)).andExpect(status().is(401));
+    }
+
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
+    @Test
     void shouldGetErrorMessage() throws Exception {
         String url = "/students";
-        when(studentService.findAll()).thenThrow(new SQLException());
+        when(userService.findAllStudent()).thenThrow(new SQLException());
         mockMvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(view().name("students/index"))
@@ -64,5 +83,4 @@ class StudentControllerTest {
                 .andExpect(model().attribute("errorMessage", "Failed to load data"))
                 .andExpect(content().string(containsString("Students List")));
     }
-
 }

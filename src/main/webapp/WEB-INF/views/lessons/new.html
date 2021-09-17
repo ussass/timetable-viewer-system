@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Add new lessons</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+</head>
+<body>
+<header th:insert="templates/header :: header"></header>
+
+<div class="container">
+    <p class="h5">Add new lessons on</p>
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/lessons/new?day=1" class="nav-link" aria-current="page"
+                                th:classappend="${activeDay == 1 ? 'active' : ''}">Monday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=2" class="nav-link"
+                                th:classappend="${activeDay == 2 ? 'active' : ''}">Tuesday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=3" class="nav-link"
+                                th:classappend="${activeDay == 3 ? 'active' : ''}">Wednesday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=4" class="nav-link"
+                                th:classappend="${activeDay == 4 ? 'active' : ''}">Thursday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=5" class="nav-link"
+                                th:classappend="${activeDay == 5 ? 'active' : ''}">Friday</a></li>
+        <li class="nav-item"><a href="/lessons/new?day=6" class="nav-link"
+                                th:classappend="${activeDay == 6 ? 'active' : ''}">Saturday</a></li>
+    </ul>
+    <br>
+    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}" class="h6">Error message</p>
+    </div>
+
+    <form method="post" th:action="@{/lessons/new}" th:if="${errorMessage == null}">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Classroom</th>
+                <th:block th:each="slot : ${slots}">
+                    <th scope="col" th:text="${slot.getNumber} + ' ' + ${slot.lessonTime}">lessonSlot</th>
+                </th:block>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="classroom : ${classrooms}">
+                <th scope="col" th:text="${classroom.getNumber}">classroom</th>
+                <th:block th:each="slot : ${slots}">
+                    <th scope="col">
+                        <select name="group" class="form-select mt-1" aria-label="Default select example">
+                            <option th:value="'0-' + ${slot.getNumber} + '-' + ${classroom.getId}">Select group</option>
+                            <th:block th:each="group : ${groups}">
+                                <option th:value="${group.getId()} + '-' + ${slot.getNumber} + '-' + ${classroom.getId}"
+                                        th:text="${group.getGroupName}">group name</option>
+                            </th:block>
+                        </select>
+                        <select name="courseTeacher" class="form-select mt-1" aria-label="Default select example">
+                            <option th:value="'0-0-' + ${activeDay}">Select teacher</option>
+                            <th:block th:each="teacher : ${teachers}">
+                                <option th:value="${teacher.getCourseId()} + '-' + ${teacher.getId()} + '-' + ${activeDay}"
+                                        th:text="${teacher.getCourseNameAndFullName}">teacher name</option>
+                            </th:block>
+                        </select>
+                    </th>
+                </th:block>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+
+    </form>
+</div>
+<script src="/js/bootstrap.js"></script>
+</body>
+</html>

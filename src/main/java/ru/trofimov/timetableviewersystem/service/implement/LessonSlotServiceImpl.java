@@ -14,8 +14,9 @@ import java.util.List;
 @Service
 public class LessonSlotServiceImpl implements LessonSlotService {
 
+    private static final Logger logger = LoggerFactory.getLogger(LessonSlotServiceImpl.class);
+
     private final LessonSlotDao lessonSlotDao;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
 
     public LessonSlotServiceImpl(LessonSlotDao lessonSlotDao) {
         this.lessonSlotDao = lessonSlotDao;

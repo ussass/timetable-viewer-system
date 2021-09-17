@@ -2,12 +2,15 @@ package ru.trofimov.timetableviewersystem.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.service.GroupService;
-import ru.trofimov.timetableviewersystem.service.StudentService;
+import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -26,11 +29,16 @@ class GroupControllerTest {
     private GroupService groupService;
 
     @MockBean
-    private StudentService studentService;
+    private UserService userService;
+
+    @Qualifier("userDetailServiceIml")
+    @MockBean
+    UserDetailsService userDetailsService;
 
     @Autowired
     private MockMvc mockMvc;
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetAllGroups() throws Exception {
         String url = "/groups";
@@ -49,6 +57,16 @@ class GroupControllerTest {
     }
 
     @Test
+    void shouldGetUnauthorized() throws Exception {
+        String url = "/groups";
+        Group group = new Group("Test");
+        group.setId(1L);
+        when(groupService.findAll()).thenReturn(Arrays.asList(group));
+        mockMvc.perform(get(url)).andExpect(status().is(401));
+    }
+
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
+    @Test
     void shouldGetErrorMessage() throws Exception {
         String url = "/groups";
         when(groupService.findAll()).thenThrow(new SQLException());
@@ -60,6 +78,7 @@ class GroupControllerTest {
                 .andExpect(content().string(containsString("Groups List")));
     }
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetNewForm() throws Exception {
         String url = "/groups/new";
@@ -70,6 +89,7 @@ class GroupControllerTest {
                 .andExpect(content().string(containsString("Add new group")));
     }
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetUpdateForm() throws Exception {
         long id = 1L;
@@ -85,6 +105,7 @@ class GroupControllerTest {
                 .andExpect(content().string(containsString("Edit group")));
     }
 
+    @WithMockUser(roles = {"ADMIN", "STUFF", "TEACHER", "STUDENT"})
     @Test
     void shouldGetUpdateErrorMessage() throws Exception {
         long id = 1L;

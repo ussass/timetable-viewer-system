@@ -1,10 +1,22 @@
 package ru.trofimov.timetableviewersystem.model;
 
-import ru.trofimov.timetableviewersystem.dao.Entity;
+import ru.trofimov.timetableviewersystem.dao.MyEntity;
 
-public class Course implements Entity<Long> {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "courses")
+public class Course implements MyEntity<Long> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "course_id")
     private Long courseId;
+
+    @Column(name = "course_name")
     private String courseName;
+
+    public Course() {
+    }
 
     public Course(String courseName) {
         this.courseName = courseName;

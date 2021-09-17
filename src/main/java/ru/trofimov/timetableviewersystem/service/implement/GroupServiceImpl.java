@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.GroupDao;
-import ru.trofimov.timetableviewersystem.model.Classes;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.service.GroupService;
 
@@ -15,8 +14,9 @@ import java.util.List;
 @Service
 public class GroupServiceImpl implements GroupService {
 
+    private static final Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
+
     private final GroupDao groupDao;
-    private static final Logger logger = LoggerFactory.getLogger(ClassesServiceImpl.class);
 
     public GroupServiceImpl(GroupDao groupDao) {
         this.groupDao = groupDao;
@@ -56,12 +56,5 @@ public class GroupServiceImpl implements GroupService {
     public void delete(Long id) throws SQLException {
         logger.info("deleted group with id = {}", id);
         groupDao.delete(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Classes> getGroupTimetable(long groupId, long startDate, long finishDate) throws SQLException {
-        logger.info("Got schedule for group with id = {} for dates {} - {}", groupId, startDate, finishDate);
-        return groupDao.getGroupTimetable(groupId, startDate, finishDate);
     }
 }

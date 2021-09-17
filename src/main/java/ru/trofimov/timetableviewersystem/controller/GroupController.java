@@ -5,24 +5,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Group;
-import ru.trofimov.timetableviewersystem.model.Student;
+import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.GroupService;
-import ru.trofimov.timetableviewersystem.service.StudentService;
+import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 @RequestMapping("/groups")
 public class GroupController {
     private final GroupService groupService;
-    private final StudentService studentService;
+    private final UserService userService;
 
-    public GroupController(GroupService groupService, StudentService studentService) {
+    public GroupController(GroupService groupService, UserService userService) {
         this.groupService = groupService;
-        this.studentService = studentService;
+        this.userService = userService;
     }
 
     @GetMapping()
@@ -89,26 +89,19 @@ public class GroupController {
 
     @GetMapping("/delete/{id}")
     public String deleteTeacher(RedirectAttributes attributes, @PathVariable long id) {
-        List<Student> studentList = null;
+        AtomicBoolean isUpdated = new AtomicBoolean(true);
         try {
-            studentList = studentService.findAll();
-        } catch (SQLException e) {
-            attributes.addAttribute("errorMessage", "failed to delete group");
-        }
-
-        studentList.stream()
-                .filter(student -> student.getGroupId() == id)
-                .peek(student -> student.setGroupId(null))
-                .forEach(student -> {
-                    try {
-                        studentService.update(student);
-                    } catch (SQLException e) {
-                        attributes.addAttribute("errorMessage", "failed to delete group");
-                    }
-                });
-
-        try {
-            groupService.delete(id);
+            List<User> users = userService.findAllByGroup(id);
+            users.forEach(user -> user.setGroupId(null));
+            users.forEach(user -> {
+                try {
+                    userService.update(user);
+                } catch (SQLException e) {
+                    attributes.addAttribute("errorMessage", "failed to delete group");
+                    isUpdated.set(false);
+                }
+            });
+            if (isUpdated.get()) groupService.delete(id);
         } catch (SQLException e) {
             attributes.addAttribute("errorMessage", "failed to delete group");
         }

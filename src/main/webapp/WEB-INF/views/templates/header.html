@@ -9,13 +9,29 @@
     <ul class="nav nav-pills">
         <li class="nav-item"><a href="/" class="nav-link" aria-current="page"
                                 th:classappend="${active == 'home' ? 'active' : ''}">Home</a></li>
-        <li class="nav-item"><a href="/classes" class="nav-link"
-                                th:classappend="${active == 'classes' ? 'active' : ''}">Classes</a></li>
+        <li class="nav-item"><a href="/lessons" class="nav-link"
+                                th:classappend="${active == 'timetable' ? 'active' : ''}">Timetable</a></li>
         <li class="nav-item"><a href="/groups" class="nav-link"
                                 th:classappend="${active == 'groups' ? 'active' : ''}">Groups</a></li>
         <li class="nav-item"><a href="/students" class="nav-link"
                                 th:classappend="${active == 'students' ? 'active' : ''}">Students</a></li>
         <li class="nav-item"><a href="/teachers" class="nav-link"
                                 th:classappend="${active == 'teachers' ? 'active' : ''}">Teachers</a></li>
+        <li class="nav-item"><a href="/users" class="nav-link" sec:authorize="hasRole('ADMIN')"
+                                th:classappend="${active == 'users' ? 'active' : ''}">Users</a></li>
+
     </ul>
+
+    <div class="col-md-3 text-end">
+
+    <a href="/login" class="btn btn-outline-primary me-2" sec:authorize="isAnonymous()"
+       th:classappend="${active == 'login' ? 'btn-primary text-white' : 'btn-outline-primary'}">Login</a>
+
+        <form th:action="@{/logout}" method="post" class="d-inline" sec:authorize="isAuthenticated()">
+            <input type="submit" class="btn btn-outline-primary me-2" value="Logout"/>
+        </form>
+
+        <a href="/signup" type="button" class="btn btn-primary" sec:authorize="isAnonymous()">Sign-up</a>
+        <a href="/profile" type="button" class="btn btn-primary" sec:authorize="isAuthenticated()">My profile</a>
+    </div>
 </div>

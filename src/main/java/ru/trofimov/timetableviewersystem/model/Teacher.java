@@ -1,30 +1,56 @@
 package ru.trofimov.timetableviewersystem.model;
 
-import ru.trofimov.timetableviewersystem.dao.Entity;
+public class Teacher extends User {
 
-public class Teacher extends User implements Entity<Long> {
+    private String courseName;
 
-    private long id;
-
-    public Teacher(String firstName, String lastName, Role... roles) {
-        super(firstName, lastName, roles);
+    public Teacher() {
     }
 
-    @Override
-    public Long getId() {
-        return this.id;
+    public Teacher(String firstName, String lastName) {
+        super(firstName, lastName);
     }
 
-    @Override
-    public void setId(Long value) {
-        this.id = value;
+    public Teacher(User user) {
+
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.courseId = user.getCourseId();
+        this.groupId = user.getGroupId();
+        this.roles = user.getRoles();
+        this.stringRoles = user.getStringRoles();
+    }
+
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public String getCourseNameAndFullName(){
+        return courseName + " - " + getFullName();
+    }
+
+    public void setCourseName(String groupName) {
+        this.courseName = groupName;
     }
 
     @Override
     public String toString() {
-        return "Teacher{" +
+        return "NewStudent{" +
                 "id=" + id +
-                ", " + getFirstName() + " " + getLastName() +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", courseId=" + courseId +
+                ", courseName='" + courseName + '\'' +
+                ", groupId=" + groupId +
+                ", roles=" + roles +
+                ", authorities=" + authorities +
+                ", stringRoles='" + stringRoles + '\'' +
                 '}';
     }
 }
