@@ -103,5 +103,4 @@ public class UserServiceImpl implements UserService {
         users.forEach(User::addRolesFromString);
         return users;
     }
-
 }

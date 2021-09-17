@@ -7,9 +7,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.model.User;
-import ru.trofimov.timetableviewersystem.model.UserGroup;
 import ru.trofimov.timetableviewersystem.service.GroupService;
-import ru.trofimov.timetableviewersystem.service.UserGroupService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
@@ -20,12 +18,10 @@ import java.util.List;
 public class StudentController {
     private final GroupService groupService;
     private final UserService userService;
-    private final UserGroupService userGroupService;
 
-    public StudentController(GroupService groupService, UserService userService, UserGroupService userGroupService) {
+    public StudentController(GroupService groupService, UserService userService) {
         this.groupService = groupService;
         this.userService = userService;
-        this.userGroupService = userGroupService;
     }
 
     @GetMapping()

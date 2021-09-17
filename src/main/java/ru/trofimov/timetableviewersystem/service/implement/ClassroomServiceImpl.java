@@ -2,11 +2,9 @@ package ru.trofimov.timetableviewersystem.service.implement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.ClassroomDao;
-import ru.trofimov.timetableviewersystem.dao.jdbc.JdbcClassroomDao;
 import ru.trofimov.timetableviewersystem.model.Classroom;
 import ru.trofimov.timetableviewersystem.service.ClassroomService;
 

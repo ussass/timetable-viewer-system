@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.Student;
 import ru.trofimov.timetableviewersystem.service.GroupService;
-import ru.trofimov.timetableviewersystem.service.UserGroupService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
@@ -25,9 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(StudentController.class)
 class StudentControllerTest {
-
-    @MockBean
-    private UserGroupService userGroupService;
 
     @MockBean
     private GroupService groupService;

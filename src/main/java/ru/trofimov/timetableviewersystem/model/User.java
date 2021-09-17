@@ -119,14 +119,14 @@ public class User implements MyEntity<Long> {
     public void addRolesFromString(String roles) {
         Arrays.stream(roles.split(","))
                 .forEach(s -> {
-                    if(s.length() > 2) addRole(Role.valueOf(s));
+                    if (s.length() > 2) addRole(Role.valueOf(s));
                 });
     }
 
     public void addRolesFromString() {
         Arrays.stream(stringRoles.split(","))
                 .forEach(s -> {
-                    if(s.length() > 2) addRole(Role.valueOf(s));
+                    if (s.length() > 2) addRole(Role.valueOf(s));
                 });
     }
 
@@ -171,8 +171,8 @@ public class User implements MyEntity<Long> {
     }
 
     public Set<SimpleGrantedAuthority> getAuthorities() {
-        for (Role role: roles){
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+ role.name()));
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
         }
         return authorities;
     }
@@ -181,22 +181,21 @@ public class User implements MyEntity<Long> {
         this.authorities = authorities;
     }
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
 
-    public boolean isTeacher(){
+    public boolean isTeacher() {
         return roles.contains(Role.TEACHER);
     }
 
-    public boolean isStudent(){
+    public boolean isStudent() {
         return roles.contains(Role.STUDENT);
     }
 
-    public boolean isStuff(){
+    public boolean isStuff() {
         return roles.contains(Role.STUFF);
     }
-
 
     @Override
     public String toString() {
