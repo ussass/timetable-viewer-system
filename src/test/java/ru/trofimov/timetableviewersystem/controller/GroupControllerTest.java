@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.service.GroupService;
+import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -26,6 +27,9 @@ class GroupControllerTest {
 
     @MockBean
     private GroupService groupService;
+
+    @MockBean
+    private UserService userService;
 
     @Qualifier("userDetailServiceIml")
     @MockBean
