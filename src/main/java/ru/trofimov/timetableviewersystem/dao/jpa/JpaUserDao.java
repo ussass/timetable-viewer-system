@@ -29,30 +29,57 @@ public class JpaUserDao extends AbstractDao<User> implements UserDao {
 
     @Override
     public User create(User entity) throws SQLException {
-        entityManager.persist(entity);
-        return entity;
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        try {
+            entityManager.persist(entity);
+            return entity;
+        } catch (Exception e) {
+            logger.error("Unable to insert into users {} due " + e.getMessage(), entity);
+            throw new SQLException("Unable to insert into users due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public User update(User entity) throws SQLException {
-        return entityManager.merge(entity);
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        try {
+            return entityManager.merge(entity);
+        } catch (Exception e) {
+            logger.error("Unable to update {} due " + e.getMessage(), entity);
+            throw new SQLException("Unable to update user due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public List<User> findAll() throws SQLException {
-        return entityManager.createQuery("from " + User.class.getName()).getResultList();
+        try {
+            return entityManager.createQuery("from " + User.class.getName()).getResultList();
+        } catch (Exception e) {
+            logger.error("Unable to find all user due " + e.getMessage());
+            throw new SQLException("Unable to find all user due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public User findById(Long id) throws SQLException {
-        return entityManager.find(User.class, id);
+        try {
+            return entityManager.find(User.class, id);
+        } catch (Exception e) {
+            logger.error("Unable to find user by id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to find user by id due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public void delete(Long id) throws SQLException {
-        entityManager.createQuery("delete from " + User.class.getName() + " where id=:id")
-                .setParameter("id", id)
-                .executeUpdate();
+        try {
+            entityManager.createQuery("delete from User where id=:id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+        } catch (Exception e) {
+            logger.error("Unable to delete user by id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to delete user by id due " + e.getMessage(), e);
+        }
     }
 
     @Override

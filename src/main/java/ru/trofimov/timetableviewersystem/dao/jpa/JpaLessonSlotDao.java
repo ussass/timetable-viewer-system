@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.LessonSlotDao;
 import ru.trofimov.timetableviewersystem.model.LessonSlot;
+import ru.trofimov.timetableviewersystem.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,29 +23,54 @@ public class JpaLessonSlotDao extends AbstractDao<LessonSlot> implements LessonS
 
     @Override
     public LessonSlot create(LessonSlot entity) throws SQLException {
-        entityManager.persist(entity);
-        return entity;
+        try {
+            entityManager.persist(entity);
+            return entity;
+        } catch (Exception e) {
+            logger.error("Unable to insert into lesson_slot {} due " + e.getMessage(), entity);
+            throw new SQLException("Unable to insert into lesson_slot due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public LessonSlot update(LessonSlot entity) throws SQLException {
-        return entityManager.merge(entity);
+        try {
+            return entityManager.merge(entity);
+        } catch (Exception e) {
+            logger.error("Unable to update {} due " + e.getMessage(), entity);
+            throw new SQLException("Unable to update lesson slot due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public List<LessonSlot> findAll() throws SQLException {
-        return entityManager.createQuery("from " + LessonSlot.class.getName()).getResultList();
+        try {
+            return entityManager.createQuery("from " + LessonSlot.class.getName()).getResultList();
+        } catch (Exception e) {
+            logger.error("Unable to find all lesson slots due " + e.getMessage());
+            throw new SQLException("Unable to find all lesson slots due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public LessonSlot findById(Long id) throws SQLException {
-        return entityManager.find(LessonSlot.class, id);
+        try {
+            return entityManager.find(LessonSlot.class, id);
+        } catch (Exception e) {
+            logger.error("Unable to find lesson slot by id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to find lesson slot by id due " + e.getMessage(), e);
+        }
     }
 
     @Override
     public void delete(Long id) throws SQLException {
-        entityManager.createQuery("delete from " + LessonSlot.class.getName() + " where id=:id")
-                .setParameter("id", id)
-                .executeUpdate();
+        try {
+            entityManager.createQuery("delete from LessonSlot where id=:id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+        } catch (Exception e) {
+            logger.error("Unable to delete lesson slot with id {} due " + e.getMessage(), id);
+            throw new SQLException("Unable to delete lesson slot due " + e.getMessage(), e);
+        }
     }
 }
