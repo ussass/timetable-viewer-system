@@ -2,11 +2,9 @@ package ru.trofimov.timetableviewersystem.service.implement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.ClassroomDao;
-import ru.trofimov.timetableviewersystem.dao.jdbc.JdbcClassroomDao;
 import ru.trofimov.timetableviewersystem.model.Classroom;
 import ru.trofimov.timetableviewersystem.service.ClassroomService;
 
@@ -16,18 +14,12 @@ import java.util.List;
 @Service
 public class ClassroomServiceImpl implements ClassroomService {
 
-    @Autowired
-    private JdbcClassroomDao dao;
+    private static final Logger logger = LoggerFactory.getLogger(ClassroomServiceImpl.class);
 
     private final ClassroomDao classroomDao;
-    private static final Logger logger = LoggerFactory.getLogger(ClassroomServiceImpl.class);
 
     public ClassroomServiceImpl(ClassroomDao classroomDao) {
         this.classroomDao = classroomDao;
-    }
-
-    public ClassroomServiceImpl() {
-        classroomDao = null;
     }
 
     @Override
@@ -64,9 +56,5 @@ public class ClassroomServiceImpl implements ClassroomService {
     public void delete(Long id) throws SQLException {
         logger.info("deleted classroom with id = {}", id);
         classroomDao.delete(id);
-    }
-
-    public List<Classroom> findAllTest() {
-        return dao.findAllTest();
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.service.CourseService;
-import ru.trofimov.timetableviewersystem.service.UserCourseService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
@@ -30,9 +29,6 @@ class TeacherControllerTest {
 
     @MockBean
     private CourseService courseService;
-
-    @MockBean
-    private UserCourseService userCourseService;
 
     @Qualifier("userDetailServiceIml")
     @MockBean

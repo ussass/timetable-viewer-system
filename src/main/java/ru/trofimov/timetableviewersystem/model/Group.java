@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "groups")
 public class Group implements MyEntity<Long> {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
     private long id;
 

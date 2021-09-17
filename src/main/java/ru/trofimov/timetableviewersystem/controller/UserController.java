@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Role;
 import ru.trofimov.timetableviewersystem.model.User;
-import ru.trofimov.timetableviewersystem.service.UserCourseService;
-import ru.trofimov.timetableviewersystem.service.UserGroupService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,13 +17,9 @@ import java.util.Set;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    private final UserGroupService userGroupService;
-    private final UserCourseService userCourseService;
 
-    public UserController(UserService userService, UserGroupService userGroupService, UserCourseService userCourseService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userGroupService = userGroupService;
-        this.userCourseService = userCourseService;
     }
 
     @GetMapping()
@@ -55,41 +49,28 @@ public class UserController {
 
     @PostMapping("/edit")
     public String postEditUser(RedirectAttributes attributes,
-                                  @RequestParam String firstName,
-                                  @RequestParam String lastName,
-                                  @RequestParam(defaultValue = "false") boolean switchCheckAdmin,
-                                  @RequestParam(defaultValue = "false") boolean switchCheckStudent,
-                                  @RequestParam(defaultValue = "false") boolean switchCheckTeacher,
-                                  @RequestParam(defaultValue = "false") boolean switchCheckStuff,
-                                  @RequestParam Long id) {
-
-        System.out.println("firstName = " + firstName);
-        System.out.println("lastName = " + lastName);
-        System.out.println("switchCheckAdmin = " + switchCheckAdmin);
-        System.out.println("switchCheckStudent = " + switchCheckStudent);
-        System.out.println("switchCheckTeacher = " + switchCheckTeacher);
-        System.out.println("switchCheckStuff = " + switchCheckStuff);
-        System.out.println("id = " + id);
-
+                               @RequestParam String firstName,
+                               @RequestParam String lastName,
+                               @RequestParam(defaultValue = "false") boolean switchCheckAdmin,
+                               @RequestParam(defaultValue = "false") boolean switchCheckStudent,
+                               @RequestParam(defaultValue = "false") boolean switchCheckTeacher,
+                               @RequestParam(defaultValue = "false") boolean switchCheckStuff,
+                               @RequestParam Long id) {
 
         if (firstName.length() > 0 && lastName.length() > 0) {
             Set<Role> roles = new HashSet<>();
-            if (switchCheckAdmin) roles.add(Role.ADMIN);
-            if (switchCheckStudent) roles.add(Role.STUDENT);
-            else try {
-                userGroupService.deleteByUserId(id);
-            } catch (SQLException e) {
-                attributes.addAttribute("errorMessage", "failed to delete entry");
-            }
-            if (switchCheckTeacher) roles.add(Role.TEACHER);
-            else try {
-                userCourseService.deleteByUserId(id);
-            } catch (SQLException e) {
-                attributes.addAttribute("errorMessage", "failed to delete entry");
-            }
-            if (switchCheckStuff) roles.add(Role.STUFF);
             try {
                 User user = userService.findById(id);
+                if (switchCheckAdmin) roles.add(Role.ADMIN);
+
+                if (switchCheckStudent) roles.add(Role.STUDENT);
+                else user.setGroupId(null);
+
+                if (switchCheckTeacher) roles.add(Role.TEACHER);
+                else user.setCourseId(null);
+
+                if (switchCheckStuff) roles.add(Role.STUFF);
+
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
                 user.setRoles(roles);
@@ -111,5 +92,4 @@ public class UserController {
         }
         return "redirect:/users";
     }
-
 }

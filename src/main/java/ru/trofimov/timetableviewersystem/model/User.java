@@ -13,30 +13,38 @@ import java.util.Set;
 public class User implements MyEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    protected Long id;
 
     @Column(name = "first_name")
-    private String firstName;
+    protected String firstName;
 
     @Column(name = "last_name")
-    private String lastName;
+    protected String lastName;
 
-    private String login;
+    protected String login;
 
-    private String password;
+    protected String password;
+
+    @Column(name = "course_id")
+    protected Long courseId;
+
+    @Column(name = "group_id")
+    protected Long groupId;
 
     @Transient
-    private Set<Role> roles;
+    protected Set<Role> roles;
 
     @Transient
-    private Set<SimpleGrantedAuthority> authorities;
+    protected Set<SimpleGrantedAuthority> authorities;
 
     @Column(name = "roles")
-    private String stringRoles;
+    protected String stringRoles;
 
     public User() {
+        roles = new HashSet<>();
+        authorities = new HashSet<>();
     }
 
     public User(String firstName, String lastName) {
@@ -77,25 +85,48 @@ public class User implements MyEntity<Long> {
         return firstName + " " + lastName;
     }
 
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public String getStringRoles() {
+        return stringRoles;
     }
 
     public void addRole(Role role) {
         roles.add(role);
     }
 
-    public String getStringRoles() {
-        if (roles.size() == 0) return "";
-        StringBuilder builder = new StringBuilder();
-        roles.forEach(role -> builder.append(role.name()).append(","));
-        return builder.toString().substring(0, builder.toString().length() - 1);
+    public String setRolesToStringRoles() {
+        if (roles.size() == 0) {
+            stringRoles = "";
+        } else {
+            StringBuilder builder = new StringBuilder();
+            roles.forEach(role -> builder.append(role.name()).append(","));
+            stringRoles = builder.toString().substring(0, builder.toString().length() - 1);
+        }
+        return stringRoles;
     }
 
-    public void setStringRoles(String roles) {
+    public void addRolesFromString(String roles) {
         Arrays.stream(roles.split(","))
                 .forEach(s -> {
-                    if(s.length() > 2) addRole(Role.valueOf(s));
+                    if (s.length() > 2) addRole(Role.valueOf(s));
+                });
+    }
+
+    public void addRolesFromString() {
+        Arrays.stream(stringRoles.split(","))
+                .forEach(s -> {
+                    if (s.length() > 2) addRole(Role.valueOf(s));
                 });
     }
 
@@ -105,6 +136,14 @@ public class User implements MyEntity<Long> {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     public String getLogin() {
@@ -123,13 +162,17 @@ public class User implements MyEntity<Long> {
         this.password = password;
     }
 
+    public void setStringRoles(String stringRoles) {
+        this.stringRoles = stringRoles;
+    }
+
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
     public Set<SimpleGrantedAuthority> getAuthorities() {
-        for (Role role: roles){
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+ role.name()));
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
         }
         return authorities;
     }
@@ -138,22 +181,21 @@ public class User implements MyEntity<Long> {
         this.authorities = authorities;
     }
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
 
-    public boolean isTeacher(){
+    public boolean isTeacher() {
         return roles.contains(Role.TEACHER);
     }
 
-    public boolean isStudent(){
+    public boolean isStudent() {
         return roles.contains(Role.STUDENT);
     }
 
-    public boolean isStuff(){
+    public boolean isStuff() {
         return roles.contains(Role.STUFF);
     }
-
 
     @Override
     public String toString() {
@@ -163,7 +205,10 @@ public class User implements MyEntity<Long> {
                 ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", groupId='" + groupId + '\'' +
                 ", roles=" + roles +
+                ", stringRoles=" + stringRoles +
                 '}';
     }
 }

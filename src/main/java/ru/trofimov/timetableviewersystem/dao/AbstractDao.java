@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public abstract class AbstractDao<T extends MyEntity<Long>> implements Dao<T, Long> {
     public T save(T entity) throws SQLException {
-        return entity.getId() == 0 ? create(entity) : update(entity);
+        return entity.getId() == null ? create(entity) : update(entity);
     }
 
     abstract public T create(T entity) throws SQLException;

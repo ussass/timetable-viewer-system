@@ -14,8 +14,9 @@ import java.util.List;
 @Service
 public class GroupServiceImpl implements GroupService {
 
-    private final GroupDao groupDao;
     private static final Logger logger = LoggerFactory.getLogger(GroupServiceImpl.class);
+
+    private final GroupDao groupDao;
 
     public GroupServiceImpl(GroupDao groupDao) {
         this.groupDao = groupDao;

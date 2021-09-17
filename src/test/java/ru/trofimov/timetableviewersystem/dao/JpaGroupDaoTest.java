@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.model.Group;
 
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class JdbcGroupDaoTest extends BaseDaoTest {
+class JpaGroupDaoTest extends BaseDaoTest {
 
     @Autowired
     GroupDao groupDao;
@@ -32,6 +33,7 @@ class JdbcGroupDaoTest extends BaseDaoTest {
     }
 
     @Test
+    @Transactional
     @Sql("/group/recreate_schema.sql")
     void shouldAdd() throws SQLException {
         Group group = new Group("test");
@@ -41,6 +43,7 @@ class JdbcGroupDaoTest extends BaseDaoTest {
     }
 
     @Test
+    @Transactional
     @Sql({ "/group/recreate_schema.sql", "/group/insert_data.sql" })
     void shouldUpdate() throws SQLException {
         Group group = new Group("update");
@@ -52,6 +55,7 @@ class JdbcGroupDaoTest extends BaseDaoTest {
     }
 
     @Test
+    @Transactional
     @Sql({ "/group/recreate_schema.sql", "/group/insert_data.sql" })
     void shouldDelete() throws SQLException {
         groupDao.delete(1L);

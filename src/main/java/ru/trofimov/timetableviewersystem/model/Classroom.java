@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Classroom implements MyEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "classroom_id")
     private Long id;
 

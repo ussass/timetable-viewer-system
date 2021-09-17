@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LessonDao extends Dao<Lesson, Long> {
     List<Lesson> getLessonsForDay(int day) throws SQLException;
+
+    void deleteByDay(int day) throws SQLException;
 }
