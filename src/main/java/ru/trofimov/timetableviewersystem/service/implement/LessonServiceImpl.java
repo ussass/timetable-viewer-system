@@ -71,4 +71,10 @@ public class LessonServiceImpl implements LessonService {
     public List<Lesson> getLessonsForDay(int day) throws SQLException {
         return lessonDao.getLessonsForDay(day);
     }
+
+    @Override
+    @Transactional
+    public void deleteByDay(int day) throws SQLException {
+        lessonDao.deleteByDay(day);
+    }
 }

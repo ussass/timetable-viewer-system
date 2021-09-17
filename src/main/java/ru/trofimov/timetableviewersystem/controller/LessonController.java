@@ -4,10 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.trofimov.timetableviewersystem.model.Course;
-import ru.trofimov.timetableviewersystem.model.Group;
-import ru.trofimov.timetableviewersystem.model.Lesson;
-import ru.trofimov.timetableviewersystem.model.User;
+import ru.trofimov.timetableviewersystem.model.*;
 import ru.trofimov.timetableviewersystem.service.*;
 
 import java.sql.SQLException;
@@ -61,8 +58,6 @@ public class LessonController {
                     .findFirst().orElse(new Course("no course"))
                     .getCourseName());
         }
-        System.out.println("day = " + day);
-
         model.addAttribute("lessons", lessons);
 
         return "lessons/index";
@@ -75,17 +70,16 @@ public class LessonController {
         model.addAttribute("classrooms", classroomService.findAll());
         model.addAttribute("slots", lessonSlotService.findAll());
         model.addAttribute("groups", groupService.findAll());
-        model.addAttribute("teachers", userService.findAllTeacher());
+        model.addAttribute("teachers", getCourseNameById());
 
         return "lessons/new";
     }
 
     @PostMapping("/new")
-    public String postEditLesson(
+    public String postNewLesson(
             @RequestParam() String[] group,
             @RequestParam() String[] courseTeacher
-    ) {
-        System.out.println("courseTeacher = " + courseTeacher[0]);
+    ) throws SQLException {
         List<Lesson> lessons = new ArrayList<>();
         for (int i = 0; i < group.length; i++) {
             String[] splitGroup = group[i].split("-");
@@ -102,6 +96,7 @@ public class LessonController {
                     Integer.parseInt(splitTeacher[2]))  //dayOfWeek
             );
         }
+        lessonService.deleteByDay(Integer.parseInt(courseTeacher[0].split("-")[2]));
         lessonService.saveAll(lessons);
 
         return "redirect:/lessons";
@@ -112,9 +107,10 @@ public class LessonController {
         model.addAttribute("active", "timetable");
         try {
             Lesson lesson = lessonService.findById(id);
+
             model.addAttribute("lesson", lesson);
             model.addAttribute("groups", groupService.findAll());
-            model.addAttribute("teachers", userService.findAllTeacher());
+            model.addAttribute("teachers", getCourseNameById());
         } catch (SQLException e) {
             model.addAttribute("errorMessage", "Failed to load data");
         }
@@ -140,5 +136,17 @@ public class LessonController {
         }
 
         return "redirect:/lessons/";
+    }
+
+    private List<Teacher> getCourseNameById() throws SQLException {
+        List<Teacher> teachers = userService.findAllTeacher();
+        List<Course> courses = courseService.findAll();
+        teachers.forEach(
+                teacher -> teacher.setCourseName(courses.stream()
+                        .filter(course -> course.getId() == teacher.getCourseId())
+                        .findFirst().orElse(new Course(""))
+                        .getCourseName())
+        );
+        return teachers;
     }
 }

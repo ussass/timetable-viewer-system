@@ -9,4 +9,6 @@ public interface LessonService extends Service<Lesson, Long>{
     List<Lesson> saveAll(List<Lesson> lessons);
 
     List<Lesson> getLessonsForDay(int day) throws SQLException;
+
+    void deleteByDay(int day) throws SQLException;
 }

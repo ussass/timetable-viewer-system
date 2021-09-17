@@ -86,4 +86,16 @@ public class JpaLessonDao extends AbstractDao<Lesson> implements LessonDao {
             throw new SQLException("Unable to find lessons by day due " + e.getMessage(), e);
         }
     }
+
+    @Override
+    public void deleteByDay(int day) throws SQLException {
+        try {
+            entityManager.createQuery("delete from Lesson l where l.dayOfWeek=:day")
+                    .setParameter("day", day)
+                    .executeUpdate();
+        } catch (DataAccessException e) {
+            logger.error("Unable to delete lesson with day {} due " + e.getMessage(), day);
+            throw new SQLException("Unable to delete lesson due " + e.getMessage(), e);
+        }
+    }
 }
