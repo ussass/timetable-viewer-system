@@ -29,6 +29,10 @@ public class Teacher extends User {
         return courseName;
     }
 
+    public String getCourseNameAndFullName(){
+        return courseName + " - " + getFullName();
+    }
+
     public void setCourseName(String groupName) {
         this.courseName = groupName;
     }
