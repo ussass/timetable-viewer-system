@@ -19,6 +19,10 @@ public class Classroom implements MyEntity<Long> {
     public Classroom() {
     }
 
+    public Classroom(Long id) {
+        this.id = id;
+    }
+
     public Classroom(int number) {
         this.number = number;
     }

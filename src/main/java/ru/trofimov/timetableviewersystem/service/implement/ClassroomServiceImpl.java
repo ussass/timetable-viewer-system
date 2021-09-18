@@ -10,6 +10,8 @@ import ru.trofimov.timetableviewersystem.service.ClassroomService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ClassroomServiceImpl implements ClassroomService {
@@ -34,27 +36,27 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Transactional(readOnly = true)
     public List<Classroom> findAll() throws SQLException {
         logger.info("Got all classrooms");
-        return classroomDao.findAll();
+        return StreamSupport.stream(classroomDao.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Classroom findById(Long id) throws SQLException {
         logger.info("Got classroom by id = {}", id);
-        return classroomDao.findById(id);
+        return classroomDao.findById(id).get();
     }
 
     @Override
     @Transactional
     public Classroom update(Classroom entity) throws SQLException {
         logger.info("updated classroom with id = {}", entity.getId());
-        return classroomDao.update(entity);
+        return classroomDao.save(entity);
     }
 
     @Override
     @Transactional
     public void delete(Long id) throws SQLException {
         logger.info("deleted classroom with id = {}", id);
-        classroomDao.delete(id);
+        classroomDao.delete(new Classroom(id));
     }
 }
