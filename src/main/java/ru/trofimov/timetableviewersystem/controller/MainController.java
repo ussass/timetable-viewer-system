@@ -8,24 +8,41 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.trofimov.timetableviewersystem.model.Classroom;
 import ru.trofimov.timetableviewersystem.model.User;
+import ru.trofimov.timetableviewersystem.service.ClassroomService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 public class MainController {
 
     private final UserService userService;
+    private final ClassroomService classroomService;
 
-    public MainController(UserService userService) {
+    public MainController(UserService userService, ClassroomService classroomService) {
         this.userService = userService;
+        this.classroomService = classroomService;
     }
 
     @GetMapping("/")
     public String showIndex(Model model) throws SQLException {
         model.addAttribute("active", "home");
 //        int i = 5 / 0; test @ExceptionHandler
+
+//        Iterable<Classroom> classrooms = classroomService.findAll();
+//        classrooms.forEach(System.out::println);
+//        System.out.println("classroomService.findById(1L) = " + classroomService.findById(1L));
+        Classroom classroom = new Classroom(1234);
+//        classroom.setId(9L);
+
+//        classroomService.save(classroom);
+        classroomService.delete(10L);
+        classroomService.findAll().forEach(System.out::println);
+//        System.out.println("classroomService.findById(9L) = " + classroomService.findById(9L));
+//        System.out.println("classroom = " + classroom);
 
         return "index";
     }

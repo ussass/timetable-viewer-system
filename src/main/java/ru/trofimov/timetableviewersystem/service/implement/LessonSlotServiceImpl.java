@@ -10,6 +10,8 @@ import ru.trofimov.timetableviewersystem.service.LessonSlotService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class LessonSlotServiceImpl implements LessonSlotService {
@@ -34,27 +36,27 @@ public class LessonSlotServiceImpl implements LessonSlotService {
     @Transactional(readOnly = true)
     public List<LessonSlot> findAll() throws SQLException {
         logger.info("Got all lessonSlots");
-        return lessonSlotDao.findAll();
+        return StreamSupport.stream(lessonSlotDao.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public LessonSlot findById(Long id) throws SQLException {
         logger.info("Got lessonSlot by id = {}", id);
-        return lessonSlotDao.findById(id);
+        return lessonSlotDao.findById(id).get();
     }
 
     @Override
     @Transactional
     public LessonSlot update(LessonSlot entity) throws SQLException {
         logger.info("updated lessonSlot with id = {}", entity.getId());
-        return lessonSlotDao.update(entity);
+        return lessonSlotDao.save(entity);
     }
 
     @Override
     @Transactional
     public void delete(Long id) throws SQLException {
         logger.info("deleted lessonSlot with id = {}", id);
-        lessonSlotDao.delete(id);
+        lessonSlotDao.delete(new LessonSlot(id));
     }
 }

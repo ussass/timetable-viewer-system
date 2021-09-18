@@ -10,6 +10,8 @@ import ru.trofimov.timetableviewersystem.service.GroupService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -34,27 +36,27 @@ public class GroupServiceImpl implements GroupService {
     @Transactional(readOnly = true)
     public List<Group> findAll() throws SQLException {
         logger.info("Got all groups");
-        return groupDao.findAll();
+        return StreamSupport.stream(groupDao.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Group findById(Long id) throws SQLException {
         logger.info("Got group by id = {}", id);
-        return groupDao.findById(id);
+        return groupDao.findById(id).get();
     }
 
     @Override
     @Transactional
     public Group update(Group entity) throws SQLException {
         logger.info("updated group with id = {}", entity.getId());
-        return groupDao.update(entity);
+        return groupDao.save(entity);
     }
 
     @Override
     @Transactional
     public void delete(Long id) throws SQLException {
         logger.info("deleted group with id = {}", id);
-        groupDao.delete(id);
+        groupDao.delete(new Group(id));
     }
 }

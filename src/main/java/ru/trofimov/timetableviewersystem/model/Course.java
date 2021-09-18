@@ -18,6 +18,10 @@ public class Course implements MyEntity<Long> {
     public Course() {
     }
 
+    public Course(Long courseId) {
+        this.courseId = courseId;
+    }
+
     public Course(String courseName) {
         this.courseName = courseName;
     }

@@ -24,6 +24,11 @@ public class Group implements MyEntity<Long> {
         students = new ArrayList<>();
     }
 
+    public Group(long id) {
+        this.id = id;
+        students = new ArrayList<>();
+    }
+
     public Group(String groupName) {
         this.groupName = groupName;
         students = new ArrayList<>();
