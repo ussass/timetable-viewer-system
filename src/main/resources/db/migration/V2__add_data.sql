@@ -29,12 +29,6 @@ INSERT INTO users (first_name, last_name, login, password, group_id, roles) valu
 INSERT INTO users (first_name, last_name, login, password, course_id, roles) values ('Jacob', 'Smith', 'jacob-smith', '$2a$10$EOv4C4b69cJf1Jx9YCKLCe3No7Rui1CTywg6rFw5/i4yhHF/GIR2S', 2, 'TEACHER');
 INSERT INTO users (first_name, last_name, login, password, course_id, roles) values ('Mason', 'Johnson', 'mason-johnson', '$2a$10$EOv4C4b69cJf1Jx9YCKLCe3No7Rui1CTywg6rFw5/i4yhHF/GIR2S', 3, 'TEACHER');
 
-INSERT INTO users_groups values (6,1);
-INSERT INTO users_groups values (7,2);
-
-INSERT INTO users_courses (user_id, course_id) values (8,1);
-INSERT INTO users_courses (user_id, course_id) values (9,2);
-
 INSERT INTO classrooms (classroom_number) values (11);
 INSERT INTO classrooms (classroom_number) values (12);
 INSERT INTO classrooms (classroom_number) values (13);
