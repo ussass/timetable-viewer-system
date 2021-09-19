@@ -2,8 +2,10 @@ package ru.trofimov.timetableviewersystem.service.implement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.trofimov.timetableviewersystem.dao.UserCrudDao;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
 import ru.trofimov.timetableviewersystem.model.Teacher;
 import ru.trofimov.timetableviewersystem.model.Student;
@@ -13,23 +15,29 @@ import ru.trofimov.timetableviewersystem.service.UserService;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    private final UserCrudDao userCrudDao;
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserCrudDao userCrudDao, UserDao userDao, PasswordEncoder passwordEncoder) {
+        this.userCrudDao = userCrudDao;
         this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
     public User save(User entity) throws SQLException {
         entity.setRolesToStringRoles();
-        User user = userDao.save(entity);
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        User user = userCrudDao.save(entity);
         user.addRolesFromString();
         logger.info("saved new user with id={}", user.getId());
         return user;
@@ -39,7 +47,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<User> findAll() throws SQLException {
         logger.info("Got all users");
-        List<User> users = userDao.findAll();
+        List<User> users = StreamSupport.stream(userCrudDao.findAll().spliterator(), false)
+                .collect(Collectors.toList());
         users.forEach(User::addRolesFromString);
         return users;
     }
@@ -48,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User findById(Long id) throws SQLException {
         logger.info("Got user by id = {}", id);
-        User user = userDao.findById(id);
+        User user = userCrudDao.findById(id).get();
         user.addRolesFromString();
         return user;
     }
@@ -57,8 +66,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User update(User entity) throws SQLException {
         entity.setRolesToStringRoles();
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         logger.info("updated user with id = {}", entity.getId());
-        User user = userDao.update(entity);
+        User user = userCrudDao.save(entity);
         user.addRolesFromString();
         return user;
     }
@@ -67,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(Long id) throws SQLException {
         logger.info("deleted user with id = {}", id);
-        userDao.delete(id);
+        userCrudDao.deleteById(id);
     }
 
     @Override
@@ -99,7 +109,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<User> findAllByGroup(Long id) throws SQLException {
         logger.info("Got all users by Group");
-        List<User> users = userDao.findAll();
+        List<User> users = StreamSupport.stream(userCrudDao.findAll().spliterator(), false)
+                .collect(Collectors.toList());
         users.forEach(User::addRolesFromString);
         return users;
     }
