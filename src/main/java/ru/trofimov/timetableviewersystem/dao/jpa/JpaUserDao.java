@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import ru.trofimov.timetableviewersystem.dao.AbstractDao;
 import ru.trofimov.timetableviewersystem.dao.UserDao;
 import ru.trofimov.timetableviewersystem.model.*;
 
@@ -26,61 +25,6 @@ public class JpaUserDao implements UserDao {
     public JpaUserDao(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
-
-//    @Override
-//    public User create(User entity) throws SQLException {
-//        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-//        try {
-//            entityManager.persist(entity);
-//            return entity;
-//        } catch (Exception e) {
-//            logger.error("Unable to insert into users {} due " + e.getMessage(), entity);
-//            throw new SQLException("Unable to insert into users due " + e.getMessage(), e);
-//        }
-//    }
-//
-//    @Override
-//    public User update(User entity) throws SQLException {
-//        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-//        try {
-//            return entityManager.merge(entity);
-//        } catch (Exception e) {
-//            logger.error("Unable to update {} due " + e.getMessage(), entity);
-//            throw new SQLException("Unable to update user due " + e.getMessage(), e);
-//        }
-//    }
-//
-//    @Override
-//    public List<User> findAll() throws SQLException {
-//        try {
-//            return entityManager.createQuery("from " + User.class.getName()).getResultList();
-//        } catch (Exception e) {
-//            logger.error("Unable to find all user due " + e.getMessage());
-//            throw new SQLException("Unable to find all user due " + e.getMessage(), e);
-//        }
-//    }
-//
-//    @Override
-//    public User findById(Long id) throws SQLException {
-//        try {
-//            return entityManager.find(User.class, id);
-//        } catch (Exception e) {
-//            logger.error("Unable to find user by id {} due " + e.getMessage(), id);
-//            throw new SQLException("Unable to find user by id due " + e.getMessage(), e);
-//        }
-//    }
-//
-//    @Override
-//    public void delete(Long id) throws SQLException {
-//        try {
-//            entityManager.createQuery("delete from User where id=:id")
-//                    .setParameter("id", id)
-//                    .executeUpdate();
-//        } catch (Exception e) {
-//            logger.error("Unable to delete user by id {} due " + e.getMessage(), id);
-//            throw new SQLException("Unable to delete user by id due " + e.getMessage(), e);
-//        }
-//    }
 
     @Override
     @SuppressWarnings("UNCHECKED")

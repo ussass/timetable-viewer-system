@@ -30,31 +30,31 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     @Transactional
-    public Lesson save(Lesson entity) throws SQLException {
+    public Lesson save(Lesson entity) {
         return lessonCrudDao.save(entity);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Lesson> findAll() throws SQLException {
+    public List<Lesson> findAll() {
         return StreamSupport.stream(lessonCrudDao.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Lesson findById(Long id) throws SQLException {
+    public Lesson findById(Long id) {
         return lessonCrudDao.findById(id).get();
     }
 
     @Override
     @Transactional
-    public Lesson update(Lesson entity) throws SQLException {
+    public Lesson update(Lesson entity) {
         return lessonCrudDao.save(entity);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) throws SQLException {
+    public void delete(Long id) {
         lessonCrudDao.deleteById(id);
     }
 

@@ -22,10 +22,6 @@ public class LessonSlot implements MyEntity<Long> {
     public LessonSlot() {
     }
 
-    public LessonSlot(Long id) {
-        this.id = id;
-    }
-
     public LessonSlot(int number, int minStart) {
         this.number = number;
         this.minStart = minStart;

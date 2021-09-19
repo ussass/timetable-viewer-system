@@ -8,7 +8,6 @@ import ru.trofimov.timetableviewersystem.dao.GroupDao;
 import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.service.GroupService;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -26,7 +25,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public Group save(Group entity) throws SQLException {
+    public Group save(Group entity) {
         Group group = groupDao.save(entity);
         logger.info("saved new group with id={}", group.getId());
         return group;
@@ -34,29 +33,29 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Group> findAll() throws SQLException {
+    public List<Group> findAll() {
         logger.info("Got all groups");
         return StreamSupport.stream(groupDao.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Group findById(Long id) throws SQLException {
+    public Group findById(Long id) {
         logger.info("Got group by id = {}", id);
         return groupDao.findById(id).get();
     }
 
     @Override
     @Transactional
-    public Group update(Group entity) throws SQLException {
+    public Group update(Group entity) {
         logger.info("updated group with id = {}", entity.getId());
         return groupDao.save(entity);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) throws SQLException {
+    public void delete(Long id) {
         logger.info("deleted group with id = {}", id);
-        groupDao.delete(new Group(id));
+        groupDao.deleteById(id);
     }
 }

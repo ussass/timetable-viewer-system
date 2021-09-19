@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save(User entity) throws SQLException {
+    public User save(User entity) {
         entity.setRolesToStringRoles();
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         User user = userCrudDao.save(entity);
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAll() throws SQLException {
+    public List<User> findAll() {
         logger.info("Got all users");
         List<User> users = StreamSupport.stream(userCrudDao.findAll().spliterator(), false)
                 .collect(Collectors.toList());
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User findById(Long id) throws SQLException {
+    public User findById(Long id) {
         logger.info("Got user by id = {}", id);
         User user = userCrudDao.findById(id).get();
         user.addRolesFromString();
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User update(User entity) throws SQLException {
+    public User update(User entity) {
         entity.setRolesToStringRoles();
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         logger.info("updated user with id = {}", entity.getId());
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws SQLException {
+    public void delete(Long id) {
         logger.info("deleted user with id = {}", id);
         userCrudDao.deleteById(id);
     }
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAllByGroup(Long id) throws SQLException {
+    public List<User> findAllByGroup(Long id) {
         logger.info("Got all users by Group");
         List<User> users = StreamSupport.stream(userCrudDao.findAll().spliterator(), false)
                 .collect(Collectors.toList());

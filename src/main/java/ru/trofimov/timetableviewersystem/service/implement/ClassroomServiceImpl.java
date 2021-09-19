@@ -8,7 +8,6 @@ import ru.trofimov.timetableviewersystem.dao.ClassroomDao;
 import ru.trofimov.timetableviewersystem.model.Classroom;
 import ru.trofimov.timetableviewersystem.service.ClassroomService;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -26,7 +25,7 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     @Transactional
-    public Classroom save(Classroom entity) throws SQLException {
+    public Classroom save(Classroom entity) {
         Classroom classroom = classroomDao.save(entity);
         logger.info("saved new classroom with id={}", classroom.getId());
         return classroom;
@@ -34,29 +33,29 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Classroom> findAll() throws SQLException {
+    public List<Classroom> findAll() {
         logger.info("Got all classrooms");
         return StreamSupport.stream(classroomDao.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Classroom findById(Long id) throws SQLException {
+    public Classroom findById(Long id) {
         logger.info("Got classroom by id = {}", id);
         return classroomDao.findById(id).get();
     }
 
     @Override
     @Transactional
-    public Classroom update(Classroom entity) throws SQLException {
+    public Classroom update(Classroom entity) {
         logger.info("updated classroom with id = {}", entity.getId());
         return classroomDao.save(entity);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) throws SQLException {
+    public void delete(Long id) {
         logger.info("deleted classroom with id = {}", id);
-        classroomDao.delete(new Classroom(id));
+        classroomDao.deleteById(id);
     }
 }
