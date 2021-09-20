@@ -1,13 +1,15 @@
 package ru.trofimov.timetableviewersystem.dao;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import ru.trofimov.timetableviewersystem.model.Lesson;
 
-import java.sql.SQLException;
 import java.util.List;
 
-public interface LessonDao {
+@Repository
+public interface LessonDao extends CrudRepository<Lesson, Long> {
 
-    List<Lesson> getLessonsForDay(int day) throws SQLException;
+    List<Lesson> findByDayOfWeek(int dayOfWeek);
 
-    void deleteByDay(int day) throws SQLException;
+    void deleteByDayOfWeek(int dayOfWeek);
 }

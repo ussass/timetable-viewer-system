@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.trofimov.timetableviewersystem.dao.LessonDao;
-import ru.trofimov.timetableviewersystem.dao.LessonCrudDao;
 import ru.trofimov.timetableviewersystem.model.Lesson;
 import ru.trofimov.timetableviewersystem.service.LessonService;
 
@@ -19,60 +18,57 @@ public class LessonServiceImpl implements LessonService {
 
     private static final Logger logger = LoggerFactory.getLogger(LessonServiceImpl.class);
 
-    private final LessonCrudDao lessonCrudDao;
-
     private final LessonDao lessonDao;
 
-    public LessonServiceImpl(LessonCrudDao lessonCrudDao, LessonDao lessonDao) {
-        this.lessonCrudDao = lessonCrudDao;
-        this.lessonDao = lessonDao;
+    public LessonServiceImpl(LessonDao lessonCrudDao) {
+        this.lessonDao = lessonCrudDao;
     }
 
     @Override
     @Transactional
     public Lesson save(Lesson entity) {
-        return lessonCrudDao.save(entity);
+        return lessonDao.save(entity);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Lesson> findAll() {
-        return StreamSupport.stream(lessonCrudDao.findAll().spliterator(), false).collect(Collectors.toList());
+        return StreamSupport.stream(lessonDao.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Lesson findById(Long id) {
-        return lessonCrudDao.findById(id).get();
+        return lessonDao.findById(id).get();
     }
 
     @Override
     @Transactional
     public Lesson update(Lesson entity) {
-        return lessonCrudDao.save(entity);
+        return lessonDao.save(entity);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        lessonCrudDao.deleteById(id);
+        lessonDao.deleteById(id);
     }
 
     @Override
     @Transactional
     public List<Lesson> saveAll(List<Lesson> lessons){
-        return lessons.stream().map(lessonCrudDao::save).collect(Collectors.toList());
+        return lessons.stream().map(lessonDao::save).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Lesson> getLessonsForDay(int day) throws SQLException {
-        return lessonDao.getLessonsForDay(day);
+        return lessonDao.findByDayOfWeek(day);
     }
 
     @Override
     @Transactional
     public void deleteByDay(int day) throws SQLException {
-        lessonDao.deleteByDay(day);
+        lessonDao.deleteByDayOfWeek(day);
     }
 }
