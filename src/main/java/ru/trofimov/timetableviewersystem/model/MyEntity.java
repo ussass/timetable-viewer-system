@@ -1,4 +1,4 @@
-package ru.trofimov.timetableviewersystem.dao;
+package ru.trofimov.timetableviewersystem.model;
 
 public interface MyEntity<K> {
     K getId();

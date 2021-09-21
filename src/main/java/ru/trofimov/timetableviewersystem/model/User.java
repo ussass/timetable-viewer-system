@@ -1,7 +1,6 @@
 package ru.trofimov.timetableviewersystem.model;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import ru.trofimov.timetableviewersystem.dao.MyEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -25,7 +25,6 @@ public class MainController {
     @GetMapping("/")
     public String showIndex(Model model) throws SQLException {
         model.addAttribute("active", "home");
-//        int i = 5 / 0; test @ExceptionHandler
 
         return "index";
     }
@@ -35,12 +34,6 @@ public class MainController {
         model.addAttribute("active", "login");
         return "login";
     }
-
-//    @GetMapping("/error")
-//    public String error(Model model) {
-////        model.addAttribute("active","home");
-//        return "index";
-//    }
 
     @GetMapping("/signup")
     public String SignUp(Model model, @RequestParam(required = false, value = "errorMessage") String errorMessage) {
