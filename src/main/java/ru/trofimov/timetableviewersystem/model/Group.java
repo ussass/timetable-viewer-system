@@ -3,6 +3,8 @@ package ru.trofimov.timetableviewersystem.model;
 import ru.trofimov.timetableviewersystem.dao.MyEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class Group implements MyEntity<Long> {
     private long id;
 
     @Column(name = "group_name")
+    @Size(min = 3)
     private String groupName;
 
     @Transient
