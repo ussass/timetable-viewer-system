@@ -7,7 +7,7 @@ import ru.trofimov.timetableviewersystem.model.User;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface UserService extends Service<User, Long> {
+public interface UserService extends CrudService<User, Long> {
     User findByLogin(String login) throws SQLException;
 
     List<Student> findAllStudent() throws SQLException;

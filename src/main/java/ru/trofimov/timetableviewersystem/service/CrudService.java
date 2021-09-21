@@ -3,7 +3,7 @@ package ru.trofimov.timetableviewersystem.service;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface Service<T, K> {
+public interface CrudService<T, K> {
     T save(T entity) throws SQLException;
 
     List<T> findAll() throws SQLException;

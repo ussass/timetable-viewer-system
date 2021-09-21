@@ -1,7 +1,5 @@
 package ru.trofimov.timetableviewersystem.model;
 
-import ru.trofimov.timetableviewersystem.dao.MyEntity;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
