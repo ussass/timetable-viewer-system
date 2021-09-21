@@ -8,29 +8,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.trofimov.timetableviewersystem.model.Classroom;
 import ru.trofimov.timetableviewersystem.model.User;
-import ru.trofimov.timetableviewersystem.service.ClassroomService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @Controller
 public class MainController {
 
     private final UserService userService;
-    private final ClassroomService classroomService;
 
-    public MainController(UserService userService, ClassroomService classroomService) {
+    public MainController(UserService userService) {
         this.userService = userService;
-        this.classroomService = classroomService;
     }
 
     @GetMapping("/")
     public String showIndex(Model model) throws SQLException {
         model.addAttribute("active", "home");
-//        int i = 5 / 0; test @ExceptionHandler
 
         return "index";
     }
@@ -40,12 +34,6 @@ public class MainController {
         model.addAttribute("active", "login");
         return "login";
     }
-
-//    @GetMapping("/error")
-//    public String error(Model model) {
-////        model.addAttribute("active","home");
-//        return "index";
-//    }
 
     @GetMapping("/signup")
     public String SignUp(Model model, @RequestParam(required = false, value = "errorMessage") String errorMessage) {
