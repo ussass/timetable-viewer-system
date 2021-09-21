@@ -1,34 +1,14 @@
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS groups CASCADE;
-DROP TABLE IF EXISTS students CASCADE;
-DROP TABLE IF EXISTS teachers CASCADE;
 DROP TABLE IF EXISTS classrooms CASCADE;
 DROP TABLE IF EXISTS lesson_slot CASCADE;
 DROP TABLE IF EXISTS courses CASCADE;
 DROP TABLE IF EXISTS lesson CASCADE;
-DROP TABLE IF EXISTS users_groups CASCADE;
-DROP TABLE IF EXISTS users_courses CASCADE;
 
 CREATE TABLE groups
 (
     group_id   BIGSERIAL    NOT NULL PRIMARY KEY,
     group_name VARCHAR(255) NOT NULL
-);
-
-
-CREATE TABLE students
-(
-    student_id BIGSERIAL    NOT NULL PRIMARY KEY,
-    "group_id" BIGINT REFERENCES groups (group_id),
-    first_name VARCHAR(255) NOT NULL,
-    last_name  VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE teachers
-(
-    teacher_id BIGSERIAL    NOT NULL PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name  VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE classrooms
@@ -72,17 +52,4 @@ CREATE TABLE lessons
     "classroom_id"   BIGINT REFERENCES classrooms (classroom_id),
     "lesson_slot_id" BIGINT REFERENCES lesson_slot (lesson_slot_id),
     day_of_week      INTEGER   NOT NULL
-);
-
-CREATE TABLE users_groups
-(
-    user_id  BIGINT REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    group_id BIGINT REFERENCES groups (group_id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE users_courses
-(
-    uc_id     BIGSERIAL NOT NULL PRIMARY KEY,
-    user_id   BIGINT REFERENCES users (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    course_id BIGINT REFERENCES courses (course_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
