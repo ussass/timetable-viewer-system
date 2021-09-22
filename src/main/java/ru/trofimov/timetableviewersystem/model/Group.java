@@ -15,7 +15,7 @@ public class Group implements MyEntity<Long> {
     private long id;
 
     @Column(name = "group_name")
-    @Size(min = 3)
+    @Size(min = 3, max = 20)
     private String groupName;
 
     @Transient

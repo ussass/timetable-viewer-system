@@ -2,6 +2,7 @@ package ru.trofimov.timetableviewersystem.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.trofimov.timetableviewersystem.model.Group;
@@ -9,6 +10,7 @@ import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.GroupService;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,27 +43,28 @@ public class GroupController {
     }
 
     @GetMapping("/new")
-    public String newGroup(Model model) {
+    public String newGroup(Model model, Group group) {
         model.addAttribute("active", "groups");
         return "groups/new";
     }
 
     @PostMapping("/new")
-    public String postNewGroup(RedirectAttributes attributes, @RequestParam String groupName) {
-        if (groupName.length() > 0) {
-            try {
-                groupService.save(new Group(groupName));
-            } catch (SQLException e) {
-                attributes.addAttribute("errorMessage", "failed to add entry");
-            }
+    public String postNewGroup(RedirectAttributes attributes,
+                               @Valid Group group, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "groups/new";
+        }
+        try {
+            groupService.save(group);
+        } catch (SQLException e) {
+            attributes.addAttribute("errorMessage", "failed to add entry");
         }
         return "redirect:/groups";
     }
 
     @GetMapping("/edit/{id}")
-    public String editGroup(Model model, @PathVariable long id) {
+    public String editGroup(Model model, @PathVariable long id, Group group) {
         model.addAttribute("active", "groups");
-        System.out.println("id = " + id);
         try {
             model.addAttribute("group", groupService.findById(id));
         } catch (SQLException e) {
@@ -73,16 +76,14 @@ public class GroupController {
 
     @PostMapping("/edit")
     public String postEditGroup(RedirectAttributes attributes,
-                                @RequestParam String groupName,
-                                @RequestParam Long id) {
-        if (groupName.length() > 0) {
-            Group group = new Group(groupName);
-            group.setId(id);
-            try {
-                groupService.update(group);
-            } catch (SQLException e) {
-                attributes.addAttribute("errorMessage", "failed to update entry");
-            }
+                                @Valid Group group, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "groups/edit";
+        }
+        try {
+            groupService.update(group);
+        } catch (SQLException e) {
+            attributes.addAttribute("errorMessage", "failed to update entry");
         }
         return "redirect:/groups";
     }

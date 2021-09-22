@@ -16,13 +16,15 @@
         <p th:text="${errorMessage}" class="h6">Error message</p>
     </div>
 
-    <form method="post" th:action="@{/groups/edit}" th:if="${errorMessage == null}">
+    <form method="post" th:action="@{/groups/edit}" th:object="${group}" th:if="${errorMessage == null}">
         <div class="mb-3">
             <label for="groupName" class="form-label">Group name</label>
-            <input type="text" class="form-control" id="groupName"
+            <input type="text" class="form-control" id="groupName" th:field="*{groupName}"
                    th:value="${group.getGroupName()}" name="groupName">
+            <p th:if="${#fields.hasErrors('groupName')}" th:errors="*{groupName}">Group name Error</p>
+
         </div>
-        <input type="text" class="d-none" th:value="${group.getId}" name="id">
+        <input type="text" class="d-none" th:value="${group.getId}" name="id" th:field="*{id}">
         <br>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-primary" type="submit">Edit group</button>
