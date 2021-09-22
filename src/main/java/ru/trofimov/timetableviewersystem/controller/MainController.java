@@ -4,13 +4,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.trofimov.timetableviewersystem.model.Group;
 import ru.trofimov.timetableviewersystem.model.User;
 import ru.trofimov.timetableviewersystem.service.UserService;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 
 @Controller
@@ -23,7 +26,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String showIndex(Model model) throws SQLException {
+    public String showIndex(Model model) {
         model.addAttribute("active", "home");
 
         return "index";
@@ -36,7 +39,8 @@ public class MainController {
     }
 
     @GetMapping("/signup")
-    public String SignUp(Model model, @RequestParam(required = false, value = "errorMessage") String errorMessage) {
+    public String SignUp(@RequestParam(required = false, value = "errorMessage") String errorMessage,
+                         Model model, User user) {
         if (errorMessage != null) {
             model.addAttribute("errorMessage", errorMessage);
         }
@@ -45,21 +49,14 @@ public class MainController {
 
     @PostMapping("/signup")
     public String SignUpPost(RedirectAttributes attributes,
-                             @RequestParam String login,
-                             @RequestParam String password,
-                             @RequestParam String firstName,
-                             @RequestParam String lastName) {
-        if (login.length() == 0 || password.length() == 0 || firstName.length() == 0 || lastName.length() == 0) {
-            attributes.addAttribute("errorMessage", "fields must be filled");
-            return "redirect:/signup";
+                             @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "signup";
         }
 
-        User user = new User(firstName, lastName);
-        user.setLogin(login);
-        user.setPassword(password);
         boolean loginIsExists = false;
         try {
-            if (userService.findByLogin(login) == null) {
+            if (userService.findByLogin(user.getLogin()) == null) {
                 loginIsExists = true;
             }
         } catch (SQLException e) {
@@ -84,7 +81,7 @@ public class MainController {
     @GetMapping("/profile")
     public String showProfile(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails)principal).getUsername();
+        String username = ((UserDetails) principal).getUsername();
         try {
             model.addAttribute("user", userService.findByLogin(username));
 

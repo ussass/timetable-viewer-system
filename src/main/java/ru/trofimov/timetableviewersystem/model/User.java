@@ -20,16 +20,18 @@ public class User implements MyEntity<Long> {
 
     @Column(name = "first_name")
     @NotNull(message = "First name cannot be null")
+    @Size(min = 1, max = 100)
     protected String firstName;
 
     @Column(name = "last_name")
     @NotNull(message = "Last name cannot be null")
+    @Size(min = 1, max = 100)
     protected String lastName;
 
-    @Size(min = 4)
+    @Size(min = 4, max = 20)
     protected String login;
 
-    @Size(min = 8)
+    @Size(min = 8, max = 100)
     protected String password;
 
     @Column(name = "course_id")
