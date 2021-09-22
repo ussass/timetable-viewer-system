@@ -3,6 +3,8 @@ package ru.trofimov.timetableviewersystem.model;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,13 +19,19 @@ public class User implements MyEntity<Long> {
     protected Long id;
 
     @Column(name = "first_name")
+    @NotNull(message = "First name cannot be null")
+    @Size(min = 1, max = 100)
     protected String firstName;
 
     @Column(name = "last_name")
+    @NotNull(message = "Last name cannot be null")
+    @Size(min = 1, max = 100)
     protected String lastName;
 
+    @Size(min = 4, max = 20)
     protected String login;
 
+    @Size(min = 8, max = 100)
     protected String password;
 
     @Column(name = "course_id")

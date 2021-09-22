@@ -11,7 +11,6 @@ CREATE TABLE groups
     group_name VARCHAR(255) NOT NULL
 );
 
-
 CREATE TABLE classrooms
 (
     classroom_id     BIGSERIAL NOT NULL PRIMARY KEY,

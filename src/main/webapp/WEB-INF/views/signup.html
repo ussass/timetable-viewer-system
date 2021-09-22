@@ -16,24 +16,31 @@
         <p th:text="${errorMessage}" class="h6">Error message</p>
     </div>
 
-    <form method="post" th:action="@{/signup}">
-        <div class="mb-3">
+    <form method="post" th:action="@{/signup}" th:object="${user}">
+        <div>
             <label for="login" class="form-label">Login</label>
-            <input type="text" class="form-control" id="login" name="login">
+            <input type="text" class="form-control" id="login" name="login" th:field="*{login}">
+            <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</p>
         </div>
-        <div class="mb-3">
+        <br th:if="!${#fields.hasErrors('login')}">
+        <div>
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <input type="password" class="form-control" id="password" name="password" th:field="*{password}">
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
         </div>
-        <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="firstName" name="firstName">
+        <br th:if="!${#fields.hasErrors('password')}">
+        <div>
+            <label for="firstName" class="form-label">First name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" th:field="*{firstName}">
+            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name Error</p>
         </div>
-        <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" name="lastName">
+        <br th:if="!${#fields.hasErrors('firstName')}">
+        <div>
+            <label for="lastName" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" th:field="*{lastName}">
+            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name Error</p>
         </div>
-        <br>
+        <br th:if="!${#fields.hasErrors('lastName')}">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-primary" type="submit">Create account</button>
         </div>

@@ -1,6 +1,8 @@
 package ru.trofimov.timetableviewersystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "lessons")
@@ -21,12 +23,15 @@ public class Lesson implements MyEntity<Long> {
     private Long groupId;
 
     @Column(name = "classroom_id")
+    @NotNull(message = "Classroom id name cannot be null")
     private Long classroomId;
 
     @Column(name = "lesson_slot_id")
+    @NotNull(message = "Lesson slot id name cannot be null")
     private Long lessonSlotId;
 
     @Column(name = "day_of_week")
+    @Max(value = 6, message = "Day of week should not be greater than 6")
     private int dayOfWeek;
 
     @Transient
