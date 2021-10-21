@@ -31,8 +31,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(User entity) {
+        System.out.println("entity.getPassword() = " + entity.getPassword());
         entity.setRolesToStringRoles();
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        System.out.println("entity.getPassword() = " + entity.getPassword());
         User user = userRepository.save(entity);
         user.addRolesFromString();
         logger.info("saved new user with id={}", user.getId());
@@ -62,7 +64,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User update(User entity) {
         entity.setRolesToStringRoles();
-        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        User userDb = findById(entity.getId());
+        if (!userDb.getPassword().equals(entity.getPassword())){
+            entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        }
+
         logger.info("updated user with id = {}", entity.getId());
         User user = userRepository.save(entity);
         user.addRolesFromString();
